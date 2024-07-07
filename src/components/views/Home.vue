@@ -22,19 +22,25 @@ import ContentCreatorIcon from '../icons/ContentCreatorIcon.vue';
 			</svg>
 		</div>
 	</section>
-	<section class="h-24">
-		<div class="text-3xl w-5/12 mx-auto font-antonio text-shadow my-24">
+	<section class="h-24 font-antonio text-shadow mb-24">
+		<div class="text-3xl w-5/12 mx-auto my-24">
 			Escriben is a browser based note taking application. 
 			Built to let you focus on writing and organizing your thoughts.
 		</div>
 
-		<div class="w-full bg-zinc-500 flex flex-row justify-between px-10">
-			<ContentCreatorIcon />
-			<p class="w-11/12">
-				Our in browser editor allows you to make content quickly and easily all while keeping your hands on the keyboard.
-				Create a notebook to contain all your notes and share with all your colleagues.
-			</p>
+		<div class="relative w-full">
+			<div class="flex flex-row w-8/12 mx-auto">
+				<ContentCreatorIcon class="z-20" />
+				<p class="w-4/12 h-fit absolute bottom-14 right-60 z-20 text-2xl">
+					Our in browser editor allows you to make content quickly and easily all while keeping your hands on the keyboard.
+					Create a notebook to contain all your notes and share with all your colleagues.
+				</p>
+			</div>
+			<div class="bg-zinc-500 h-52 absolute inset-x-0 bottom-0 z-10"></div>
 		</div>
+	</section>
+	<section class="my-24">
+		<h1 class="text-3xl">How Does It Work?</h1>
 	</section>
 </template>
 <style scoped>
