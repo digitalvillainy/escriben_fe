@@ -41,6 +41,9 @@ import ContentCreatorIcon from '../icons/ContentCreatorIcon.vue';
 	</section>
 	<section class="my-24">
 		<h1 class="text-3xl">How Does It Work?</h1>
+		<div class="w-full flex flex-row justify-evenly">
+
+		</div>
 	</section>
 </template>
 <style scoped>
