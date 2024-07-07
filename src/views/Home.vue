@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import ContentCreatorIcon from '../icons/ContentCreatorIcon.vue';
+import ContentCreatorIcon from '../components/icons/ContentCreatorIcon.vue';
+import StepCard from '../components/cards/StepCard.vue';
+import Step1Icon from '../components/icons/Step1Icon.vue';
+import Step2Icon from '../components/icons/Step2Icon.vue';
+import Step3Icon from '../components/icons/Step3Icon.vue';
+import Footer from '../components/Footer.vue'; 
 </script>
 
 <template>
@@ -22,30 +27,44 @@ import ContentCreatorIcon from '../icons/ContentCreatorIcon.vue';
 			</svg>
 		</div>
 	</section>
-	<section class="h-24 font-antonio text-shadow mb-24">
-		<div class="text-3xl w-5/12 mx-auto my-24">
-			Escriben is a browser based note taking application. 
-			Built to let you focus on writing and organizing your thoughts.
-		</div>
-
-		<div class="relative w-full">
+	<div class="text-3xl w-5/12 mx-auto my-24">
+		Escriben is a browser based note taking application. 
+		Built to let you focus on writing and organizing your thoughts.
+	</div>
+	<section class="font-antonio text-shadow mb-24 bg-zinc-500 w-full">
 			<div class="flex flex-row w-8/12 mx-auto">
-				<ContentCreatorIcon class="z-20" />
-				<p class="w-4/12 h-fit absolute bottom-14 right-60 z-20 text-2xl">
+				<ContentCreatorIcon />
+				<p class="w-8/12 text-2xl h-fit place-self-center">
 					Our in browser editor allows you to make content quickly and easily all while keeping your hands on the keyboard.
 					Create a notebook to contain all your notes and share with all your colleagues.
 				</p>
 			</div>
-			<div class="bg-zinc-500 h-52 absolute inset-x-0 bottom-0 z-10"></div>
-		</div>
 	</section>
 	<section class="my-24">
-		<h1 class="text-3xl">How Does It Work?</h1>
-		<div class="w-full flex flex-row justify-evenly">
-
+		<h1 class="text-5xl text-center font-antonio">How Does It Work?</h1>
+		<div class="w-full flex flex-row justify-evenly my-24">
+			<StepCard>
+					<div class="text-3xl">Create An Account</div>
+				<Step1Icon class="justify-self-center" />
+				<p class="text-lg">
+					Create an account and start writing your first notebook.
+				</p>	
+			</StepCard>
+			<StepCard>
+					<div class="text-3xl">Create Your Account</div>
+				<Step2Icon class="justify-self-center" />
+				<p class="text-lg">
+					Start creating your content with our in browser editor.
+				</p>	
+			</StepCard>
+			<StepCard>
+				<div class="text-3xl">Share Your Notes</div>
+				<Step3Icon class="mx-auto" />
+				<p class="text-lg">
+					Collaborate with other users by sharing your notes.
+				</p>	
+			</StepCard>
 		</div>
 	</section>
+	<Footer />
 </template>
-<style scoped>
-
-</style>
