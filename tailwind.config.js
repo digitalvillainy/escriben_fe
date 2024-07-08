@@ -20,6 +20,7 @@ export default {
         'custom-coal': '#3F3D56',
         'custom-zinc': '#D9D9D9',
         'custom-gray': '#1D2225',
+        'custom-cyan': '#00BFA6'
       },
       fontFamily: {
         'antonio': ['Antonio', 'sans-serif'],
