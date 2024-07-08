@@ -17,6 +17,7 @@ export default {
           lg: '0 8px 16px var(--tw-shadow-color)',
       },
       colors: {
+        'custom-coal': '#3F3D56',
         'custom-zinc': '#D9D9D9',
         'custom-gray': '#1D2225',
       },
