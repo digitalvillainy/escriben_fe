@@ -10,7 +10,7 @@
 
 <template>
 	<footer class="flex flex-row justify-between px-5 mt-20">
-		<div class="flex flex-row justify-between w-20 place-self-end pb-3">
+		<div class="flex flex-row justify-between w-28 place-self-end pb-3">
 			<RouterLink to="/instagram" target="_blank" class="text-shadow">
 				<InstagramIcon />
 			</RouterLink>

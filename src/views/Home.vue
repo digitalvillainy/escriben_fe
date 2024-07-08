@@ -11,7 +11,7 @@ import Footer from '../components/Footer.vue';
 <template>
 	<section class="flex flex-col font-antonio bg-home-hero-pattern bg-cover bg-no-repeat bg-center h-[524px] relative">
 		<div class="text-right z-20">
-			<RouterLink to="/register" class="m-2 text-2xl font-antonio text-shadow">Register/Login</RouterLink>
+			<RouterLink to="/register" class="m-2 text-2xl font-antonio text-shadow hover:text-cyan-400">Register/Login</RouterLink>
 		</div>
 		<div class="flex flex-row justify-center text-center z-20 h-full">
 			<div class="w-fit place-self-center">
@@ -27,11 +27,11 @@ import Footer from '../components/Footer.vue';
 			</svg>
 		</div>
 	</section>
-	<div class="text-3xl w-5/12 mx-auto my-24">
+	<div class="font-antonio text-shadow text-3xl w-5/12 mx-auto my-24">
 		Escriben is a browser based note taking application. 
 		Built to let you focus on writing and organizing your thoughts.
 	</div>
-	<section class="font-antonio text-shadow mb-24 bg-zinc-500 w-full">
+	<section class="font-roboto text-shadow mb-24 bg-zinc-500 w-full">
 			<div class="flex flex-row w-8/12 mx-auto">
 				<ContentCreatorIcon />
 				<p class="w-8/12 text-2xl h-fit place-self-center">
@@ -43,24 +43,24 @@ import Footer from '../components/Footer.vue';
 	<section class="my-24">
 		<h1 class="text-5xl text-center font-antonio">How Does It Work?</h1>
 		<div class="w-full flex flex-row justify-evenly my-24">
-			<StepCard>
+			<StepCard class="h-96 w-80">
 					<div class="text-3xl">Create An Account</div>
 				<Step1Icon class="justify-self-center" />
-				<p class="text-lg">
+				<p class="text-lg font-roboto">
 					Create an account and start writing your first notebook.
 				</p>	
 			</StepCard>
-			<StepCard>
-					<div class="text-3xl">Create Your Account</div>
+			<StepCard class="h-96 w-80">
+					<div class="text-3xl">Create Your Content</div>
 				<Step2Icon class="justify-self-center" />
-				<p class="text-lg">
+				<p class="text-lg font-roboto">
 					Start creating your content with our in browser editor.
 				</p>	
 			</StepCard>
-			<StepCard>
+			<StepCard class="h-96 w-80">
 				<div class="text-3xl">Share Your Notes</div>
 				<Step3Icon class="mx-auto" />
-				<p class="text-lg">
+				<p class="text-lg font-roboto">
 					Collaborate with other users by sharing your notes.
 				</p>	
 			</StepCard>
