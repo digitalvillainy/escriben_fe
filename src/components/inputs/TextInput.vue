@@ -9,6 +9,7 @@ defineProps<{
 	<label class="relative" :for="label">
 		<input 
 			:type="type" 
+			:id="label"
 			class="w-full p-2 placeholder:text-custom-coal/75 text-custom-coal rounded-lg bg-zinc-300 shadow-[inset_1px_4px_8px_0_rgba(47,46,65,0.6)]" 
 			:placeholder="placeholder" 
 		/>

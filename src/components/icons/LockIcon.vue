@@ -1,5 +1,6 @@
 <template>
-<svg width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M3.375 4.5a3.376 3.376 0 0 0-2.025 6.075l15.3 11.475a2.257 2.257 0 0 0 2.7 0l15.3-11.475A3.377 3.377 0 0 0 32.625 4.5H3.375ZM0 12.375V27c0 2.482 2.018 4.5 4.5 4.5h27c2.482 0 4.5-2.018 4.5-4.5V12.375L20.7 23.85a4.493 4.493 0 0 1-5.4 0L0 12.375Z" fill="#2F2E41"/>
+<svg viewBox="0 0 448 512" class="h-8 w-8">
+<!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+  <path d="M144 144v48h160v-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zm-64 48v-48C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64v192c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64h16z" fill="#2F2E41"/>
 </svg>
 </template>

@@ -16,29 +16,29 @@ import MailIcon from '../components/icons/MailIcon.vue';
 		<StepCard class="w-[49rem] h-[30rem] drop-shadow-2xl border-black border-2">
 			<h5 class="font-antonio text-3xl text-left">Register User</h5>
 			<div class="flex flex-row justify-between space-x-3">
-				<TextInput type="text" label="First Name" placeholder="First Name" class="w-full">
-					<UserIcon />
+				<TextInput type="text" label="First Name" placeholder="First Name" class="w-full relative">
+					<UserIcon class="absolute top-2 right-0"/>
 				</TextInput>
-				<TextInput type="text" label="Last Name" placeholder="Last Name" class="w-full">
-					<UserIcon/>
+				<TextInput type="text" label="Last Name" placeholder="Last Name" class="w-full relative">
+					<UserIcon class="absolute top-2 right-0"/>
 				</TextInput>
 			</div>
 			<div class="flex flex-row justify-between space-x-3">
-				<TextInput type="text" label="Email" placeholder="Email" class="w-full">
-					<EmailIcon />	
+				<TextInput type="text" label="Email" placeholder="Email" class="w-full relative">
+					<MailIcon class="absolute top-2 right-1.5"/>
 				</TextInput>
-				<TextInput type="text" label="Username" placeholder="Username" class="w-full">
-					<UserIcon />
+				<TextInput type="text" label="Username" placeholder="Username" class="w-full relative">
+					<UserIcon class="absolute top-2 right-0"/>
 				</TextInput>
 			</div>
 			<!-- TODO: Add password validation -->
 			<!-- TODO: Add password restrictions -->
 			<div class="flex flex-row justify-between space-x-3">
-				<TextInput type="password" label="Password" placeholder="Password" class="w-full">
-					<LockIcon />
+				<TextInput type="password" label="Password" placeholder="Password" class="w-full relative">
+					<LockIcon class="absolute top-1 right-1.5"/>
 				</TextInput>
-				<TextInput type="password" label="Type Password Again" placeholder="Type Password Again" class="w-full">
-					<LockIcon />
+				<TextInput type="password" label="Type Password Again" placeholder="Type Password Again" class="w-full relative">
+					<LockIcon class="absolute top-1 right-1.5"/>
 				</TextInput>
 			</div>
 			<div class="flex flex-row justify-between space-x-3">
