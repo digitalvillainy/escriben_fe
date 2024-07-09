@@ -9,7 +9,7 @@ import LockIcon from '../components/icons/LockIcon.vue';
 import MailIcon from '../components/icons/MailIcon.vue';
 
 import { reactive, computed } from 'vue';
-import { required, email, minLength, sameAs, alpha } from '@vuelidate/validators';
+import { required, email, minLength, sameAs, alpha, alphaNum } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 import { postApi } from '../axios.ts';
@@ -27,10 +27,10 @@ const form = reactive({
 // Rules for vuelidate validation
 const rules = computed(() => {
 	return {
-		first_name: { required, alpha: true },
-		last_name: { required },
+		first_name: { required, alpha },
+		last_name: { required, alpha },
 		email: { required, email },
-		username: { required },
+		username: { required, minLength: minLength(6), alphaNum },
 		password: { required, minLength: minLength(8) },
 		confirmPassword: { required, sameAs: sameAs(form.password) },
 	}
