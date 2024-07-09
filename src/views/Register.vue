@@ -9,7 +9,7 @@ import LockIcon from '../components/icons/LockIcon.vue';
 import MailIcon from '../components/icons/MailIcon.vue';
 
 import { reactive, computed } from 'vue';
-import { required, email, minLength, sameAs } from '@vuelidate/validators';
+import { required, email, minLength, sameAs, alpha } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 import { postApi } from '../axios.ts';
@@ -27,7 +27,7 @@ const form = reactive({
 // Rules for vuelidate validation
 const rules = computed(() => {
 	return {
-		first_name: { required },
+		first_name: { required, alpha: true },
 		last_name: { required },
 		email: { required, email },
 		username: { required },
@@ -43,9 +43,9 @@ const submitForm = async () => {
 	const result = await v$.value.$validate();
 	if (!result) return
 
-	console.log(form);
 	try {
 		const response = await postApi('/register', form);
+		//TODO: Store token in local storage
 		//TODO: Add success message then redirect
 		console.log(response);
 	} catch (error) {
@@ -90,7 +90,7 @@ const submitForm = async () => {
 			</div>
 			<div class="flex flex-row justify-between space-x-3">
 				<div class="flex flex-row justify-between w-5/12">
-					<RouterLink to="/forgot" class="text-shadow hover:text-cyan-400">Forgot Password?</RouterLink>
+					<RouterLink to="/forgot" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
 					<RouterLink to="/login" class="text-shadow hover:text-cyan-400">Already Have An Account?</RouterLink>
 				</div>
 				<button type="submit" class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">REGISTER</button>
