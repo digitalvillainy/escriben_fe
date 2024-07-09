@@ -68,4 +68,14 @@ const patchApi = async (url: string, data?: any) => {
   }
 }
 
-export { getApi, postApi, patchApi };
+const deleteApi = async (url: string) => {
+  try {
+    const response = await api.delete(url);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+export { getApi, postApi, patchApi, deleteApi };
