@@ -1,11 +1,10 @@
 <script setup lang="ts">
 	import { RouterLink } from 'vue-router';
-	import { ref } from 'vue';
 	import InstagramIcon from '../components/icons/social/InstagramIcon.vue';
 	import ThreadsIcon from '../components/icons/social/ThreadsIcon.vue';
 	import FooterTriangleIcon from '../components/icons/FooterTriangleIcon.vue';
 
-	const year: number = ref<number>(new Date().getFullYear());
+	const year: number = new Date().getFullYear();
 </script>
 
 <template>

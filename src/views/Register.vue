@@ -1,12 +1,23 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
-import { RouterLink } from 'vue-router';
 import TextInput from '../components/inputs/TextInput.vue';
 import UserIcon from '../components/icons/UserIcon.vue';
 import LockIcon from '../components/icons/LockIcon.vue';
 import MailIcon from '../components/icons/MailIcon.vue';
+
+import {reactive} from 'vue';
+
+const form = reactive({
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+	confirmPassword: '',
+});
+
 </script>
 
 <template>
