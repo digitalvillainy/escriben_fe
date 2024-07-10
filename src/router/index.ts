@@ -3,6 +3,7 @@ import Register from "../views/Register.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Forgot from "../views/Forgot.vue";
+import Dashboard from "../views/Dashboard.vue";
 
 const routes = [
 	{
@@ -24,6 +25,11 @@ const routes = [
 		path: "/forgot",
 		name: "forgot",
 		component: Forgot 
+	},
+	{
+		path: "/dashboard",
+		name: "dashboard",
+		component: Dashboard 
 	},
 	{
 		path: "/port",

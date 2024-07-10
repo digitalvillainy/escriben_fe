@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
@@ -13,6 +13,8 @@ import { required, email, minLength, sameAs, alpha, alphaNum } from '@vuelidate/
 import { useVuelidate } from '@vuelidate/core';
 
 import { postApi } from '../axios.ts';
+
+const router = useRouter();
 
 // Form State
 const form = reactive({
@@ -45,14 +47,12 @@ const submitForm = async () => {
 
 	try {
 		const response = await postApi('/register', form);
-		//TODO: Store token in local storage
-		//TODO: Add success message then redirect
-		console.log(response);
+		localStorage.setItem('token', response.token);
+		router.push({ name: 'dashboard' });
 	} catch (error) {
-		//TODO: Add error message from server validation
+		v$.value.$touch();
 		console.log(error);
 	}
-
 };
 
 
