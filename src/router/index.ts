@@ -29,7 +29,10 @@ const routes = [
 	{
 		path: "/dashboard",
 		name: "dashboard",
-		component: Dashboard 
+		component: Dashboard,
+		meta: {
+			requiresAuth: true
+		}
 	},
 	{
 		path: "/port",
@@ -57,6 +60,16 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(),
 	routes
+});
+
+// Check if user is authenticated
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('token'); 
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    next({ name: 'login' })
+  } else {
+    next()
+  }
 });
 
 export default router;
