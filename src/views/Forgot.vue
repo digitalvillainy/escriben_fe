@@ -36,10 +36,9 @@ const submitForm = async () => {
 	if (!result) return
 
 	try {
-		const response = await postApi('/login', form);
-		localStorage.setItem('token', response.token);
-		router.push({ name: 'dashboard' });
-	} catch (error) {
+		const response = await postApi('/forgot-password', form);
+		router.push({ name: 'login' });
+	} catch (error) 
 		v$.value.$touch();
 		console.log(error);
 	}
@@ -56,9 +55,6 @@ const submitForm = async () => {
 				<div class="flex flex-col flex-grow">
 					<TextInput type="text" label="Email" placeholder="Email" class="w-full relative" v-model="form.email" :errors="v$.email.$errors">
 						<MailIcon class="absolute top-2 right-1.5"/>
-					</TextInput>
-					<TextInput type="password" label="Password" placeholder="Password" class="w-full relative" v-model="form.password" :errors="v$.password.$errors">
-						<LockIcon class="absolute top-1 right-1.5"/>
 					</TextInput>
 				</div>
 				<div class="flex flex-row justify-between space-x-3">

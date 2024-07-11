@@ -19,12 +19,14 @@ const router = useRouter();
 // Form State
 const form = reactive({
 	email: '',
+	password: '',
 });
 
 // Rules for vuelidate validation
 const rules = computed(() => {
 	return {
 		email: { required, email },
+		password: { required, minLength: minLength(8) },
 	}
 });
 
