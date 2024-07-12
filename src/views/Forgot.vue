@@ -38,7 +38,7 @@ const submitForm = async () => {
 	try {
 		const response = await postApi('/forgot-password', form);
 		router.push({ name: 'login' });
-	} catch (error) 
+	} catch (error) {
 		v$.value.$touch();
 		console.log(error);
 	}
