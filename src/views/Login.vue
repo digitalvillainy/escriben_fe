@@ -59,6 +59,7 @@ const submitForm = async () => {
 </script>
 
 <template>
+	<!-- TODO: Fix issues with height -->
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<form class="flex flex-col place-items-center flex-grow" @submit.prevent="submitForm">
