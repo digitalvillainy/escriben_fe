@@ -4,7 +4,8 @@ import {getApi} from '../axios.ts';
 const getDashboard = async () => {
 	try {
 		console.log(localStorage.getItem('token'));
-		const response = await getApi('/notebooks');
+		//TODO: add user id after crating user store in pinia
+		// const response = await getApi(`/notebooks?user_id=${}`);
 		console.log(response);
 	} catch (error) {
 		console.error(error);
