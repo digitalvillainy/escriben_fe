@@ -13,9 +13,6 @@ const api = axios.create({
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    console.log(token);
-    console.log(config);
-    console.log('wu-tang');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
