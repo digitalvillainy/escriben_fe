@@ -44,7 +44,6 @@ const submitForm = async () => {
 			password: form.password
 		};
 		const response = await getApi(`/reset-password?token=${token}&email=${email}&password=${form.password}`);
-		console.log(response);
 		router.push({ name: 'login' });
 	} catch (error) {
 		v$.value.$touch();

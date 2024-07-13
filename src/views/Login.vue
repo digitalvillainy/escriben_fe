@@ -8,11 +8,12 @@ import UserIcon from '../components/icons/UserIcon.vue';
 import LockIcon from '../components/icons/LockIcon.vue';
 import MailIcon from '../components/icons/MailIcon.vue';
 
-import { reactive, computed } from 'vue';
+import { reactive, computed, ref } from 'vue';
 import { required, email, minLength } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 import { postApi } from '../axios.ts';
+import { useUserStore } from '../stores/user';
 
 const router = useRouter();
 
@@ -21,6 +22,8 @@ const form = reactive({
 	email: '',
 	password: '',
 });
+
+const failedLogin: boolean = ref(false);
 
 // Rules for vuelidate validation
 const rules = computed(() => {
@@ -38,8 +41,16 @@ const submitForm = async () => {
 
 	try {
 		const response = await postApi('/login', form);
-		localStorage.setItem('token', response.token);
-		router.push({ name: 'dashboard' });
+		if (response.status) {
+			failedLogin.value = true;
+			return
+		}
+
+		if (response.token) {
+			localStorage.setItem('token', response.token);
+			useUserStore().setUser(response.user);
+			router.push({ name: 'dashboard' });
+		}
 	} catch (error) {
 		v$.value.$touch();
 		console.log(error);
@@ -61,6 +72,9 @@ const submitForm = async () => {
 					<TextInput type="password" label="Password" placeholder="Password" class="w-full relative" v-model="form.password" :errors="v$.password.$errors">
 						<LockIcon class="absolute top-1 right-1.5"/>
 					</TextInput>
+				</div>
+				<div class="flex flew-row justify-center" v-if="failedLogin">
+					<p class="text-red-800 text-shadow">Invalid Credentials</p>
 				</div>
 				<div class="flex flex-row justify-between space-x-3">
 					<div class="flex flex-row justify-between w-5/12">
