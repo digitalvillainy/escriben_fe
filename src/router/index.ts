@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Forgot from "../views/Forgot.vue";
 import Dashboard from "../views/Dashboard.vue";
+import ResetPwd from "../views/ResetPwd.vue";
 
 const routes = [
 	{
@@ -22,9 +23,14 @@ const routes = [
 		component: Login 
 	},
 	{
-		path: "/forgot",
-		name: "forgot",
+		path: "/forgot-password",
+		name: "forgot-password",
 		component: Forgot 
+	},
+	{
+		path: "/reset-password",
+		name: "reset-password",
+		component: ResetPwd 
 	},
 	{
 		path: "/dashboard",

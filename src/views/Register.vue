@@ -40,7 +40,6 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, form);
 
-
 const submitForm = async () => {
 	const result = await v$.value.$validate();
 	if (!result) return
