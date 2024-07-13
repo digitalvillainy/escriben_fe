@@ -10,7 +10,7 @@ const api = axios.create({
 });
 
 // Intercepts requests and adds token if available.
-axios.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -25,7 +25,7 @@ axios.interceptors.request.use(
 
 // Intercepts responses and checks for errors.
 // Removes token if unauthorized. Redirects to login.
-axios.interceptors.response.use(
+api.interceptors.response.use(
   (response) => {
     return response;
   },
