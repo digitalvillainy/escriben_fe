@@ -53,18 +53,17 @@ const submitForm = async () => {
 		}
 	} catch (error) {
 		v$.value.$touch();
-		console.log(error);
+		console.error(error);
 	}
 };
 </script>
 
 <template>
-	<!-- TODO: Fix issues with height -->
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<form class="flex flex-col place-items-center flex-grow" @submit.prevent="submitForm">
 			<h3 class="text-5xl text-center font-normal mt-36 mb-20 pb-2 font-antonio text-shadow-lg">Login</h3>
-			<StepCard class="w-[49rem] h-[20rem] drop-shadow-2xl border-black border-2 flex flex-col">
+			<StepCard class="w-[49rem] h-[25rem] drop-shadow-2xl border-black border-2 flex flex-col">
 				<h5 class="font-antonio text-3xl text-left">Login User</h5>
 				<div class="flex flex-col flex-grow">
 					<TextInput type="text" label="Email" placeholder="Email" class="w-full relative" v-model="form.email" :errors="v$.email.$errors">
@@ -74,7 +73,7 @@ const submitForm = async () => {
 						<LockIcon class="absolute top-1 right-1.5"/>
 					</TextInput>
 				</div>
-				<div class="flex flew-row justify-center" v-if="failedLogin">
+				<div class="flex flew-row justify-center !mt-0" v-if="failedLogin">
 					<p class="text-red-800 text-shadow">Invalid Credentials</p>
 				</div>
 				<div class="flex flex-row justify-between space-x-3">

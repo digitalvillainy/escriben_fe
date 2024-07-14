@@ -5,7 +5,6 @@
 	const userStore = useUserStore();
 
 	const authenticated = userStore.isAuthenticated;
-	console.log(authenticated);
 	const router = useRouter();
 	const logout = () => {
 		userStore.logout();

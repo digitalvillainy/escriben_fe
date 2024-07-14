@@ -40,7 +40,7 @@ const submitForm = async () => {
 		router.push({ name: 'login' });
 	} catch (error) {
 		v$.value.$touch();
-		console.log(error);
+		console.error(error);
 	}
 };
 </script>
