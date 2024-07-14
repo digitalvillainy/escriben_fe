@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import NavBar from '../components/NavBar.vue';
+import Footer from '../components/Footer.vue';
 import {getApi} from '../axios.ts';
 import {useUserStore} from '../stores/user';
 
@@ -18,8 +20,12 @@ const getDashboard = async () => {
 getDashboard();
 </script>
 <template>
-	<div>
-		Dashboard
-	</div>
+
+	<section class="flex flex-col h-screen">
+		<NavBar />
+		<main class="flex flex-col place-items-center flex-grow">Dashboard</main>
+		<Footer />
+	</section>
+
 </template>
 
