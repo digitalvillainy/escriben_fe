@@ -6,12 +6,15 @@ import PlusIcon from '../components/icons/PlusIcon.vue';
 
 import {getApi, postApi} from '../axios.ts';
 import {useUserStore} from '../stores/user';
+import {onMounted} from 'vue';
+
 
 const userStore = useUserStore();
 
+let notebooks: any;
 const getDashboard = async () => {
 	try {
-		const response = await getApi(`/notebooks?user_id=${userStore.id}`);
+		notebooks = await getApi(`/notebooks?user_id=${userStore.id}`);
 	} catch (error) {
 		console.error(error);
 	}
@@ -20,14 +23,19 @@ const getDashboard = async () => {
 const createNotebook = async () => {
 	try {
 		const response = await postApi(`/notebooks?user_id=${userStore.id}`);
+
 	} catch (error) {
 		console.error(error);
 	}
+
+	await getDashboard();
 };
 
+onMounted(() => {
+	//Requests Notbooks for user
+	getDashboard();
+});
 
-//Requests Notbooks for user
-getDashboard();
 
 </script>
 <template>
@@ -39,15 +47,22 @@ getDashboard();
 			<div class="w-full flex flex-row justify-start px-12">
 				<StepCard 
 					@click="createNotebook" 
-					class="w-64 h-96 drop-shadow-2xl border-custom-cyan border-dashed border-8 flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white"
-				>
+					class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-8 flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white">
 					<PlusIcon class="mx-auto"/>
+					<span class="font-antonio text-lg text-center">Create Notebook</span>
 				</StepCard>
 			</div>
-			<div class="w-full flex flex-row justify-start bg-zinc-500">
+			<div class="w-full flex flex-row justify-start bg-zinc-900 h-full space-x-4 mt-8 pt-8 px-10 overflow-y-scroll overflow-x-hidden">
+
+				<StepCard 
+					v-for="( notebook, index ) in notebooks"
+					v-bind:key="index"
+					class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-doshed border-4 flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white">
+					<PlusIcon class="mx-auto"/>
+					<span class="font-antonio text-md text-center">{{notebook.title}}</span>
+				</StepCard>
 			</div>
 		</main>
-		<Footer />
 	</section>
 
 </template>

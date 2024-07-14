@@ -4,10 +4,11 @@
 	import { useRouter } from 'vue-router';
 	const userStore = useUserStore();
 
-	const authenticated = userStore.isAuthenticated;
+	const authenticated = localStorage.getItem('token'); 
 	const router = useRouter();
 	const logout = () => {
 		userStore.logout();
+		localStorage.removeItem('token');
 		router.push({ name:'login' });
 	}
 </script>
