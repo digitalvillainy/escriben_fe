@@ -19,7 +19,7 @@ const getDashboard = async () => {
 
 const createNotebook = async () => {
 	try {
-		const response = await getApi(`/notebooks?user_id=${userStore.id}`);
+		const response = await postApi(`/notebooks?user_id=${userStore.id}`);
 	} catch (error) {
 		console.error(error);
 	}
@@ -39,10 +39,12 @@ getDashboard();
 			<div class="w-full flex flex-row justify-start px-12">
 				<StepCard 
 					@click="createNotebook" 
-					class="w-64 h-96 drop-shadow-2xl border-custom-cyan border-dashed border-8 flex flex-col"
+					class="w-64 h-96 drop-shadow-2xl border-custom-cyan border-dashed border-8 flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white"
 				>
 					<PlusIcon class="mx-auto"/>
 				</StepCard>
+			</div>
+			<div class="w-full flex flex-row justify-start bg-zinc-500">
 			</div>
 		</main>
 		<Footer />
