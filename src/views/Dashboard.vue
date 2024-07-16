@@ -3,6 +3,8 @@ import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
 import PlusIcon from '../components/icons/PlusIcon.vue';
+import Modal from '../components/modal/Modal.vue';
+
 
 import {getApi, postApi} from '../axios.ts';
 import {useUserStore} from '../stores/user';
@@ -24,10 +26,9 @@ const getDashboard = async () => {
 const createNotebook = async () => {
 	try {
 		const response = await postApi(`/notebooks?user_id=${userStore.id}`);
-
 	} catch (error) {
 		console.error(error);
-}
+	}
 
 	await getDashboard();
 };
@@ -40,6 +41,7 @@ onMounted(() => {
 </script>
 <template>
 	<!-- TODO: Add current notebooks and if not a prompt to create -->
+	<Modal showBtnText="Create Notebook" />
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
