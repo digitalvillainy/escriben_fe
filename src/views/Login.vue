@@ -78,7 +78,7 @@ const submitForm = async () => {
 				</div>
 				<div class="flex flex-row justify-between space-x-3">
 					<div class="flex flex-row justify-between w-5/12">
-						<RouterLink to="/forgot" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
+						<RouterLink to="/forgot-pwd" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
 						<RouterLink to="/register" class="text-shadow hover:text-cyan-400">Not Registered?</RouterLink>
 					</div>
 					<button type="submit" class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">LOGIN</button>
