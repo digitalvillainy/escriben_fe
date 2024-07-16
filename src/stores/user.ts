@@ -3,23 +3,25 @@ import {getApi} from '../axios.ts';
 
 type User = {
   id: number;
+  token: string;
   username: string;
   first_name: string;
   last_name: string;
   email: string;
-  created_at: string;
-  updated_at: string;
+ created_at?: string;
+  updated_at?: string;
 };
 
 export const useUserStore = defineStore('user', {
-  state: () => {
+  state: (): User => {
+    const user: User = JSON.parse(localStorage.getItem('user') || '{}');
     return {
-      token: '',
-      id: 0,
-      username: '',
-      first_name: '',
-      last_name: '',
-      email: '',
+      token: localStorage.getItem('token') || '',
+      id: user.id || 0,
+      username: user.username || '',
+      first_name: user.first_name || '',
+      last_name: user.last_name || '',
+      email: user.email || '',
     };
   },
   getters: {
@@ -57,14 +59,21 @@ export const useUserStore = defineStore('user', {
       }
     },
     setUser(user: User) {
+      // Save User in state
       this.id = user.id;
       this.username = user.username;
       this.first_name = user.first_name;
       this.last_name = user.last_name;
       this.email = user.email;
+      
+      // Save User in localStorage
+      localStorage.setItem('user', JSON.stringify( user ));
     },
     login(token: string) {
+      // Save token in state
       this.token = token;
+      // Save token in localStorage
+      localStorage.setItem('token', token);
     },
     logout() {
       localStorage.removeItem('token');
