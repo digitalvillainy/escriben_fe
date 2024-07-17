@@ -3,53 +3,40 @@ import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
 import PlusIcon from '../components/icons/PlusIcon.vue';
-import Modal from '../components/modal/Modal.vue';
-
 
 import {getApi, postApi} from '../axios.ts';
 import {useUserStore} from '../stores/user';
-import {onMounted, ref} from 'vue';
-
+import {useNotebooksStore} from '../stores/notebooks';
+import {ref} from 'vue';
 
 const userStore = useUserStore();
+
+const notebookStore = useNotebooksStore();
 
 let notebooks: array<object> = ref([{}]);
 
 const getDashboard = async () => {
 	try {
-		notebooks = await getApi(`/notebooks?user_id=${userStore.id}`);
+		notebooks.value = await notebookStore.getNotebooksByUserId();
 	} catch (error) {
 		console.error(error);
+		return [{}];
 	}
 };
 
-const createNotebook = async () => {
-	try {
-		const response = await postApi(`/notebooks?user_id=${userStore.id}`);
-	} catch (error) {
-		console.error(error);
-	}
-
-	await getDashboard();
-};
-
-onMounted(() => {
-	//Requests Notbooks for user
-	getDashboard();
-});
+//Requests Notbooks for user
+getDashboard();
 
 </script>
 <template>
 	<!-- TODO: Add current notebooks and if not a prompt to create -->
-	<Modal showBtnText="Create Notebook" />
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
 			<h3 class="text-5xl text-center font-normal mt-36 mb-20 pb-2 font-antonio text-shadow-lg">Notebooks</h3>
 			<div class="w-full flex flex-row justify-start px-12">
-				<StepCard 
-					@click="createNotebook" 
-					class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white">
+				<StepCard class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col 
+					cursor-pointer hover:bg-gray-600 hover:text-white hover:border-cyan-400">
 					<PlusIcon class="mx-auto"/>
 					<span class="font-antonio text-lg text-center">Create Notebook</span>
 				</StepCard>

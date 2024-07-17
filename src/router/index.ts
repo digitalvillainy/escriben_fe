@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Forgot from "../views/Forgot.vue";
 import Dashboard from "../views/Dashboard.vue";
 import ResetPwd from "../views/ResetPwd.vue";
+import Notebooks from "../views/Notebooks.vue";
 
 const routes = [
 	{
@@ -28,7 +29,7 @@ const routes = [
 		component: Forgot 
 	},
 	{
-		path: "/reset-password",
+		path: "/reset-password?:token&:email",
 		name: "reset-password",
 		component: ResetPwd 
 	},
@@ -36,6 +37,14 @@ const routes = [
 		path: "/dashboard",
 		name: "dashboard",
 		component: Dashboard,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "/notebooks?:notebook_id",
+		name: "notebooks",
+		component: Notebooks,
 		meta: {
 			requiresAuth: true
 		}

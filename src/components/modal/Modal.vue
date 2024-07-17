@@ -13,6 +13,7 @@ const props = defineProps({
 const showModal = (): void => {
 	dialog.value?.showModal();
 	visible.value = true;
+	emit('open');
 };
 
 const confirm = (): void => {
@@ -27,24 +28,35 @@ const closeModal = (): void => {
 	emit('close');
 };
 
-const emit = defineEmits(['confirm', 'close']);
-
+const emit = defineEmits(['confirm', 'open', 'close']);
 
 </script>
 <template>
 	<div>
-		<dialog ref="dialog">
-			<slot></slot>
-			<button 
-				class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500" 
-				@click="closeModal">
-				{{closeBtnText}}
-			</button>
+		<dialog 
+			ref="dialog" 
+			@close="visible = false">
+			<slot name="content"></slot>
+			<slot name="footer"></slot>
+			<slot name="actionButtons">
+				<button
+					v-if="!hideConfirmBtn"
+					class="bg-custom-cyan hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded"
+					@click="confirm"
+				>
+					{{ props.showBtnText }}
+				</button>
+				<button
+					v-if="showCancelBtn"
+					class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+					@click="closeModal"
+				>
+					{{ props.closeBtnText }}
+				</button>
+			</slot>
 		</dialog>
-		<button 
-			class="w-full p-2 text-base shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500" 
-			@click="showModal">
-			{{showBtnText}}
-		</button>
+		<div>
+			<slot name="show" @click="showModal"></slot>
+		</div>
 	</div>
 </template>
