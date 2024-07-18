@@ -55,12 +55,13 @@ export const useNotebooksStore = defineStore('notebooks', {
         console.error(error);
       }
     },
-    async getNotebookById(id: number): Promise<void> {
+    async getNotebookById(id: number): Promise<Notebook[]> {
       try {
         const response = await getApi(`/notebooks/notebook_id=${id}`);
-        this.setNotebook(response);
+        return response;
       } catch (error) {
         console.error(error);
+        return [{}] as Notebook[];
       }
     },
     async deleteNotebook(id: number): Promise<void> {
