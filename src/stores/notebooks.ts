@@ -3,31 +3,40 @@ import { getApi, postApi } from '../axios';
 import { useUserStore } from './user.ts';
 
 
-type Notebook = {
-  id: number;
-  user_id: number;
-  title: string;
-  created_at: string;
-  updated_at: string;
-}[];
+interface Notebook {
+  id: number
+  user_id: number
+  title: string
+  created_at: string
+  updated_at: string
+};
 
-const Notebooks: Notebook = JSON.parse(localStorage.getItem('notebooks') || '[]');
+const Notebooks: Notebook[] = JSON.parse(localStorage.getItem('notebooks') || '[{}]');
+
 export const useNotebooksStore = defineStore('notebooks', {
-  state: (): Notebook => {
-    return {...Notebooks};
-  },
+  state: () => ({
+    books: Notebooks || [
+      {
+        id: 0,
+        user_id: 0,
+        title: '',
+        created_at: '',
+        updated_at: '',
+      }
+    ] as Notebook[]
+  }),
   getters: {
-    getNotebooks(state): Notebook {
-      return state;
+    getNotebooks(): Notebook[] {
+      return this.books;
     },
   },
   actions: {
-    setNotebook(notebook: Notebook): void {
-      this.$state = notebook;
+    setNotebook(notebook: Notebook[]): void {
+      this.books = notebook;
       localStorage.setItem('notebooks', JSON.stringify(notebook));
     },
     addNotebook(notebook: Notebook): void {
-      this.$state.push(...notebook);
+      this.books.push(notebook);
       localStorage.setItem('notebooks', JSON.stringify(this.$state));
     },
     async createNotebook(title: string, user_id: number): Promise<void> {

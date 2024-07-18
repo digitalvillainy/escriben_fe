@@ -4,32 +4,32 @@ import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
 import PlusIcon from '../components/icons/PlusIcon.vue';
 
-import {getApi, postApi} from '../axios.ts';
-import {useUserStore} from '../stores/user';
-import {useNotebooksStore} from '../stores/notebooks';
-import {ref} from 'vue';
+import { getApi, postApi } from '../axios.ts';
+import { useUserStore } from '../stores/user';
+import { useNotebooksStore } from '../stores/notebooks';
+import { ref } from 'vue';
 
 const userStore = useUserStore();
-
 const notebookStore = useNotebooksStore();
 
 let notebooks: array<object> = ref([{}]);
 
-const getDashboard = async () => {
+//Requests Notbooks for user
+const getNotebooks = async ()=> {
 	try {
-		notebooks.value = await notebookStore.getNotebooksByUserId();
+		await notebookStore.getNotebooksByUserId();
 	} catch (error) {
 		console.error(error);
-		return [{}];
 	}
-};
+}
 
-//Requests Notbooks for user
-getDashboard();
+getNotebooks();
+
+notebooks.value = notebookStore.getNotebooks;
+
 
 </script>
 <template>
-	<!-- TODO: Add current notebooks and if not a prompt to create -->
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
@@ -37,22 +37,20 @@ getDashboard();
 			<div class="w-full flex flex-row justify-start px-12">
 				<StepCard class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col 
 					cursor-pointer hover:bg-gray-600 hover:text-white hover:border-cyan-400">
-					<PlusIcon class="mx-auto"/>
+					<PlusIcon class="mx-auto" />
 					<span class="font-antonio text-lg text-center">Create Notebook</span>
 				</StepCard>
 			</div>
 			<div class="w-full flex flex-row flex-wrap justify-start bg-zinc-900 h-full mt-8 pt-8 px-7 overflow-y-scroll overflow-x-hidden">
-
-				<StepCard 
-					v-for="( notebook, index ) in notebooks"
-					v-bind:key="index"
-					class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-doshed border-4 
+				<h3 v-if="notebooks.length === 0" class="text-3xl font-antonio text-shadow-lg">
+					Please create a notebook to get started... 
+				</h3>
+				<StepCard v-else v-for="( notebook, index ) in notebooks" v-bind:key="index" class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-doshed border-4 
 					flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400">
-					<span class="text-white font-antonio text-md text-center">{{notebook.title}}</span>
+					<span class="text-white font-antonio text-md text-center">{{ notebook.title }}</span>
 				</StepCard>
 			</div>
 		</main>
 	</section>
-
 </template>
 
