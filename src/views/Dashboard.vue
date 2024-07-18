@@ -3,17 +3,20 @@ import NavBar from '../components/NavBar.vue';
 import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
 import PlusIcon from '../components/icons/PlusIcon.vue';
+import CloseIcon from '../components/icons/CloseIcon.vue';
+import EditIcon from '../components/icons/EditIcon.vue';
 
 import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
 import { ref } from 'vue';
+import {RouterLink} from 'vue-router';
 
 const notebookStore = useNotebooksStore();
 
 let notebooks: array<object> = ref([{}]);
 
 //Requests Notbooks for user
-const getNotebooks = async ()=> {
+const getNotebooks = async (): Promise<void> => {
 	try {
 		await notebookStore.getNotebooksByUserId();
 	} catch (error) {
@@ -25,6 +28,13 @@ getNotebooks();
 
 notebooks.value = notebookStore.getNotebooks;
 
+const deleteNotebook = async (id: number): Promise<void> => {
+	try {
+		await notebookStore.deleteNotebook(id);
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 </script>
 <template>
@@ -44,11 +54,13 @@ notebooks.value = notebookStore.getNotebooks;
 					Please create a notebook to get started... 
 				</h3>
 				<StepCard v-else v-for="( notebook, index ) in notebooks" v-bind:key="index" class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-doshed border-4 
-					flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400">
+					flex flex-col hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400">
 					<span class="text-white font-antonio text-md text-center flex-grow">{{ notebook.title }}</span>
 					<div class="flex flex-row justify-between cursor-pointer hover:bg-gray-600 hover:text-white">
-						<span class="font-antonio text-md text-center">DELETE</span>
-						<span class="font-antonio text-md text-center">EDIT</span>
+						<CloseIcon @click="deleteNotebook(notebook.id)" />
+						<router-link :to="{ name: 'notebooks', params: { notebook_id: notebook.id } }" >
+							<EditIcon />
+						</router-link>
 					</div>
 				</StepCard>
 			</div>

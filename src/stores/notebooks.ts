@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getApi, postApi } from '../axios';
+import { getApi, postApi, deleteApi } from '../axios';
 import { useUserStore } from './user.ts';
 
 interface Notebook {
@@ -59,6 +59,14 @@ export const useNotebooksStore = defineStore('notebooks', {
       try {
         const response = await getApi(`/notebooks/notebook_id=${id}`);
         this.setNotebook(response);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteNotebook(id: number): Promise<void> {
+      try {
+        await deleteApi(`/notebooks?notebook_id=${id}`);
+        this.getNotebooksByUserId();
       } catch (error) {
         console.error(error);
       }

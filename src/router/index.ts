@@ -42,7 +42,7 @@ const routes = [
 		}
 	},
 	{
-		path: "/notebooks?:notebook_id",
+		path: "/notebooks?notebook_id=:notebook_id",
 		name: "notebooks",
 		component: Notebooks,
 		meta: {
