@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { getApi, postApi } from '../axios';
 import { useUserStore } from './user.ts';
 
-
 interface Notebook {
   id: number
   user_id: number

@@ -5,11 +5,9 @@ import StepCard from '../components/cards/StepCard.vue';
 import PlusIcon from '../components/icons/PlusIcon.vue';
 
 import { getApi, postApi } from '../axios.ts';
-import { useUserStore } from '../stores/user';
 import { useNotebooksStore } from '../stores/notebooks';
 import { ref } from 'vue';
 
-const userStore = useUserStore();
 const notebookStore = useNotebooksStore();
 
 let notebooks: array<object> = ref([{}]);
@@ -47,7 +45,11 @@ notebooks.value = notebookStore.getNotebooks;
 				</h3>
 				<StepCard v-else v-for="( notebook, index ) in notebooks" v-bind:key="index" class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-doshed border-4 
 					flex flex-col cursor-pointer hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400">
-					<span class="text-white font-antonio text-md text-center">{{ notebook.title }}</span>
+					<span class="text-white font-antonio text-md text-center flex-grow">{{ notebook.title }}</span>
+					<div class="flex flex-row justify-between cursor-pointer hover:bg-gray-600 hover:text-white">
+						<span class="font-antonio text-md text-center">DELETE</span>
+						<span class="font-antonio text-md text-center">EDIT</span>
+					</div>
 				</StepCard>
 			</div>
 		</main>
