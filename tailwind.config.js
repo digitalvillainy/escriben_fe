@@ -1,4 +1,5 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin');
+const typography = require('@tailwindcss/typography');
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -29,6 +30,7 @@ export default {
     },
   },
   plugins: [
+    typography,
     plugin(function({ matchUtilities, theme }) {
       matchUtilities({
         '.text-shadow': (value) => ({
