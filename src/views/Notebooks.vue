@@ -19,6 +19,8 @@ currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.i
 		<main class="flex flex-col place-items-center flex-grow">
 			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg">{{ currentNotebook.title }} / Note 1</h3>
 			<section class="flex flex-row w-full px-4">
+				<!-- TODO: Show all notes in the notebook -->
+				<!-- TODO: Create a hide show for aside -->
 				<aside class="flex flex-col h-screen w-1/12 p-4 mb-12">
 					<ul class="flex flex-col list-disc font-antonio text-base">
 						<li>{{currentNotebook.title}}</li>
