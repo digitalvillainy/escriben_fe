@@ -11,26 +11,23 @@ const { notebook_id } = useRoute().params;
 const notebookStore = useNotebooksStore();
 const notesStore = useNotesStore();
 
-//Get all notes from Notebook ID
-const getNotes = async (): Promise<void> => {
-	try {
-		await notesStore.getNotesByNotebook(notebook_id);
-	} catch (error) {
-		console.error(error);
-	}
-};
-
 let currentNotebook = ref({});
 let currentNotes = ref([]);
 
+let selectedNote = ref({});
+
+const changeSelectedNote = (note) => {
+	selectedNote.value = note;
+};
+
 onBeforeMount(async () => {
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
+	selectedNote.value = currentNotes.value[0];
 });
 
 onMounted(() => {
 	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
 });
-
 
 </script>
 <template>
@@ -39,20 +36,25 @@ onMounted(() => {
 		<main class="flex flex-col place-items-center flex-grow">
 			<!-- TODO: Add an option to update the name of the note -->
 			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg">{{ currentNotebook.title
-				}} / Note 1</h3>
+			}} / {{ selectedNote?.title || 'New Note' }}</h3>
 			<section class="flex flex-row w-full px-4">
-				<!-- TODO: Show all notes in the notebook -->
 				<!-- TODO: Create a hide show for aside -->
 				<aside class="flex flex-col h-screen w-1/12 p-4 mb-12">
 					<ul class="flex flex-col list-disc font-antonio text-base">
-						<li>{{ currentNotebook.title }}</li>
+						<li>
+							{{ currentNotebook.title }}
+						</li>
 						<!-- TODO: List all notes in the notebook -->
-						<li class="ml-8">Note 1</li>
+						<li class="ml-8" v-for="note in currentNotes">
+							<button class="m-1 text-shadow hover:text-cyan-400" @click="changeSelectedNote(note)">
+								{{ note.title }}
+							</button>
+						</li>
 						<!-- TODO: Create new note in notebook -->
 						<li>Add Note</li>
 					</ul>
 				</aside>
-				<MarkdownEditor class="w-11/12 h-screen" :notebook="currentNotebook" :notes="currentNotes" />
+				<MarkdownEditor class="w-11/12 h-screen" :notebook="currentNotebook" :notes="selectedNote" />
 			</section>
 		</main>
 	</section>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, defineProps } from 'vue';
+import { ref, watch, onBeforeMount, defineProps } from 'vue';
 import { marked } from 'marked';
 
 const props = defineProps({
@@ -8,11 +8,11 @@ const props = defineProps({
 		default: true,
 	},
 	notes: {
-		type: Array,
+		type: Object,
 		default: '',
 	},
 	notebooks: {
-		type: Array,
+		type: String,
 		default: '',
 	}
 });
@@ -25,11 +25,11 @@ const updatePreview = () => {
 	html.value = marked(markdown.value);
 };
 
-markdown.value = props.notes[0]?.content || '';
+markdown.value = props.notes.content || '';
 
 watch(markdown, updatePreview);
 
-onMounted(() => {
+onBeforeMount(() => {
 	updatePreview();
 });
 
