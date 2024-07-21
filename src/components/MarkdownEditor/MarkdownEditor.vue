@@ -1,19 +1,38 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, defineProps } from 'vue';
 import { marked } from 'marked';
+
+const props = defineProps({
+	preview: {
+		type: Boolean,
+		default: true,
+	},
+	notes: {
+		type: Array,
+		default: '',
+	},
+	notebooks: {
+		type: Array,
+		default: '',
+	}
+});
 
 const markdown = ref('# Markdown Editor');
 const html = ref('');
 
+
 const updatePreview = () => {
 	html.value = marked(markdown.value);
 };
+
+markdown.value = props.notes[0]?.content || '';
 
 watch(markdown, updatePreview);
 
 onMounted(() => {
 	updatePreview();
 });
+
 
 </script>
 <template>

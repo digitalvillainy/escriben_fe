@@ -2,37 +2,58 @@
 import NavBar from '../components/NavBar.vue';
 import MarkdownEditor from '../components/MarkdownEditor/MarkdownEditor.vue';
 
-import {useRouter, useRoute} from 'vue-router';
-import {useNotebooksStore} from '../stores/notebooks';
-import {ref} from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useNotebooksStore } from '../stores/notebooks';
+import { useNotesStore } from '../stores/notes';
+import { ref, onBeforeMount, onMounted } from 'vue';
 
-const {notebook_id}= useRoute().params;
+const { notebook_id } = useRoute().params;
 const notebookStore = useNotebooksStore();
+const notesStore = useNotesStore();
+
+//Get all notes from Notebook ID
+const getNotes = async (): Promise<void> => {
+	try {
+		await notesStore.getNotesByNotebook(notebook_id);
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 let currentNotebook = ref({});
-currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
+let currentNotes = ref([]);
+
+onBeforeMount(async () => {
+	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
+});
+
+onMounted(() => {
+	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
+});
+
 
 </script>
 <template>
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
-			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg">{{ currentNotebook.title }} / Note 1</h3>
+			<!-- TODO: Add an option to update the name of the note -->
+			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg">{{ currentNotebook.title
+				}} / Note 1</h3>
 			<section class="flex flex-row w-full px-4">
 				<!-- TODO: Show all notes in the notebook -->
 				<!-- TODO: Create a hide show for aside -->
 				<aside class="flex flex-col h-screen w-1/12 p-4 mb-12">
 					<ul class="flex flex-col list-disc font-antonio text-base">
-						<li>{{currentNotebook.title}}</li>
+						<li>{{ currentNotebook.title }}</li>
 						<!-- TODO: List all notes in the notebook -->
 						<li class="ml-8">Note 1</li>
 						<!-- TODO: Create new note in notebook -->
 						<li>Add Note</li>
 					</ul>
 				</aside>
-				<MarkdownEditor class="w-11/12 h-screen" />
+				<MarkdownEditor class="w-11/12 h-screen" :notebook="currentNotebook" :notes="currentNotes" />
 			</section>
 		</main>
 	</section>
 </template>
-

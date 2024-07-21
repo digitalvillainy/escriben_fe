@@ -57,7 +57,7 @@ export const useNotebooksStore = defineStore('notebooks', {
     },
     async getNotebookById(id: number): Promise<Notebook[]> {
       try {
-        const response = await getApi(`/notebooks/notebook_id=${id}`);
+        const response = await getApi(`/notebooks?notebook_id=${id}`);
         return response;
       } catch (error) {
         console.error(error);
