@@ -44,9 +44,8 @@ onMounted(() => {
 						<li>
 							{{ currentNotebook.title }}
 						</li>
-						<!-- TODO: List all notes in the notebook -->
-						<li class="ml-8" v-for="note in currentNotes">
-							<button class="m-1 text-shadow hover:text-cyan-400" @click="changeSelectedNote(note)">
+						<li class="ml-8" v-for="( note, index ) in currentNotes">
+							<button :key="index" class="m-1 text-shadow hover:text-cyan-400" @click="changeSelectedNote(note)">
 								{{ note.title }}
 							</button>
 						</li>
@@ -54,7 +53,7 @@ onMounted(() => {
 						<li>Add Note</li>
 					</ul>
 				</aside>
-				<MarkdownEditor class="w-11/12 h-screen" :notebook="currentNotebook" :notes="selectedNote" />
+				<MarkdownEditor class="w-11/12" :notebook="currentNotebook" :notes="selectedNote" />
 			</section>
 		</main>
 	</section>

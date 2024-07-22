@@ -22,16 +22,16 @@ const html = ref('');
 
 
 const updatePreview = () => {
-	html.value = marked(markdown.value);
+	markdown.value = props.notes.content ? props.notes.content : markdown.value;
+	html.value = props.notes.content ? marked(props.notes.content) : marked(markdown.value);
 };
 
-markdown.value = props.notes.content || '';
+updatePreview();
 
 watch(markdown, updatePreview);
 
-onBeforeMount(() => {
-	updatePreview();
-});
+watch(props, updatePreview);
+
 
 
 </script>
