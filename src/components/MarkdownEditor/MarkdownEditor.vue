@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeMount, defineProps } from 'vue';
+import { ref, watch, onBeforeMount } from 'vue';
 import { marked } from 'marked';
 
 const props = defineProps({

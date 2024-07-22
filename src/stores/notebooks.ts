@@ -40,7 +40,7 @@ export const useNotebooksStore = defineStore('notebooks', {
     },
     async createNotebook(title: string, user_id: number): Promise<void> {
       try {
-        const response = await postApi(`/notebooks?user_id=${user_id}&title=${title}`);
+        const response = await postApi('/notebooks', { title, user_id });
         this.addNotebook(response);
       } catch (error) {
         console.error(error);

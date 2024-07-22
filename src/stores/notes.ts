@@ -51,7 +51,7 @@ export const useNotesStore = defineStore('notes', {
     },
     async createNote(title: string, content: string, notebook_id: number): Promise<void> {
       try {
-        const response = await postApi(`/notes?notebook_id=${notebook_id}&title=${title}&content=${content}`);
+        const response = await postApi('/notes', { title, content, notebook_id });
         this.addNote(response);
       } catch (error) {
         console.error(error);
@@ -59,6 +59,11 @@ export const useNotesStore = defineStore('notes', {
     },
     addNote(note: Note): void {
       this.notes.push(note);
+      localStorage.setItem('notes', JSON.stringify(this.$state));
+    },
+    updateNote(note: Note): void {
+      const index = this.notes.findIndex((n) => n.id === note.id);
+      this.notes[index] = note;
       localStorage.setItem('notes', JSON.stringify(this.$state));
     },
   }

@@ -16,8 +16,18 @@ let currentNotes = ref([]);
 
 let selectedNote = ref({});
 
-const changeSelectedNote = (note) => {
+const changeSelectedNote = (note): void => {
 	selectedNote.value = note;
+};
+
+const addNote = () => {
+	const newNote = {
+		title: 'New Note',
+		content: '# Add your content here...',
+		notebook_id: notebook_id,
+	};
+
+	notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
 onBeforeMount(async () => {
@@ -36,7 +46,7 @@ onMounted(() => {
 		<main class="flex flex-col place-items-center flex-grow">
 			<!-- TODO: Add an option to update the name of the note -->
 			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg">{{ currentNotebook.title
-			}} / {{ selectedNote?.title || 'New Note' }}</h3>
+				}} / {{ selectedNote?.title || 'New Note' }}</h3>
 			<section class="flex flex-row w-full px-4">
 				<!-- TODO: Create a hide show for aside -->
 				<aside class="flex flex-col h-screen w-1/12 p-4 mb-12">
@@ -50,7 +60,11 @@ onMounted(() => {
 							</button>
 						</li>
 						<!-- TODO: Create new note in notebook -->
-						<li>Add Note</li>
+						<li>
+							<button class="m-1 text-shadow hover:text-cyan-400" @click="addNote">
+								Add Note
+							</button>
+						</li>
 					</ul>
 				</aside>
 				<MarkdownEditor class="w-11/12" :notebook="currentNotebook" :notes="selectedNote" />
