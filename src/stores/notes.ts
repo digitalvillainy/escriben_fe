@@ -1,6 +1,6 @@
 //Notes Store
 import { defineStore } from 'pinia';
-import { getApi, postApi } from '../axios';
+import { getApi, postApi, patchApi } from '../axios';
 
 export interface Note {
   id: number;
@@ -53,6 +53,16 @@ export const useNotesStore = defineStore('notes', {
       try {
         const response = await postApi('/notes', { title, content, notebook_id });
         this.addNote(response);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async updateNoteById(id: number, title: string, content: string): Promise<void> {
+      try {
+        const response = await patchApi(`/notes`, { id, title, content });
+        console.log(response);
+        return;
+        this.updateNote(response);
       } catch (error) {
         console.error(error);
       }

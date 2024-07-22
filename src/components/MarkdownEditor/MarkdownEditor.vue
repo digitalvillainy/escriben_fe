@@ -20,11 +20,27 @@ const props = defineProps({
 const markdown = ref('# Markdown Editor');
 const html = ref('');
 
-
+//TODO: update as now I cannot update.
 const updatePreview = () => {
 	markdown.value = props.notes.content ? props.notes.content : markdown.value;
 	html.value = props.notes.content ? marked(props.notes.content) : marked(markdown.value);
 };
+
+const saveNotesProgress = () => {
+	//params: {id, content, notebook_id}
+	// notesStore.updateNoteById(props.notes.id, markdown.value, props.notes.id);
+	console.log('qwerty');
+};
+
+const debounce = (fn, wait) => {
+	let timeout;
+	return (...args) => {
+		if(timeout) clearTimeout(timeout);
+		timeout = setTimeout(() => {
+			fn.apply(this, args);
+		}, wait);
+	};
+}
 
 updatePreview();
 
