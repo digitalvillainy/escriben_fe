@@ -20,27 +20,16 @@ const props = defineProps({
 const markdown = ref('# Markdown Editor');
 const html = ref('');
 const emit = defineEmits(['update:modelValue']);
-const { notebooks, preview, notes } = props;
 
-//TODO: update as now I cannot update.
 const updatePreview = () => {
-	markdown.value = notes.content ? notes.content : markdown.value;
-	html.value = notes.content ? marked(notes.content) : marked(markdown.value);
+	markdown.value = props.notes.content ? props.notes.content : markdown.value;
+	html.value = props.notes.content ? marked(props.notes.content) : marked(markdown.value);
 };
 
 const saveNotesProgress = () => {
 	emit('update:modelValue', markdown.value);
+	updatePreview();
 };
-
-const debounce = (fn, wait) => {
-	let timeout;
-	return (...args) => {
-		if(timeout) clearTimeout(timeout);
-		timeout = setTimeout(() => {
-			fn.apply(this, args);
-		}, wait);
-	};
-}
 
 updatePreview();
 

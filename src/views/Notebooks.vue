@@ -13,8 +13,8 @@ const notesStore = useNotesStore();
 
 let currentNotebook = ref({});
 let currentNotes = ref([]);
-
 let selectedNote = ref({});
+let timeout;
 
 const changeSelectedNote = (note): void => {
 	selectedNote.value = note;
@@ -32,7 +32,11 @@ const addNote = () => {
 
 const updateNotes = (notes) => {
 	selectedNote.value.content = notes;
-	console.log(selectedNote.value);
+	clearTimeout(timeout);
+	timeout = setTimeout(
+		() => {
+			notesStore.updateNoteById(selectedNote.value.id, selectedNote.value.title, selectedNote.value.content)
+		}, 1000);
 };
 
 onBeforeMount(async () => {
@@ -64,7 +68,6 @@ onMounted(() => {
 								{{ note.title }}
 							</button>
 						</li>
-						<!-- TODO: Create new note in notebook -->
 						<li>
 							<button class="m-1 text-shadow hover:text-cyan-400" @click="addNote">
 								Add Note

@@ -60,8 +60,6 @@ export const useNotesStore = defineStore('notes', {
     async updateNoteById(id: number, title: string, content: string): Promise<void> {
       try {
         const response = await patchApi(`/notes`, { id, title, content });
-        console.log(response);
-        return;
         this.updateNote(response);
       } catch (error) {
         console.error(error);
