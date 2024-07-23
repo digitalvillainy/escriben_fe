@@ -5,7 +5,7 @@ import MarkdownEditor from '../components/MarkdownEditor/MarkdownEditor.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
 import { useNotesStore } from '../stores/notes';
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeMount, onMounted, computed } from 'vue';
 
 const { notebook_id } = useRoute().params;
 const notebookStore = useNotebooksStore();
@@ -20,7 +20,7 @@ const changeSelectedNote = (note): void => {
 	selectedNote.value = note;
 };
 
-const addNote = () => {
+const addNote = (): void => {
 	const newNote = {
 		title: 'New Note',
 		content: '# Add your content here...',
@@ -30,7 +30,7 @@ const addNote = () => {
 	notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
-const updateNotes = (notes) => {
+const updateNotes = (notes): void => {
 	selectedNote.value.content = notes;
 	clearTimeout(timeout);
 	timeout = setTimeout(
@@ -39,12 +39,17 @@ const updateNotes = (notes) => {
 		}, 1000);
 };
 
-onBeforeMount(async () => {
+const title = computed(() => {
+	return selectedNote?.title || 'New Note';
+
+});
+
+onBeforeMount(async (): Promise<void> => {
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
 	selectedNote.value = currentNotes.value[0];
 });
 
-onMounted(() => {
+onMounted((): void => {
 	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
 });
 
@@ -54,8 +59,11 @@ onMounted(() => {
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
 			<!-- TODO: Add an option to update the name of the note -->
-			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg">{{ currentNotebook.title
-				}} / {{ selectedNote?.title || 'New Note' }}</h3>
+			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg cursor-pointer">{{
+				currentNotebook.title }} /
+				<input type="text" v-model="selectedNote.title" @input="updateNotes(selectedNote.content)"
+					class="bg-transparent" />
+			</h3>
 			<section class="flex flex-row w-full px-4">
 				<!-- TODO: Create a hide show for aside -->
 				<aside class="flex flex-col h-screen w-1/12 p-4 mb-12">
@@ -64,7 +72,9 @@ onMounted(() => {
 							{{ currentNotebook.title }}
 						</li>
 						<li class="ml-8" v-for="( note, index ) in currentNotes">
-							<button :key="index" class="m-1 text-shadow hover:text-cyan-400" @click="changeSelectedNote(note)">
+							<button :key="index"
+								:class="[{ 'text-cyan-400': note.title === selectedNote.title }, 'm-1 text-shadow hover:text-cyan-400']"
+								@click="changeSelectedNote(note)">
 								{{ note.title }}
 							</button>
 						</li>
