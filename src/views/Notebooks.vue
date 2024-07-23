@@ -30,6 +30,11 @@ const addNote = () => {
 	notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
+const updateNotes = (notes) => {
+	selectedNote.value.content = notes;
+	console.log(selectedNote.value);
+};
+
 onBeforeMount(async () => {
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
 	selectedNote.value = currentNotes.value[0];
@@ -67,7 +72,7 @@ onMounted(() => {
 						</li>
 					</ul>
 				</aside>
-				<MarkdownEditor class="w-11/12" :notebook="currentNotebook" :notes="selectedNote" />
+				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
 			</section>
 		</main>
 	</section>
