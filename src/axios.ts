@@ -69,9 +69,9 @@ const patchApi = async (url: string, data?: any) => {
   }
 }
 
-const deleteApi = async (url: string) => {
+const deleteApi = async (url: string, data?: any): Promise<Object> => {
   try {
-    const response = await api.delete(url);
+    const response = await api.delete(url, data);
     return response.data;
   } catch (error) {
     console.error(error);

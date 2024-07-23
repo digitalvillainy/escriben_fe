@@ -1,6 +1,6 @@
 //Notes Store
 import { defineStore } from 'pinia';
-import { getApi, postApi, patchApi } from '../axios';
+import { getApi, postApi, patchApi, deleteApi } from '../axios';
 
 export interface Note {
   id: number;
@@ -61,6 +61,15 @@ export const useNotesStore = defineStore('notes', {
       try {
         const response = await patchApi(`/notes`, { id, title, content });
         this.updateNote(response);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteNoteById(id: number): Promise<void> {
+      try {
+        await deleteApi('/notes', { id });
+        this.notes = this.notes.filter((note) => note.id !== id);
+        localStorage.setItem('notes', JSON.stringify(this.$state));
       } catch (error) {
         console.error(error);
       }

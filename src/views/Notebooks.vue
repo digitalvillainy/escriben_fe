@@ -2,6 +2,7 @@
 import NavBar from '../components/NavBar.vue';
 import MarkdownEditor from '../components/MarkdownEditor/MarkdownEditor.vue';
 import CloseChevronIcon from '../components/icons/CloseChevronIcon.vue';
+import CloseIcon from '../components/icons/CloseIcon.vue';
 
 import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -36,6 +37,17 @@ const addNote = (): void => {
 	notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
+
+// NOTE: Currently being tested and is not working 
+// TODO: Working on deletion of notes
+const deleteNote = async (note) => {
+	console.log(note);
+	return
+	await notesStore.deleteNoteById(note.id);
+	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
+	selectedNote.value = currentNotes.value[0];
+};
+
 const updateNotes = (notes): void => {
 	selectedNote.value.content = notes;
 	clearTimeout(timeout);
@@ -64,25 +76,24 @@ onMounted((): void => {
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
-			<!-- TODO: Add an option to update the name of the note -->
 			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg cursor-pointer">{{
 				currentNotebook.title }} /
 				<input type="text" v-model="selectedNote.title" @input="updateNotes(selectedNote.content)"
 					class="bg-transparent" />
 			</h3>
 			<section class="flex flex-row w-full px-4">
-				<!-- TODO: Create a hide show for aside -->
 				<aside class="flex flex-col h-full w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
 					<ul class="flex flex-col list-disc font-antonio text-base">
 						<li>
 							{{ currentNotebook.title }}
 						</li>
-						<li class="ml-8" v-for="( note, index ) in currentNotes">
+						<li class="ml-8 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes">
 							<button :key="index"
 								:class="[{ 'text-cyan-400': note.title === selectedNote.title }, 'm-1 text-shadow hover:text-cyan-400']"
 								@click="changeSelectedNote(note)">
 								{{ note.title }}
 							</button>
+							<CloseIcon class="w-3 h-3 cursor-pointer" @click="notesStore.deleteNoteById(note.id)" />
 						</li>
 						<li>
 							<button class="m-1 text-shadow hover:text-cyan-400" @click="addNote">
