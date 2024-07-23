@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import NavBar from '../components/NavBar.vue';
 import MarkdownEditor from '../components/MarkdownEditor/MarkdownEditor.vue';
+import CloseChevronIcon from '../components/icons/CloseChevronIcon.vue';
 
 import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -11,13 +12,18 @@ const { notebook_id } = useRoute().params;
 const notebookStore = useNotebooksStore();
 const notesStore = useNotesStore();
 
-let currentNotebook = ref({});
-let currentNotes = ref([]);
-let selectedNote = ref({});
+let currentNotebook = ref<object>({});
+let currentNotes = ref<array<object>>([]);
+let selectedNote = ref<object>({});
+let hiddenToggle = ref<boolean>(false);
 let timeout;
 
 const changeSelectedNote = (note): void => {
 	selectedNote.value = note;
+};
+
+const hideMenu = (): void => {
+	hiddenToggle.value = !hiddenToggle.value;
 };
 
 const addNote = (): void => {
@@ -66,7 +72,7 @@ onMounted((): void => {
 			</h3>
 			<section class="flex flex-row w-full px-4">
 				<!-- TODO: Create a hide show for aside -->
-				<aside class="flex flex-col h-screen w-1/12 p-4 mb-12">
+				<aside class="flex flex-col h-full w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
 					<ul class="flex flex-col list-disc font-antonio text-base">
 						<li>
 							{{ currentNotebook.title }}
@@ -84,6 +90,15 @@ onMounted((): void => {
 							</button>
 						</li>
 					</ul>
+
+					<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
+						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer" @click="hideMenu"/>
+					</div>
+				</aside>
+				<aside class="flex flex-col h-full w-fit p-4 place-content-end relative" v-else>
+					<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
+						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu"/>
+					</div>
 				</aside>
 				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
 			</section>
