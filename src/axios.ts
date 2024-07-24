@@ -69,7 +69,7 @@ const patchApi = async (url: string, data?: any) => {
   }
 }
 
-const deleteApi = async (url: string, data?: any): Promise<Object> => {
+const deleteApi = async (url: string, data?: any) => {
   try {
     const response = await api.delete(url, data);
     return response.data;

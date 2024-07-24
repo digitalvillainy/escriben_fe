@@ -37,12 +37,7 @@ const addNote = (): void => {
 	notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
-
-// NOTE: Currently being tested and is not working 
-// TODO: Working on deletion of notes
 const deleteNote = async (note) => {
-	console.log(note);
-	return
 	await notesStore.deleteNoteById(note.id);
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
 	selectedNote.value = currentNotes.value[0];
@@ -57,9 +52,21 @@ const updateNotes = (notes): void => {
 		}, 1000);
 };
 
+const updateNotebooks = (notebook): void => {
+	currentNotebook.value.content = notes;
+	clearTimeout(timeout);
+	timeout = setTimeout(
+		() => {
+			notebookStore.updateNotebooks();
+		}, 1000);
+};
+
+const updateNotebook = (notebook): void => {
+	notebookStore.updateNotebookById(notebook.id, notebook.title, notebook.color, notebook.icon);
+};
+
 const title = computed(() => {
 	return selectedNote?.title || 'New Note';
-
 });
 
 onBeforeMount(async (): Promise<void> => {
@@ -76,8 +83,9 @@ onMounted((): void => {
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
-			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg cursor-pointer">{{
-				currentNotebook.title }} /
+			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg cursor-pointer">
+				<input type="text" v-model="currentNotebook.title" @input="updateNotes(selectedNote.content)"
+					class="bg-transparent" />/
 				<input type="text" v-model="selectedNote.title" @input="updateNotes(selectedNote.content)"
 					class="bg-transparent" />
 			</h3>

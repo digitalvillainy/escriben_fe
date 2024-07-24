@@ -21,17 +21,17 @@ const routes = [
 	{
 		path: "/login",
 		name: "login",
-		component: Login 
+		component: Login
 	},
 	{
 		path: "/forgot-password",
 		name: "forgot-password",
-		component: Forgot 
+		component: Forgot
 	},
 	{
 		path: "/reset-password?:token&:email",
 		name: "reset-password",
-		component: ResetPwd 
+		component: ResetPwd
 	},
 	{
 		path: "/dashboard",
@@ -52,21 +52,21 @@ const routes = [
 	{
 		path: "/port",
 		beforeEnter: () => {
-			location.href='https://robertorivera.dev'
+			location.href = 'https://robertorivera.dev'
 		},
 		component: { template: '<div>Going to https://robertorivera.dev</div>' }
 	},
 	{
 		path: "/instagram",
 		beforeEnter: () => {
-			location.href='https://www.instagram.com/xerafenix/'
+			location.href = 'https://www.instagram.com/xerafenix/'
 		},
 		component: { template: '<div>Going to https://www.instagram.com/xerafenix/' }
 	},
 	{
 		path: "/threads",
 		beforeEnter: () => {
-			location.href='https://www.threads.net/@xerafenix?xmt=AQGzDZ1U138aT8iCQUGgKSTueEldyfHN98hibwqq1Oeylm0'
+			location.href = 'https://www.threads.net/@xerafenix?xmt=AQGzDZ1U138aT8iCQUGgKSTueEldyfHN98hibwqq1Oeylm0'
 		},
 		component: { template: '<div>Going to https://www.threads.net/@xerafenix?xmt=AQGzDZ1U138aT8iCQUGgKSTueEldyfHN98hibwqq1Oeylm0' }
 	}
@@ -77,14 +77,14 @@ const router = createRouter({
 	routes
 });
 
+// TODO: Make it so when loggedin you always go to Dashboard when attempting to login/register/home
 // Check if user is authenticated
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token'); 
-  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-    next({ name: 'login' })
-  } else {
-    next()
-  }
+	const isAuthenticated = !!localStorage.getItem('token');
+	if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+		next({ name: 'login' })
+	} else {
+		next()
+	}
 });
-
 export default router;

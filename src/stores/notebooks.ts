@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getApi, postApi, deleteApi } from '../axios';
+import { getApi, postApi, deleteApi, patchApi } from '../axios';
 import { useUserStore } from './user.ts';
 
 interface Notebook {
@@ -37,6 +37,16 @@ export const useNotebooksStore = defineStore('notebooks', {
     addNotebook(notebook: Notebook): void {
       this.books.push(notebook);
       localStorage.setItem('notebooks', JSON.stringify(this.$state));
+    },
+    //TODO: Currently working on updating notebook title
+    async updateNotebook(id: number, title: string): Promise<void> {
+      try {
+        //Returns updated notebooks
+        const response = await patchApi(`/notebooks`, { id, title });
+        this.setNotebook(response);
+      } catch (error) {
+        console.error(error);
+      }
     },
     async createNotebook(title: string, user_id: number): Promise<void> {
       try {

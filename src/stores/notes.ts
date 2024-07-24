@@ -65,9 +65,9 @@ export const useNotesStore = defineStore('notes', {
         console.error(error);
       }
     },
-    async deleteNoteById(id: number): Promise<void> {
+    async deleteNoteById(id: number) {
       try {
-        await deleteApi('/notes', { id });
+        await deleteApi(`/notes?id=${id}`);
         this.notes = this.notes.filter((note) => note.id !== id);
         localStorage.setItem('notes', JSON.stringify(this.$state));
       } catch (error) {
