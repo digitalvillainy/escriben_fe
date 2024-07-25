@@ -52,7 +52,7 @@ watch(props, updatePreview);
 .editor-full {
 	min-width: 100% !important;
 	max-width: 100% !important;
-	min-height: 100vh !important;
+	min-height: 100% !important;
 }
 
 .preview {

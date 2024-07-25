@@ -59,6 +59,7 @@ const updateNotebooks = (notebook): void => {
 		() => {
 			notebookStore.updateNotebooks();
 		}, 1000);
+	selectedNote.value.title = notebook.title;
 };
 
 const updateNotebook = (notebook): void => {
@@ -71,7 +72,12 @@ const title = computed(() => {
 
 onBeforeMount(async (): Promise<void> => {
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
-	selectedNote.value = currentNotes.value[0];
+	const defaultNote = {
+		title: 'New Note',
+		content: '# Add your content here...',
+		notebook_id: notebook_id,
+	};
+	selectedNote.value = currentNotes.value.length > 0 ? currentNotes.value[0] : defaultNote;
 });
 
 onMounted((): void => {
@@ -111,12 +117,12 @@ onMounted((): void => {
 					</ul>
 
 					<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
-						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer" @click="hideMenu"/>
+						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer" @click="hideMenu" />
 					</div>
 				</aside>
 				<aside class="flex flex-col h-full w-fit p-4 place-content-end relative" v-else>
 					<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
-						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu"/>
+						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu" />
 					</div>
 				</aside>
 				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
