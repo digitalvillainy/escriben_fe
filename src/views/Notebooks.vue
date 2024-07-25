@@ -85,8 +85,6 @@ onMounted((): void => {
 	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
 });
 
-// TODO: Handle issue regarding updating Notebook and note name
-
 </script>
 <template>
 	<section class="flex flex-col h-screen">
@@ -104,9 +102,9 @@ onMounted((): void => {
 						<li>
 							{{ currentNotebook.title }}
 						</li>
-						<li class="ml-8 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes">
+						<li class="ml-2 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes">
 							<button :key="index"
-								:class="[{ 'text-cyan-400': note.title === selectedNote.title }, 'm-1 text-shadow hover:text-cyan-400']"
+								:class="[{ 'text-cyan-400': note.title === selectedNote.title }, 'm-1 text-shadow hover:text-cyan-400 overflow-x-hidden']"
 								@click="changeSelectedNote(note)">
 								{{ note.title }}
 							</button>

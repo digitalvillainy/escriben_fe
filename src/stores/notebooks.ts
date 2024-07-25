@@ -38,7 +38,6 @@ export const useNotebooksStore = defineStore('notebooks', {
       this.books.push(notebook);
       localStorage.setItem('notebooks', JSON.stringify(this.$state));
     },
-    //TODO: Currently working on updating notebook title
     async updateNotebook(id: number, title: string): Promise<void> {
       try {
         //Returns updated notebooks
@@ -48,12 +47,14 @@ export const useNotebooksStore = defineStore('notebooks', {
         console.error(error);
       }
     },
-    async createNotebook(title: string, user_id: number): Promise<void> {
+    async createNotebook(title: string, user_id: number): Promise<Notebook> {
       try {
         const response = await postApi('/notebooks', { title, user_id });
         this.addNotebook(response);
+        return response;
       } catch (error) {
         console.error(error);
+        return {} as Notebook;
       }
     },
     async getNotebooksByUserId(): Promise<void> {

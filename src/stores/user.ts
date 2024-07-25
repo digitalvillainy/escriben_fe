@@ -1,5 +1,5 @@
-import {defineStore} from 'pinia';
-import {getApi} from '../axios.ts';
+import { defineStore } from 'pinia';
+import { getApi } from '../axios.ts';
 
 type User = {
   id: number;
@@ -8,10 +8,10 @@ type User = {
   first_name: string;
   last_name: string;
   email: string;
- created_at?: string;
+  created_at?: string;
   updated_at?: string;
 };
-
+//TODO: Make it so when getting user information if undefined then getUser() from api
 export const useUserStore = defineStore('user', {
   state: (): User => {
     const user: User = JSON.parse(localStorage.getItem('user') || '{}');
@@ -65,9 +65,9 @@ export const useUserStore = defineStore('user', {
       this.first_name = user.first_name;
       this.last_name = user.last_name;
       this.email = user.email;
-      
+
       // Save User in localStorage
-      localStorage.setItem('user', JSON.stringify( user ));
+      localStorage.setItem('user', JSON.stringify(user));
     },
     login(token: string) {
       // Save token in state
