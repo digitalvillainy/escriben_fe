@@ -5,6 +5,7 @@ import StepCard from '../components/cards/StepCard.vue';
 import PlusIcon from '../components/icons/PlusIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import EditIcon from '../components/icons/EditIcon.vue';
+import DeleteModal from '../components/Modals/DeleteModal.vue';
 
 import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -16,6 +17,12 @@ const notebookStore = useNotebooksStore();
 const userStore = useUserStore();
 const $router = useRouter();
 let notebooks: array<object> = ref([{}]);
+
+const modal = ref(null);
+
+const openModal = () => {
+	modal.value.openDialog();
+};
 
 //Create Notebook and route to the notebook page
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
@@ -43,6 +50,8 @@ notebooks.value = notebookStore.getNotebooks;
 const deleteNotebook = async (id: number): Promise<void> => {
 	try {
 		await notebookStore.deleteNotebook(id);
+		openModal();
+		console.log(modal.value.confirm);
 	} catch (error) {
 		console.error(error);
 	}
@@ -78,5 +87,9 @@ const deleteNotebook = async (id: number): Promise<void> => {
 				</StepCard>
 			</div>
 		</main>
+		<DeleteModal ref="modal"/>
+
+
+
 	</section>
 </template>
