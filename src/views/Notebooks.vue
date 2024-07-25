@@ -52,8 +52,6 @@ const updateNotes = (notes): void => {
 		}, 1000);
 };
 
-//NOTE: Currently working on this one.
-//TODO: Should update Notebook title
 const updateNotebooks = (notebook): void => {
 	currentNotebook.value.title = notebook.title;
 	clearTimeout(timeout);
