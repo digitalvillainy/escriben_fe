@@ -52,23 +52,20 @@ const updateNotes = (notes): void => {
 		}, 1000);
 };
 
+//NOTE: Currently working on this one.
+//TODO: Should update Notebook title
 const updateNotebooks = (notebook): void => {
-	currentNotebook.value.content = notes;
+	currentNotebook.value.title = notebook.title;
 	clearTimeout(timeout);
 	timeout = setTimeout(
 		() => {
-			notebookStore.updateNotebooks();
+			notebookStore.updateNotebook(notebook.id, notebook.title);
 		}, 1000);
-	selectedNote.value.title = notebook.title;
 };
 
 const updateNotebook = (notebook): void => {
 	notebookStore.updateNotebookById(notebook.id, notebook.title, notebook.color, notebook.icon);
 };
-
-const title = computed(() => {
-	return selectedNote?.title || 'New Note';
-});
 
 onBeforeMount(async (): Promise<void> => {
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
@@ -78,6 +75,12 @@ onBeforeMount(async (): Promise<void> => {
 		notebook_id: notebook_id,
 	};
 	selectedNote.value = currentNotes.value.length > 0 ? currentNotes.value[0] : defaultNote;
+
+	// Create a default note if there are no notes
+	if(currentNotes.value.length == 0) {
+		notesStore.createNote(defaultNote.title, defaultNote.content, defaultNote.notebook_id);
+	}
+
 });
 
 onMounted((): void => {
@@ -92,7 +95,7 @@ onMounted((): void => {
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
 			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg cursor-pointer">
-				<input type="text" v-model="currentNotebook.title" @input="updateNotes(selectedNote.content)"
+				<input type="text" v-model="currentNotebook.title" @input="updateNotebooks(currentNotebook)"
 					class="bg-transparent" />/
 				<input type="text" v-model="selectedNote.title" @input="updateNotes(selectedNote.content)"
 					class="bg-transparent" />
