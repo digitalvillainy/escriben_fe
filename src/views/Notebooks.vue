@@ -84,6 +84,8 @@ onMounted((): void => {
 	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
 });
 
+// TODO: Handle issue regarding updating Notebook and note name
+
 </script>
 <template>
 	<section class="flex flex-col h-screen">
