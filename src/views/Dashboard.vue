@@ -10,19 +10,18 @@ import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
 import { useUserStore } from '../stores/user';
 import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 
 const notebookStore = useNotebooksStore();
 const userStore = useUserStore();
+const $router = useRouter();
 let notebooks: array<object> = ref([{}]);
 
-//WARN: Currently not working
-//TODO: Fix 500 error issues with user_id
-//Create Notebook
+//Create Notebook and route to the notebook page
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
 	try {
 		const response = await notebookStore.createNotebook(title, user_id);
-		$router.push({ name: 'notebook', params: { notebook_id: response.id } });
+		$router.push({ name: 'notebooks', params: { notebook_id: response.id } });
 	} catch (error) {
 		console.error(error);
 	}
@@ -56,7 +55,7 @@ const deleteNotebook = async (id: number): Promise<void> => {
 		<main class="flex flex-col place-items-center flex-grow">
 			<h3 class="text-5xl text-center font-normal mt-36 mb-20 pb-2 font-antonio text-shadow-lg">Notebooks</h3>
 			<div class="w-full flex flex-row justify-start px-12">
-				<StepCard @click="createNotebook('New Notebook', userStore.user_id)" class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col 
+				<StepCard @click="createNotebook('New Notebook', userStore.getUser.id)" class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col 
 					cursor-pointer hover:bg-gray-600 hover:text-white hover:border-cyan-400">
 					<PlusIcon class="mx-auto" />
 					<span class="font-antonio text-lg text-center">Create Notebook</span>

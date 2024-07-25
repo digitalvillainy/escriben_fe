@@ -11,6 +11,7 @@ type User = {
   created_at?: string;
   updated_at?: string;
 };
+
 //TODO: Make it so when getting user information if undefined then getUser() from api
 export const useUserStore = defineStore('user', {
   state: (): User => {
@@ -36,6 +37,7 @@ export const useUserStore = defineStore('user', {
     },
     getUser(): object {
       return {
+        id: this.id,
         username: this.username,
         first_name: this.first_name,
         last_name: this.last_name,
