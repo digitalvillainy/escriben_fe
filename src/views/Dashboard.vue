@@ -13,6 +13,8 @@ import { useUserStore } from '../stores/user';
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 
+
+//Initialize stores
 const notebookStore = useNotebooksStore();
 const userStore = useUserStore();
 const $router = useRouter();
@@ -21,7 +23,8 @@ let notebooks: array<object> = ref([{}]);
 const modal = ref(null);
 
 const openModal = () => {
-	modal.value.openDialog();
+	modal.value.openDialog(true);
+	console.log(modal.value);
 };
 
 //Create Notebook and route to the notebook page
@@ -43,19 +46,20 @@ const getNotebooks = async (): Promise<void> => {
 	}
 }
 
-getNotebooks();
+//Delete Notebook
+const deleteNotebook = async (id: number): Promise<void> => {
+	openModal();
+	// try {forgot-pwd
+	// 	await notebookStore.deleteNotebook(id);
+	// } catch (error) {
+	// 	console.error(error);
+	// }
+};
 
+//Get Notebooks and initialize notebooks store
+getNotebooks();
 notebooks.value = notebookStore.getNotebooks;
 
-const deleteNotebook = async (id: number): Promise<void> => {
-	try {
-		await notebookStore.deleteNotebook(id);
-		openModal();
-		console.log(modal.value.confirm);
-	} catch (error) {
-		console.error(error);
-	}
-};
 
 </script>
 <template>
@@ -88,8 +92,5 @@ const deleteNotebook = async (id: number): Promise<void> => {
 			</div>
 		</main>
 		<DeleteModal ref="modal"/>
-
-
-
 	</section>
 </template>

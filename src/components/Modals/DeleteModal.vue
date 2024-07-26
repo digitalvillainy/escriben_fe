@@ -6,17 +6,17 @@ const props = defineProps({
 	deleteConfirm: Boolean
 });
 
-const confirm = ref(false);
-const diaglog = ref(null);
+const confirm = ref<boolean>(false);
+const dialog = ref<HTMLElement | null>(null);
 
-const openDialog = (confirm: boolean) => {
+const openDialog = (confirm: boolean): void => {
 	confirm.value = confirm;
-	diaglog.value.showModal();
+	dialog.value.showModal();
 };
 
-const closeDialog = (confirm: boolean) => {
+const closeDialog = (confirm: boolean): void => {
 	confirm.value = confirm;
-	diaglog.value.close();
+	dialog.value.close();
 };
 
 </script>
