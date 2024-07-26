@@ -10,6 +10,7 @@ const props = defineProps({
 	},
 });
 
+// Initialize refs 
 const markdown = ref<string>('# Markdown Editor');
 const html = ref<string>('');
 const hidePreview = ref<boolean>(false);
@@ -20,12 +21,12 @@ const updatePreview = (): void => {
 	html.value = props.notes.content ? marked(props.notes.content) : marked(markdown.value);
 };
 
-const saveNotesProgress = (): void => {
-	emit('update:modelValue', markdown.value);
-	updatePreview();
-};
+// const saveNotesProgress = (event): void => {
+// 	emit('update:modelValue', event.target.value);
+// 	updatePreview();
+// };
 
-// Initialize preview
+// Initialize preview render
 updatePreview();
 
 watch(markdown, updatePreview);
@@ -37,7 +38,7 @@ watch(props, updatePreview);
 	<section class="flex flex-col h-screen">
 		<EditBar class="w-auto" @togglePreview="hidePreview = !hidePreview" />
 		<div class="flex flex-row">
-			<textarea v-model="markdown" @input="saveNotesProgress" :class="[{ 'editor-full': hidePreview }, 'editor']"
+			<textarea v-model="markdown" @input="updatePreview" :class="[{ 'editor-full': hidePreview }, 'editor']"
 				class="bg-zinc-600 p-6"></textarea>
 			<div v-html="html" v-if="!hidePreview"
 				class="preview bg-zinc-400 p-6 prose text-white break-words overflow-x-hidden"></div>

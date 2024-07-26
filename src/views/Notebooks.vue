@@ -129,7 +129,7 @@ onMounted((): void => {
 						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu" />
 					</div>
 				</aside>
-				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
+				<MarkdownEditor class="w-11/12" @update:modelValue="emit('update:modelValue', e)" v-model="selectedNote.content" :notes="selectedNote" />
 			</section>
 		</main>
 	</section>
