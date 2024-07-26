@@ -1,44 +1,45 @@
 <script setup lang="ts">
 import EditBar from '../EditBar/EditBar.vue';
-import { ref, watch, onBeforeMount, defineEmits } from 'vue';
+import { ref, watch, defineEmits } from 'vue';
 import { marked } from 'marked';
 
 const props = defineProps({
 	notes: {
 		type: Object,
-		default: '',
+		default: () => ({}),
 	},
 });
 
 // Initialize refs 
-const markdown = ref<string>('# Markdown Editor');
+const markdown = ref<string>(props.notes.content || '# Markdown Editor');
 const html = ref<string>('');
 const hidePreview = ref<boolean>(false);
 const emit = defineEmits(['update:modelValue']);
 
 const updatePreview = (): void => {
-	markdown.value = props.notes.content ? props.notes.content : markdown.value;
-	html.value = props.notes.content ? marked(props.notes.content) : marked(markdown.value);
+	html.value = marked(markdown.value);
 };
 
-// const saveNotesProgress = (event): void => {
-// 	emit('update:modelValue', event.target.value);
-// 	updatePreview();
-// };
+const saveNotesProgress = (): void => {
+	emit('update:modelValue', markdown.value);
+	updatePreview();
+};
 
-// Initialize preview render
-updatePreview();
+// Watch for changes in props.notes and update internal state
+watch(() => props.notes.content, (newContent) => {
+	markdown.value = newContent || '# Markdown Editor';
+	updatePreview();
+});
 
-watch(markdown, updatePreview);
-
-watch(props, updatePreview);
+// Watch for changes in markdown and update preview
+watch(markdown, saveNotesProgress);
 
 </script>
 <template>
 	<section class="flex flex-col h-screen">
 		<EditBar class="w-auto" @togglePreview="hidePreview = !hidePreview" />
 		<div class="flex flex-row">
-			<textarea v-model="markdown" @input="updatePreview" :class="[{ 'editor-full': hidePreview }, 'editor']"
+			<textarea v-model="markdown" @input="saveNotesProgress" :class="[{ 'editor-full': hidePreview }, 'editor']"
 				class="bg-zinc-600 p-6"></textarea>
 			<div v-html="html" v-if="!hidePreview"
 				class="preview bg-zinc-400 p-6 prose text-white break-words overflow-x-hidden"></div>

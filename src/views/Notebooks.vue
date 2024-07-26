@@ -37,13 +37,13 @@ const addNote = (): void => {
 	notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
-const deleteNote = async (note) => {
+const deleteNote = async (note: object) => {
 	await notesStore.deleteNoteById(note.id);
 	currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
 	selectedNote.value = currentNotes.value[0];
 };
 
-const updateNotes = (notes): void => {
+const updateNotes = (notes: string): void => {
 	selectedNote.value.content = notes;
 	clearTimeout(timeout);
 	timeout = setTimeout(
@@ -105,13 +105,13 @@ onMounted((): void => {
 						<li>
 							{{ currentNotebook.title }}
 						</li>
-						<li class="ml-2 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes">
-							<button :key="index"
+						<li class="ml-2 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes" :key="index">
+							<button 
 								:class="[{ 'text-cyan-400': note.title === selectedNote.title }, 'm-1 text-shadow hover:text-cyan-400 overflow-x-hidden']"
 								@click="changeSelectedNote(note)">
 								{{ note.title }}
 							</button>
-							<CloseIcon class="w-3 h-3 cursor-pointer" @click="notesStore.deleteNoteById(note.id)" />
+							<CloseIcon class="w-3 h-3 cursor-pointer" @click="deleteNote(note)" />
 						</li>
 						<li>
 							<button class="m-1 text-shadow hover:text-cyan-400" @click="addNote">
@@ -129,7 +129,7 @@ onMounted((): void => {
 						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu" />
 					</div>
 				</aside>
-				<MarkdownEditor class="w-11/12" @update:modelValue="emit('update:modelValue', e)" v-model="selectedNote.content" :notes="selectedNote" />
+				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
 			</section>
 		</main>
 	</section>
