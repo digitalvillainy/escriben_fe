@@ -16,10 +16,12 @@ const html = ref<string>('');
 const hidePreview = ref<boolean>(false);
 const emit = defineEmits(['update:modelValue']);
 
+// Update preview with new markdown
 const updatePreview = (): void => {
 	html.value = marked(markdown.value);
 };
 
+// Save notes progress to DB & local storage
 const saveNotesProgress = (): void => {
 	emit('update:modelValue', markdown.value);
 	updatePreview();
@@ -27,15 +29,13 @@ const saveNotesProgress = (): void => {
 
 // Watch for changes in props.notes and update internal state
 watch(() => props.notes.content, (newContent) => {
-	markdown.value = newContent || '# Markdown Editor';
+	markdown.value = newContent || '';
 	updatePreview();
 });
 
 // Watch for changes in markdown and update preview
 watch(markdown, saveNotesProgress);
-//WARN: Issue with writing notes!
-//TODO: When page is empty watcher updates with default string 
-//TODO: Issue with patch api
+
 </script>
 <template>
 	<section class="flex flex-col h-screen">
