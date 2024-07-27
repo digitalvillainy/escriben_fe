@@ -85,8 +85,6 @@ onMounted((): void => {
 	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
 });
 
-//WARN: Issue with writing notes!
-//TODO: Add ability to edit notes
 
 </script>
 <template>

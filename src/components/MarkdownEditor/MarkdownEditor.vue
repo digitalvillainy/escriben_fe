@@ -33,7 +33,9 @@ watch(() => props.notes.content, (newContent) => {
 
 // Watch for changes in markdown and update preview
 watch(markdown, saveNotesProgress);
-
+//WARN: Issue with writing notes!
+//TODO: When page is empty watcher updates with default string 
+//TODO: Issue with patch api
 </script>
 <template>
 	<section class="flex flex-col h-screen">
