@@ -75,9 +75,9 @@ export const useNotebooksStore = defineStore('notebooks', {
         return [{}] as Notebook[];
       }
     },
-    async deleteNotebook(id: number): Promise<void> {
+    async deleteNotebook(notebook_id: number): Promise<void> {
       try {
-        await deleteApi(`/notebooks?notebook_id=${id}`);
+        await deleteApi(`/notebooks?notebook_id=${notebook_id}`);
         this.getNotebooksByUserId();
       } catch (error) {
         console.error(error);

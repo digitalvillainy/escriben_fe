@@ -18,14 +18,9 @@ import { RouterLink, useRouter } from 'vue-router';
 const notebookStore = useNotebooksStore();
 const userStore = useUserStore();
 const $router = useRouter();
+const show = ref<boolean>(false);
+const deleteTarget = ref<number>(0);
 let notebooks: array<object> = ref([{}]);
-
-const modal = ref(null);
-
-const openModal = () => {
-	modal.value.openDialog(true);
-	console.log(modal.value);
-};
 
 //Create Notebook and route to the notebook page
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
@@ -46,14 +41,24 @@ const getNotebooks = async (): Promise<void> => {
 	}
 }
 
+//TODO: Work on Delete Notebook getting 405 error
 //Delete Notebook
-const deleteNotebook = async (id: number): Promise<void> => {
-	openModal();
-	// try {forgot-pwd
-	// 	await notebookStore.deleteNotebook(id);
-	// } catch (error) {
-	// 	console.error(error);
-	// }
+const deleteNotebook = async (mode): Promise<void> => {
+	if (mode) {
+		try {
+			await notebookStore.deleteNotebook(deleteTarget.value);
+			show.value = !show.value;
+		} catch (error) {
+			console.error(error);
+		}
+	} else {
+		show.value = !show.value;
+	}
+};
+
+const deleteModalCtrl = (id: number): void => {
+	deleteTarget.value = id;
+	show.value = !show.value;
 };
 
 //Get Notebooks and initialize notebooks store
@@ -83,7 +88,7 @@ notebooks.value = notebookStore.getNotebooks;
 					flex flex-col hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400">
 					<span class="text-white font-antonio text-md text-center flex-grow">{{ notebook.title }}</span>
 					<div class="flex flex-row justify-between cursor-pointer hover:bg-gray-600 hover:text-white">
-						<CloseIcon @click="deleteNotebook(notebook.id)" />
+						<CloseIcon @click="deleteModalCtrl(notebook.id)" />
 						<router-link :to="{ name: 'notebooks', params: { notebook_id: notebook.id } }">
 							<EditIcon />
 						</router-link>
@@ -91,6 +96,6 @@ notebooks.value = notebookStore.getNotebooks;
 				</StepCard>
 			</div>
 		</main>
-		<DeleteModal ref="modal"/>
+		<DeleteModal @confirmed="deleteNotebook" :show="show" />
 	</section>
 </template>
