@@ -109,6 +109,8 @@ onMounted((): void => {
 * Sharing Functionality
 * Search
 * Save Progress Icon
+* Add simpified layout component
+* Add Export to PDF
 */
 </script>
 <template>
