@@ -107,6 +107,8 @@ onMounted((): void => {
 * Markdown Cheat Sheet
 * User Profile
 * Sharing Functionality
+* Search
+* Save Progress Icon
 */
 </script>
 <template>
