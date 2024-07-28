@@ -32,7 +32,7 @@ const createNotebook = async (title: string, user_id: number): Promise<void> => 
 	}
 };
 
-//Requests Notbooks for user
+//Requests Notebooks for user
 const getNotebooks = async (): Promise<void> => {
 	try {
 		await notebookStore.getNotebooksByUserId();
@@ -41,7 +41,6 @@ const getNotebooks = async (): Promise<void> => {
 	}
 }
 
-//TODO: Work on Delete Notebook getting 405 error
 //Delete Notebook
 const deleteNotebook = async (mode): Promise<void> => {
 	if (mode) {
