@@ -2,8 +2,7 @@
 import { ref, watch, onMounted } from 'vue';
 
 const props = defineProps({
-	show: Boolean,
-	default: false
+	show: Boolean
 });
 
 const confirm = ref<boolean>(false);
@@ -25,7 +24,7 @@ const closeDialog = (mode: boolean): void => {
 	<div v-if="show" ref="dialog" class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800">
 		<div class="bg-zinc-300 rounded-xl p-4 space-y-24 w-3/12 place-self-center absolute z-30">
 			<p class="text-3xl font-antonio text-center">
-				Are you sure you want to delete this notebook?
+				<slot></slot>
 			</p>
 			<div class="flex flex-row justify-center space-x-40">
 				<button @click="closeDialog(true)" class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded">YES</button>

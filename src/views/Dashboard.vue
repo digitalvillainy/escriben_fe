@@ -96,6 +96,8 @@ notebooks.value = notebookStore.getNotebooks;
 				</StepCard>
 			</div>
 		</main>
-		<DeleteModal @confirmed="deleteNotebook" :show="show" />
+		<DeleteModal @confirmed="deleteNotebook" :show="show">
+			Are you sure you want to delete this notebook?
+		</DeleteModal>
 	</section>
 </template>
