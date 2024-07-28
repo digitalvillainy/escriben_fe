@@ -1,62 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const dialog = ref<HTMLElement | null>(null);
+import { ref, watch, onMounted } from 'vue';
+import CloseIcon from '../icons/CloseIcon.vue';
 
 const props = defineProps({
-	showBtnText: String,
-	closeBtnText: String,
-	hideConfirmBtn: Boolean,
-	showCancelBtn: Boolean,
+	show: Boolean
 });
 
-const showModal = (): void => {
-	dialog.value?.showModal();
-	visible.value = true;
-	emit('open');
-};
+const emit = defineEmits(['toggleModal']);
 
-const confirm = (): void => {
-	dialog.value?.close();
-	visible.value = false;
-	emit('confirm');
+// Open and close dialog and emit event and confirmed value
+const openDialog = (): void => {
+	emit('toggleModal');
 };
-
-const closeModal = (): void => {
-	dialog.value?.close();
-	visible.value = false;
-	emit('close');
-};
-
-const emit = defineEmits(['confirm', 'open', 'close']);
 
 </script>
 <template>
-	<div>
-		<dialog 
-			ref="dialog" 
-			@close="visible = false">
+	<div v-if="show"
+		class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800">
+		<div class="bg-zinc-300 rounded-xl p-4 space-y-24 w-8/12 place-self-center absolute z-30 text-slate-800">
+			<div class="flex flex-row justify-between">
+				<span class="text-3xl font-antonio">
+					<slot name="title"></slot>
+				</span>
+				<CloseIcon class="w-10 h-10 cursor-pointer" @click="openDialog" />
+			</div>
 			<slot name="content"></slot>
-			<slot name="footer"></slot>
-			<slot name="actionButtons">
-				<button
-					v-if="!hideConfirmBtn"
-					class="bg-custom-cyan hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded"
-					@click="confirm"
-				>
-					{{ props.showBtnText }}
-				</button>
-				<button
-					v-if="showCancelBtn"
-					class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-					@click="closeModal"
-				>
-					{{ props.closeBtnText }}
-				</button>
-			</slot>
-		</dialog>
-		<div>
-			<slot name="show" @click="showModal"></slot>
 		</div>
 	</div>
 </template>

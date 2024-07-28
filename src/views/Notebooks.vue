@@ -104,7 +104,7 @@ onMounted((): void => {
 
 /*
 * TODO: Add The Following
-* Markdown Cheat Sheet
+* - Markdown Cheat Sheet
 * User Profile
 * Sharing Functionality
 * Search

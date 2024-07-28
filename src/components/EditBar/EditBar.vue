@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineEmits, ref } from 'vue';
 import PreviewIcon from '../icons/PreviewIcon.vue';
+import InfoIcon from '../icons/InfoIcon.vue';
 const emit = defineEmits(['togglePreview']);
 const preview = ref<boolean>(false);
 
@@ -14,6 +15,7 @@ const togglePreview = (): void => {
 	<!-- TODO: Have a saved indicator -->
 	<!-- TODO: Create a Hint Icon -->
 	<div class="flex flex-row w-auto bg-neutral-900 p-4 justify-between">
+		<InfoIcon />
 		<PreviewIcon @click="togglePreview" :previewMode="preview"/>
 	</div>
 </template>
