@@ -111,6 +111,7 @@ onMounted((): void => {
 * Save Progress Icon
 * Add simpified layout component
 * Add Export to PDF
+* Hide the Editor for readonly mode
 */
 </script>
 <template>
