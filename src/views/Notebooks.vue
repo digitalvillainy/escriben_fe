@@ -44,6 +44,14 @@ const deleteNote = async (note: object) => {
 };
 
 const updateNotes = (notes: string): void => {
+	if(notes.content === '') {
+		notes.content = '# Add your content here...';
+	}
+
+	if(notes.title === '') {
+		notes.title = 'New Note';
+	}
+
 	selectedNote.value.content = notes;
 	clearTimeout(timeout);
 	timeout = setTimeout(

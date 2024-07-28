@@ -48,6 +48,7 @@ const deleteNotebook = async (mode): Promise<void> => {
 		try {
 			await notebookStore.deleteNotebook(deleteTarget.value);
 			show.value = !show.value;
+			notebooks.value = notebookStore.getNotebooks;
 		} catch (error) {
 			console.error(error);
 		}

@@ -78,7 +78,8 @@ export const useNotebooksStore = defineStore('notebooks', {
     async deleteNotebook(notebook_id: number): Promise<void> {
       try {
         await deleteApi(`/notebooks?notebook_id=${notebook_id}`);
-        this.getNotebooksByUserId();
+        this.setNotebook(this.books.filter((notebook) => notebook.id !== notebook_id));
+        localStorage.setItem('notebooks', JSON.stringify(this.$state));
       } catch (error) {
         console.error(error);
       }
