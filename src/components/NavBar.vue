@@ -8,11 +8,14 @@ const userStore = useUserStore();
 
 const authenticated = localStorage.getItem('token');
 const router = useRouter();
+
 const logout = () => {
 	userStore.logout();
 	localStorage.removeItem('token');
 	router.push({ name: 'login' });
-}
+};
+
+
 </script>
 <template>
 	<div class="flex flex-row justify-between place-items-center text-white font-antonio bg-black px-3 text-xl">
@@ -24,8 +27,7 @@ const logout = () => {
 			<RouterLink to="/login" class="m-2 text-shadow hover:text-cyan-400">Login</RouterLink>
 		</div>
 		<div class="flex flex-row place-items-center" v-else>
-			<UserIcon svgClass="w-7 h-7 fill-white hover:fill-cyan-400 cursor-pointer"/>
-			<!-- <button @click="logout" class="m-2 text-shadow hover:text-cyan-400">Logout</button> -->
+			<UserIcon :flat="false" svgClass="w-7 h-7 fill-white hover:fill-cyan-400 cursor-pointer"/>
 		</div>
 	</div>
 </template>
