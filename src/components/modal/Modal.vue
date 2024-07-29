@@ -18,7 +18,7 @@ const openDialog = (): void => {
 	<div v-if="show"
 		class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800">
 		<div class="bg-zinc-300 rounded-xl space-y-24 w-8/12 h-[36rem] place-self-center absolute z-30 text-slate-800 overflow-y-auto">
-			<div class="flex flex-row justify-between w-full bg-zinc-900 px-8 py-4 text-white">
+			<div class="flex flex-row justify-between w-full bg-zinc-900 px-8 py-4 text-white sticky top-0 z-30">
 				<span class="text-3xl font-antonio">
 					<slot name="title"></slot>
 				</span>

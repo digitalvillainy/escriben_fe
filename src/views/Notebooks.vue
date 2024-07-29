@@ -8,11 +8,13 @@ import DeleteModal from '../components/Modals/DeleteModal.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
 import { useNotesStore } from '../stores/notes';
+import {useUserStore} from '../stores/user';
 import { ref, onBeforeMount, onMounted, computed } from 'vue';
 
 const { notebook_id } = useRoute().params;
 const notebookStore = useNotebooksStore();
 const notesStore = useNotesStore();
+const userStore = useUserStore();
 
 let currentNotebook = ref<object>({});
 let currentNotes = ref<array<object>>([]);
@@ -106,23 +108,26 @@ onMounted((): void => {
 * TODO: Add The Following
 * User Profile
 * Sharing Functionality
+* Hide the Editor for readonly mode
 * Search
 * Save Progress Icon
 * Add simpified layout component
 * Add Export to PDF
-* Hide the Editor for readonly mode
 */
 </script>
 <template>
 	<section class="flex flex-col h-screen">
 		<NavBar />
 		<main class="flex flex-col place-items-center flex-grow">
-			<h3 class="text-3xl text-center font-normal mt-20 mb-20 pb-2 font-antonio text-shadow-lg cursor-pointer">
+			<h3 class="text-3xl text-center font-normal mt-16 mb-12 pb-2 font-antonio text-shadow-lg cursor-pointer">
 				<input type="text" v-model="currentNotebook.title" @input="updateNotebooks(currentNotebook)"
 					class="bg-transparent" />/
 				<input type="text" v-model="selectedNote.title" @input="updateNotes(selectedNote.content)"
 					class="bg-transparent" />
 			</h3>
+			<h5 class="text-2xl text-center font-antonio text-shadow-lg my-8">
+				Written By: {{ userStore.getFullName }}
+			</h5>
 			<section class="flex flex-row w-full px-4">
 				<aside class="flex flex-col h-full w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
 					<ul class="flex flex-col list-disc font-antonio text-base">

@@ -14,7 +14,7 @@ const togglePreview = (): void => {
 <template>
 	<!-- TODO: Have a saved indicator -->
 	<!-- TODO: Create a Hint Icon -->
-	<div class="flex flex-row w-auto bg-neutral-900 p-4 justify-between">
+	<div class="flex flex-row w-auto bg-neutral-900 p-4 justify-end space-x-4">
 		<InfoIcon />
 		<PreviewIcon @click="togglePreview" :previewMode="preview"/>
 	</div>

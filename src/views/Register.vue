@@ -76,10 +76,10 @@ const submitForm = async () => {
 				<h5 class="font-antonio text-3xl text-left">Register User</h5>
 				<div class="flex flex-row justify-between gap-x-2">
 					<TextInput type="text" label="First Name" placeholder="First Name" class="w-full relative" v-model="form.first_name" :errors="v$.first_name.$errors">
-						<UserIcon class="absolute top-2 right-0"/>
+						<UserIcon svgClass="absolute top-2 right-0 w-8 h-8 fill-[#3F3D56]"/>
 					</TextInput>
 					<TextInput type="text" label="Last Name" placeholder="Last Name" class="w-full relative" v-model="form.last_name" :errors="v$.last_name.$errors">
-						<UserIcon class="absolute top-2 right-0"/>
+						<UserIcon svgClass="absolute top-2 right-0 w-8 h-8 fill-[#3F3D56]"/>
 					</TextInput>
 				</div>
 				<div class="flex flex-row justify-between gap-x-2 !mt-1.5">
@@ -87,7 +87,7 @@ const submitForm = async () => {
 						<MailIcon class="absolute top-2 right-1.5"/>
 					</TextInput>
 					<TextInput type="text" label="Username" placeholder="Username" class="w-full relative" v-model="form.username" :errors="v$.username.$errors">
-						<UserIcon class="absolute top-2 right-0"/>
+						<UserIcon svgClass="absolute top-2 right-0 w-8 h-8 fill-[#3F3D56]"/>
 					</TextInput>
 				</div>
 				<div class="flex flex-row justify-between gap-x-2 !mt-1.5">
