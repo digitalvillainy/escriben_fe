@@ -17,14 +17,16 @@ const openDialog = (): void => {
 <template>
 	<div v-if="show"
 		class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800">
-		<div class="bg-zinc-300 rounded-xl p-4 space-y-24 w-8/12 place-self-center absolute z-30 text-slate-800">
-			<div class="flex flex-row justify-between">
+		<div class="bg-zinc-300 rounded-xl space-y-24 w-8/12 h-[36rem] place-self-center absolute z-30 text-slate-800 overflow-y-auto">
+			<div class="flex flex-row justify-between w-full bg-zinc-900 px-8 py-4 text-white">
 				<span class="text-3xl font-antonio">
 					<slot name="title"></slot>
 				</span>
 				<CloseIcon class="w-10 h-10 cursor-pointer" @click="openDialog" />
 			</div>
-			<slot name="content"></slot>
+			<div class="px-8">
+				<slot name="content"></slot>
+			</div>
 		</div>
 	</div>
 </template>

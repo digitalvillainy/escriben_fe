@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Modal from '../modal/Modal.vue';
+import MarkdownCheatSheet from '../MarkdownCheatsheet.vue';
 let showModal = ref(false);
+
+
 </script>
 <template>
 	<div>
@@ -18,14 +21,15 @@ let showModal = ref(false);
 			</defs>
 		</svg>
 
-		<Modal :show="showModal">
+		<Modal :show="showModal" class="min-h-44" @toggleModal="showModal = false">
 			<template #title>
 				Markdown Cheat Sheet
 			</template>
 			<template #content>
 				<p class="text-md text-slate-800">
-					Info
+					Markdown is a fun and easy way to write and format text. All while keeping your hand at the keyboard.
 				</p>
+				<MarkdownCheatSheet />
 			</template>
 		</Modal>
 	</div>
