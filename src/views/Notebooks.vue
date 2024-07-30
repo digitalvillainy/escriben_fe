@@ -107,6 +107,7 @@ onMounted((): void => {
 /*
 * TODO: Add The Following
 * User Profile
+* Update all modals with new composables
 * Sharing Functionality
 * Hide the Editor for readonly mode
 * Search

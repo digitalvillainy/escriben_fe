@@ -6,6 +6,7 @@ import Forgot from "../views/Forgot.vue";
 import Dashboard from "../views/Dashboard.vue";
 import ResetPwd from "../views/ResetPwd.vue";
 import Notebooks from "../views/Notebooks.vue";
+import Profile from "../views/Profile.vue";
 
 const routes = [
 	{
@@ -37,6 +38,15 @@ const routes = [
 		path: "/dashboard",
 		name: "dashboard",
 		component: Dashboard,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		// path: "/profile?user_id=:user_id",
+		path: "/profile",
+		name: "profile",
+		component: Profile,
 		meta: {
 			requiresAuth: true
 		}
