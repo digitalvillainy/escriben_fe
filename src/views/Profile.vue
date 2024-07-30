@@ -36,6 +36,13 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, form);
 
+/**
+* TODO: Add a method to submit the form
+*  Add a method to delete the account
+*  Add a method to change the password
+*  Add a method to update User Information
+*  Add a method to update User Avatar
+*/
 </script>
 <template>
 	<section class="flex flex-col h-screen space-y-24">
