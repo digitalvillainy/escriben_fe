@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getApi } from '../axios.ts';
+import { getApi, postApi } from '../axios.ts';
 
 type User = {
   id: number;
@@ -46,7 +46,7 @@ export const useUserStore = defineStore('user', {
     }
   },
   actions: {
-    async getuser() {
+    async getuser(): Promise<void> {
       try {
         const response = await getApi(`/users?email=${this.email}`);
         response.then((data: { user: User }) => {
@@ -60,7 +60,35 @@ export const useUserStore = defineStore('user', {
         console.error(error);
       }
     },
-    setUser(user: User) {
+    async uploadProfilePic(data: object): Promise<void> {
+      try {
+        const response = await postApi('/upload-profile-pic', data);
+        response.then((data: object) => {
+          console.log(data);
+          // Save User in localStorage
+          localStorage.setItem('user', JSON.stringify(data));
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async updateUser(data: User): Promise<void> {
+      try {
+        const response = await postApi('/users', data);
+        response.then((data: { user: User }) => {
+          this.id = data.user.id;
+          this.username = data.user.username;
+          this.first_name = data.user.first_name;
+          this.last_name = data.user.last_name;
+          this.email = data.user.email;
+          // Save User in localStorage
+          localStorage.setItem('user', JSON.stringify(data));
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    setUser(user: User): void {
       // Save User in state
       this.id = user.id;
       this.username = user.username;
@@ -71,13 +99,13 @@ export const useUserStore = defineStore('user', {
       // Save User in localStorage
       localStorage.setItem('user', JSON.stringify(user));
     },
-    login(token: string) {
+    login(token: string): void {
       // Save token in state
       this.token = token;
       // Save token in localStorage
       localStorage.setItem('token', token);
     },
-    logout() {
+    logout(): void {
       localStorage.removeItem('token');
       this.token = '';
     },

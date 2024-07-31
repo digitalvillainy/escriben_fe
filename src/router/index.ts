@@ -43,7 +43,6 @@ const routes = [
 		}
 	},
 	{
-		// path: "/profile?user_id=:user_id",
 		path: "/profile",
 		name: "profile",
 		component: Profile,

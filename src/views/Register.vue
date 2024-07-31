@@ -15,6 +15,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { postApi } from '../axios.ts';
 
 const router = useRouter();
+const errorMessage = ref<string>('');
 
 // Form State
 const form = reactive({
@@ -59,6 +60,8 @@ const submitForm = async () => {
 			router.push({ name: 'dashboard' });
 		}
 	} catch (error) {
+		errorMessage.value = error.response.data.message.split('.')[0];
+		failedLogin.value = true;
 		v$.value.$touch();
 		console.error(error);
 	}
@@ -99,11 +102,11 @@ const submitForm = async () => {
 					</TextInput>
 				</div>
 				<div class="flex flew-row justify-center !mt-0" v-if="failedLogin">
-					<p class="text-red-800 text-shadow">Invalid Credentials</p>
+					<p class="text-red-800 text-shadow">{{ errorMessage }}</p>
 				</div>
 				<div class="flex flex-row justify-between space-x-3">
 					<div class="flex flex-row justify-between w-5/12">
-						<RouterLink to="/forgot" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
+						<RouterLink to="/forgot-password" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
 						<RouterLink to="/login" class="text-shadow hover:text-cyan-400">Already Have An Account?</RouterLink>
 					</div>
 					<button type="submit" class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">REGISTER</button>

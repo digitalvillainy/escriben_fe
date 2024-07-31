@@ -17,6 +17,8 @@ import { useUserStore } from '../stores/user';
 
 const router = useRouter();
 
+const userStore = useUserStore();
+
 // Form State
 const form = reactive({
 	email: '',
@@ -35,6 +37,7 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, form);
 
+// TODO: Add error handling from server
 const submitForm = async () => {
 	const result = await v$.value.$validate();
 	if (!result) return
@@ -48,7 +51,7 @@ const submitForm = async () => {
 
 		if (response.token) {
 			localStorage.setItem('token', response.token);
-			useUserStore().setUser(response.user);
+			userStore.setUser(response.user);
 			router.push({ name: 'dashboard' });
 		}
 	} catch (error) {
@@ -78,7 +81,7 @@ const submitForm = async () => {
 				</div>
 				<div class="flex flex-row justify-between space-x-3">
 					<div class="flex flex-row justify-between w-5/12">
-						<RouterLink to="/forgot-pwd" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
+						<RouterLink to="/forgot-password" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
 						<RouterLink to="/register" class="text-shadow hover:text-cyan-400">Not Registered?</RouterLink>
 					</div>
 					<button type="submit" class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">LOGIN</button>
