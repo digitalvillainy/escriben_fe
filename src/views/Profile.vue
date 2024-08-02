@@ -67,9 +67,9 @@ const submitForm = async () => {
 <template>
 	<section class="flex flex-col h-screen space-y-24">
 		<NavBar />
-		<main class="flex flex-row justify-between w-5/12 mx-auto flex-grow">
+		<main class="flex flex-col place-items-center w-5/12 mx-auto flex-grow space-y-24">
 			<ProfilePic />
-			<form class="flex flex-col place-items-center flex-grow" @submit.prevent="submitForm">
+			<form class="flex flex-col place-items-center" @submit.prevent="submitForm">
 				<StepCard class="w-[49rem] h-auto drop-shadow-2xl border-black border-2 flex flex-col content-between space-y-12">
 					<h5 class="font-antonio text-3xl text-left">User Settings</h5>
 					<div class="flex flex-row justify-between gap-x-2 content-between">
