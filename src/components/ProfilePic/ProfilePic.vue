@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '../../stores/user.ts';
 
 const userStore = useUserStore();
@@ -8,9 +8,13 @@ const outputPic = ref<HTMLImageElement>();
 let base64Image = ref(null);
 
 //Computed property for profile picture
-const profilePic = computed((): string => {
-	return userStore.profile_pic === null ? '' : userStore.profile_pic;
-});
+const profilePic = (): string | null => {
+	if (userStore.getUser.profile_pic.includes('data:image')) {
+		return userStore.getUser.profile_pic;
+	} else {
+		return null;
+	};
+};
 
 //Convert image to base64 and call submitPic()
 const updateProfilePic = (event) => {
@@ -40,6 +44,9 @@ const submitPic = async (payload: object): Promise<void> => {
 	}
 };
 
+onMounted(() => {
+	base64Image.value = profilePic();
+});
 
 </script>
 <template>
