@@ -106,14 +106,14 @@ onMounted((): void => {
 
 /*
 * TODO: Add The Following
-* User Profile
-* Update all modals with new composables
-* Sharing Functionality
-* Hide the Editor for readonly mode
-* Search
 * Save Progress Icon
-* Add simpified layout component
+* Fix Markdown Hint Modal
+* Sharing Functionality
+* - Hide the Editor for readonly mode
+* Search Functionality
 * Add Export to PDF
+* Add simpified layout component
+* Responsive design update
 */
 </script>
 <template>

@@ -67,11 +67,6 @@ const submitForm = async () => {
 	}
 };
 
-/**
-* TODO: Add a method to submit the form
-* Add a method to delete the account
-* Add a method to update User Information
-*/
 </script>
 <template>
 	<section class="flex flex-col h-screen space-y-24">
