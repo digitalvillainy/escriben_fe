@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useUserStore } from '../../stores/user.ts';
 
 const userStore = useUserStore();
@@ -7,16 +7,23 @@ const uploadPic = ref<HTMLInputElement>();
 const outputPic = ref<HTMLImageElement>();
 let base64Image = ref(null);
 
-//WARN: This is not working... YET
+//Computed property for profile picture
+const profilePic = computed((): string => {
+	return userStore.profile_pic === null ? '' : userStore.profile_pic;
+});
+
+//Convert image to base64 and call submitPic()
 const updateProfilePic = (event) => {
 	const file = event.target.files[0];
-	if(file) {
+	if (file) {
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onload = () => {
-			base64Image.value = reader.result; 
-			//TODO: Finish and add error handling
-			submitPic({profile_pic: base64Image.value});
+			base64Image.value = reader.result;
+			submitPic({
+				id: userStore.getUser.id,
+				profile_pic: base64Image.value
+			});
 		};
 		reader.onerror = (error) => {
 			console.error('Error convwerting image: ', error);
@@ -24,16 +31,21 @@ const updateProfilePic = (event) => {
 	}
 };
 
+//Upload profile picture to DB
 const submitPic = async (payload: object): Promise<void> => {
-	const profilePic = await userStore.uploadProfilePic(payload);
+	try {
+		await userStore.uploadProfilePic(payload);
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 
 </script>
 <template>
 	<div class="flex flex-col space-y-8">
-		<svg width="226" height="221" viewBox="0 0 226 221" fill="none" xmlns="http://www.w3.org/2000/svg"
-			@click="() => uploadPic.click()" class="cursor-pointer">
+		<svg v-if="!profilePic" viewBox="0 0 226 221" fill="none" xmlns="http://www.w3.org/2000/svg"
+			@click="() => uploadPic.click()" class="cursor-pointer size-56">
 			<ellipse cx="113" cy="110.5" rx="113" ry="110.5" fill="#D9D9D9" />
 			<g clip-path="url(#clip0_66_400)">
 				<path
@@ -48,7 +60,7 @@ const submitPic = async (payload: object): Promise<void> => {
 			</defs>
 		</svg>
 
-		<img v-if="base64Image" :src="base64Image" class="w-20 h-20 rounded-full object-cover" />
+		<img v-if="profilePic" :src="base64Image" class="size-56 rounded-full object-cover" />
 		<input type="file" class="hidden" ref="uploadPic" accept="image/*" @change="updateProfilePic" />
 	</div>
 </template>

@@ -25,7 +25,6 @@ const router = useRouter();
 
 const logout = () => {
 	userStore.logout();
-	localStorage.removeItem('token');
 	router.push({ name: 'login' });
 };
 
@@ -63,7 +62,7 @@ useDetectOutsideClick(menu, () => {
 			</svg>
 			<div v-if="show" class="absolute bg-black/60 top-9 right-0 bg-red p-2 w-56 flex flex-col space-y-2">
 				<RouterLink to="/profile" class="text-shadow hover:text-cyan-400 hover:bg-white/30 pl-2">Profile</RouterLink>
-				<button class="text-shadow hover:text-cyan-400 text-left hover:bg-white/30 pl-2">Logout</button>
+				<button @click="logout" class="text-shadow hover:text-cyan-400 text-left hover:bg-white/30 pl-2">Logout</button>
 			</div>
 		</div>
 	</div>

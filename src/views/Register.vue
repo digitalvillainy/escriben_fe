@@ -10,11 +10,13 @@ import MailIcon from '../components/icons/MailIcon.vue';
 
 import { reactive, computed, ref } from 'vue';
 import { required, email, minLength, sameAs, alpha, alphaNum } from '@vuelidate/validators';
+import { useUserStore } from '../stores/user';
 import { useVuelidate } from '@vuelidate/core';
 
 import { postApi } from '../axios.ts';
 
 const router = useRouter();
+const userStore = useUserStore();
 const errorMessage = ref<string>('');
 
 // Form State
@@ -55,12 +57,12 @@ const submitForm = async () => {
 		}
 
 		if (response.token) {
-			localStorage.setItem('token', response.token);
-			useUserStore().setUser(response.user);
+			userStore.login(response.token);
+			userStore.setUser(response.user);
 			router.push({ name: 'dashboard' });
 		}
 	} catch (error) {
-		errorMessage.value = error.response.data.message.split('.')[0];
+		errorMessage.value = error.response?.message.split('.')[0];
 		failedLogin.value = true;
 		v$.value.$touch();
 		console.error(error);

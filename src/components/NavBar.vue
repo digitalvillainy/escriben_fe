@@ -11,7 +11,6 @@ const router = useRouter();
 
 const logout = () => {
 	userStore.logout();
-	localStorage.removeItem('token');
 	router.push({ name: 'login' });
 };
 

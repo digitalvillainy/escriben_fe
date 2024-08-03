@@ -26,6 +26,7 @@ let notebooks: array<object> = ref([{}]);
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
 	try {
 		const response = await notebookStore.createNotebook(title, user_id);
+		if(!response) return
 		$router.push({ name: 'notebooks', params: { notebook_id: response.id } });
 	} catch (error) {
 		console.error(error);
