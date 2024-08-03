@@ -98,6 +98,7 @@ export const useUserStore = defineStore('user', {
     logout(): void {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('notebooks');
       this.token = '';
     },
   },

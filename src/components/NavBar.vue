@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router';
 import { useUserStore } from '../stores/user.ts';
 import { useRouter } from 'vue-router';
 import UserIcon from '../components/icons/UserIcon.vue';
-
+import ProfilePicIcon from '../components/icons/ProfilePicIcon.vue';
 const userStore = useUserStore();
 
 const authenticated = localStorage.getItem('token');
@@ -26,7 +26,7 @@ const logout = () => {
 			<RouterLink to="/login" class="m-2 text-shadow hover:text-cyan-400">Login</RouterLink>
 		</div>
 		<div class="flex flex-row place-items-center" v-else>
-			<UserIcon :flat="false" svgClass="w-7 h-7 fill-white hover:fill-cyan-400 cursor-pointer"/>
+			<ProfilePicIcon svgClass="w-8 h-8 fill-black hover:fill-cyan-400 cursor-pointer"/>
 		</div>
 	</div>
 </template>
