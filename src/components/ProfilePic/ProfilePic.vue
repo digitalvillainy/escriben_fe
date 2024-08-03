@@ -4,21 +4,36 @@ import { useUserStore } from '../../stores/user.ts';
 
 const userStore = useUserStore();
 const uploadPic = ref<HTMLInputElement>();
+const outputPic = ref<HTMLImageElement>();
+let base64Image = ref(null);
 
-//TODO: Finish uploading images
-const updateProfilePic = () => {
-	uploadPic.value.click();
-
-	uploadPic.value.onchange = async () => {
-		const profilePic = await userStore.uploadProfilePic({ profile_pic: uploadPic.value.files[0] });
-	};
+//WARN: This is not working... YET
+const updateProfilePic = (event) => {
+	const file = event.target.files[0];
+	if(file) {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => {
+			base64Image.value = reader.result; 
+			//TODO: Finish and add error handling
+			submitPic({profile_pic: base64Image.value});
+		};
+		reader.onerror = (error) => {
+			console.error('Error convwerting image: ', error);
+		};
+	}
 };
+
+const submitPic = async (payload: object): Promise<void> => {
+	const profilePic = await userStore.uploadProfilePic(payload);
+};
+
 
 </script>
 <template>
 	<div class="flex flex-col space-y-8">
 		<svg width="226" height="221" viewBox="0 0 226 221" fill="none" xmlns="http://www.w3.org/2000/svg"
-			@click="updateProfilePic" class="cursor-pointer">
+			@click="() => uploadPic.click()" class="cursor-pointer">
 			<ellipse cx="113" cy="110.5" rx="113" ry="110.5" fill="#D9D9D9" />
 			<g clip-path="url(#clip0_66_400)">
 				<path
@@ -32,6 +47,8 @@ const updateProfilePic = () => {
 				</clipPath>
 			</defs>
 		</svg>
-		<input type="file" class="hidden" ref="uploadPic" accept="image/*" />
+
+		<img v-if="base64Image" :src="base64Image" class="w-20 h-20 rounded-full object-cover" />
+		<input type="file" class="hidden" ref="uploadPic" accept="image/*" @change="updateProfilePic" />
 	</div>
 </template>

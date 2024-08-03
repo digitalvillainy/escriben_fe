@@ -64,7 +64,6 @@ export const useUserStore = defineStore('user', {
       try {
         const response = await postApi('/upload-profile-pic', data);
         response.then((data: object) => {
-          console.log(data);
           // Save User in localStorage
           localStorage.setItem('user', JSON.stringify(data));
         });
