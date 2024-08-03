@@ -42,16 +42,25 @@ const submitForm = async () => {
 	const result = await v$.value.$validate();
 	if (!result) return
 
-	//TODO: remove any empty fields from the form
+	let payload: object = {};
+
+	//Filter out empty fields
+	for (const key in { ...form }) {
+		if (form[key].length > 0) {
+			payload[key] = form[key];
+		}
+	}
+
+	//Update User via id
+	payload['id'] = userStore.getUser.id;
 	try {
-		const response = await postApi('/update-user', form);
+		const response = await postApi('/update-user', payload);
 		if (response.status) {
 			failedLogin.value = true;
 			return
 		}
 
 	} catch (error) {
-		errorMessage.value = error.response?.message.split('.')[0];
 		failedLogin.value = true;
 		v$.value.$touch();
 		console.error(error);
