@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Modal from '../modal/Modal.vue';
+import Modal from '../Modals/Modal.vue';
 import MarkdownCheatSheet from '../MarkdownCheatsheet.vue';
 let showModal = ref(false);
 

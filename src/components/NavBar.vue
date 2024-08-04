@@ -14,7 +14,6 @@ const logout = () => {
 	router.push({ name: 'login' });
 };
 
-
 </script>
 <template>
 	<div class="flex flex-row justify-between place-items-center text-white font-antonio bg-black px-3 text-xl">

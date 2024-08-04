@@ -70,7 +70,7 @@ const submitForm = async () => {
 				<h5 class="font-antonio text-3xl text-left">Login User</h5>
 				<div class="flex flex-col flex-grow">
 					<TextInput type="text" label="Email" placeholder="Email" class="w-full relative" v-model="form.email" :errors="v$.email.$errors">
-						<MailIcon class="absolute top-2 right-1.5"/>
+						<MailIcon class="absolute top-1 right-1.5"/>
 					</TextInput>
 					<TextInput type="password" label="Password" placeholder="Password" class="w-full relative" v-model="form.password" :errors="v$.password.$errors">
 						<LockIcon class="absolute top-1 right-1.5"/>

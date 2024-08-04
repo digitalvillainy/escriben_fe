@@ -1,0 +1,52 @@
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import TextInput from '../inputs/TextInput.vue';
+import MailIcon from '../icons/MailIcon.vue';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
+
+const props = defineProps({ show: Boolean });
+const confirm = ref<boolean>(false);
+const emit = defineEmits(['confirmed']);
+const email = ref<string>('');
+const dialog = ref<HTMLElement | null>(null);
+
+const rules = computed(() => {
+	return {
+		email: { required, email },
+	}
+});
+
+const v$ = useVuelidate({ rules, email });
+
+// Open and close dialog and emit event and confirmed value
+const openDialog = (): void => {
+	emit('confirmed', confirm.value, email.value);
+};
+
+const closeDialog = (mode: boolean): void => {
+	confirm.value = mode;
+	emit('confirmed', confirm.value);
+};
+
+</script>
+<template>
+	<div v-if="show" ref="dialog"
+		class="w-screen h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800">
+		<div class="bg-zinc-300 rounded-xl p-4 space-y-3 w-3/12 place-self-center absolute z-30">
+			<p class="text-xl font-antonio text-center">
+				Enter The Email Address Of The User You Want To Share This Notebook With
+			</p>
+			<TextInput type="text" label="Email" placeholder="Email of recipient..." class="w-full" v-model="email"
+				:errors="v$.email?.$errors">
+				<MailIcon class="absolute top-1 right-1.5" />
+			</TextInput>
+			<div class="flex flex-row justify-center space-x-40">
+				<button @click="closeDialog(false)"
+					class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">CANCEL</button>
+				<button @click="closeDialog(true)"
+					class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded">INVITE</button>
+			</div>
+		</div>
+	</div>
+</template>

@@ -9,7 +9,7 @@ let base64Image = ref(null);
 
 //Computed property for profile picture
 const profilePic = (): string | null => {
-	if (userStore.getUser?.profile_pic.includes('data:image')) {
+	if (userStore.getUser?.profile_pic !== null) {
 		return userStore.getUser.profile_pic;
 	} else {
 		return null;

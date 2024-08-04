@@ -6,6 +6,7 @@ import PlusIcon from '../components/icons/PlusIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import EditIcon from '../components/icons/EditIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
+import ShareModal from '../components/Modals/ShareModal.vue';
 import ShareIcon from '../components/icons/ShareIcon.vue';
 
 import { getApi, postApi } from '../axios.ts';
@@ -20,14 +21,16 @@ const notebookStore = useNotebooksStore();
 const userStore = useUserStore();
 const $router = useRouter();
 const show = ref<boolean>(false);
+const shareModal = ref<boolean>(false);
 const deleteTarget = ref<number>(0);
+const targetNotebookId = ref<number>(0);
 let notebooks: array<object> = ref([{}]);
 
 //Create Notebook and route to the notebook page
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
 	try {
 		const response = await notebookStore.createNotebook(title, user_id);
-		if(!response) return
+		if (!response) return
 		$router.push({ name: 'notebooks', params: { notebook_id: response.id } });
 	} catch (error) {
 		console.error(error);
@@ -67,6 +70,27 @@ const deleteModalCtrl = (id: number): void => {
 getNotebooks();
 notebooks.value = notebookStore.getNotebooks;
 
+const toggleModal = (notebook_id: number): void => {
+	targetNotebookId.value = notebook_id;
+	shareModal.value = !shareModal.value;
+};
+
+const shareNotebook = async (confirmed: boolean, email: string): void => {
+	if (confirmed) {
+		shareModal.value = !confirmed;
+		const result = await v$.value.$validate();
+		if (!result) return
+
+		try {
+			const response = await postApi('/notebooks/share', { notebook_id: targetNotebookId.value, email });
+		} catch (error) {
+			console.error(error);
+		}
+	} else {
+		// TODO: close modal
+		shareModal.value = confirmed;
+	}
+};
 
 </script>
 <template>
@@ -91,7 +115,7 @@ notebooks.value = notebookStore.getNotebooks;
 					<span class="text-white font-antonio text-md text-center flex-grow">{{ notebook.title }}</span>
 					<div class="flex flex-row justify-between cursor-pointer hover:bg-gray-600 hover:text-white">
 						<CloseIcon @click="deleteModalCtrl(notebook.id)" />
-						<ShareIcon />
+						<ShareIcon @click="toggleModal(notebook.id)" />
 						<router-link :to="{ name: 'notebooks', params: { notebook_id: notebook.id } }">
 							<EditIcon />
 						</router-link>
@@ -99,6 +123,7 @@ notebooks.value = notebookStore.getNotebooks;
 				</StepCard>
 			</div>
 		</main>
+		<ShareModal :show="shareModal" @confirmed="shareNotebook"/>
 		<DeleteModal @confirmed="deleteNotebook" :show="show">
 			Are you sure you want to delete this notebook?
 		</DeleteModal>
