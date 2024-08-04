@@ -112,10 +112,8 @@ onMounted((): void => {
 /*
 * TODO: Add The Following
 * Fix Markdown Hint Modal
-* Sharing Functionality
 * - Hide the Editor for readonly mode
-* Search Functionality
-* Add Export to PDF
+* Add Sharing Feature
 * Add simpified layout component
 * Responsive design update
 */
