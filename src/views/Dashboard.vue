@@ -6,6 +6,7 @@ import PlusIcon from '../components/icons/PlusIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import EditIcon from '../components/icons/EditIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
+import ShareIcon from '../components/icons/ShareIcon.vue';
 
 import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -90,6 +91,7 @@ notebooks.value = notebookStore.getNotebooks;
 					<span class="text-white font-antonio text-md text-center flex-grow">{{ notebook.title }}</span>
 					<div class="flex flex-row justify-between cursor-pointer hover:bg-gray-600 hover:text-white">
 						<CloseIcon @click="deleteModalCtrl(notebook.id)" />
+						<ShareIcon />
 						<router-link :to="{ name: 'notebooks', params: { notebook_id: notebook.id } }">
 							<EditIcon />
 						</router-link>
