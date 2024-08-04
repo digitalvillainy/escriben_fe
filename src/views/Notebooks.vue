@@ -111,7 +111,6 @@ onMounted((): void => {
 
 /*
 * TODO: Add The Following
-* Save Progress Icon
 * Fix Markdown Hint Modal
 * Sharing Functionality
 * - Hide the Editor for readonly mode
