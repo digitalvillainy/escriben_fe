@@ -1,10 +1,8 @@
 <script setup lang="ts">
-const props = defineProps({
-	saved: {
-		type: Boolean,
-		default: false
-	}
-});
+import { inject } from 'vue';
+
+const saved = inject('savedNotes');
+
 </script>
 <template>
 	<svg viewBox="0 0 448 512" fill="none" xmlns="http://www.w3.org/2000/svg"

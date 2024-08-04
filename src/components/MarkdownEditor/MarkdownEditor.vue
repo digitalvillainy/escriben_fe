@@ -26,7 +26,6 @@ const updatePreview = (): void => {
 // Save notes progress to DB & local storage
 const saveNotesProgress = (): void => {
 	emit('update:modelValue', markdown.value);
-	savedProgress.value = true;
 	updatePreview();
 };
 
@@ -42,7 +41,7 @@ watch(markdown, saveNotesProgress);
 </script>
 <template>
 	<section class="flex flex-col h-screen">
-		<EditBar class="w-auto" @togglePreview="hidePreview = !hidePreview" :saved="false"/>
+		<EditBar class="w-auto" @togglePreview="hidePreview = !hidePreview"/>
 		<div class="flex flex-row">
 			<textarea v-model="markdown" @input="saveNotesProgress" :class="[{ 'editor-full': hidePreview }, 'editor']"
 				class="bg-zinc-600 p-6"></textarea>

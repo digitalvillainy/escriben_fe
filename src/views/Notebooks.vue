@@ -9,7 +9,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
 import { useNotesStore } from '../stores/notes';
 import {useUserStore} from '../stores/user';
-import { ref, onBeforeMount, onMounted, computed } from 'vue';
+import { ref, onBeforeMount, onMounted, computed, provide } from 'vue';
 
 const { notebook_id } = useRoute().params;
 const notebookStore = useNotebooksStore();
@@ -21,8 +21,11 @@ let currentNotes = ref<array<object>>([]);
 let selectedNote = ref<object>({});
 let hiddenToggle = ref<boolean>(false);
 let deleteTarget = ref<object>({});
+let savedNotes = ref<boolean>(false);
 let show = ref<boolean>(false);
 let timeout;
+
+provide('savedNotes', savedNotes);
 
 const changeSelectedNote = (note): void => {
 	selectedNote.value = note;
@@ -55,6 +58,7 @@ const deleteNote = async (): Promise<void> => {
 };
 
 const updateNotes = (notes: string): void => {
+	savedNotes.value = false;
 	if (notes.content === '') {
 		notes.content = '# Add your content here...';
 	}
@@ -68,6 +72,7 @@ const updateNotes = (notes: string): void => {
 	timeout = setTimeout(
 		() => {
 			notesStore.updateNoteById(selectedNote.value.id, selectedNote.value.title, selectedNote.value.content)
+				.then(() => savedNotes.value = true)
 		}, 1000);
 };
 
