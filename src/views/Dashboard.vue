@@ -6,10 +6,6 @@ import PlusIcon from '../components/icons/PlusIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import EditIcon from '../components/icons/EditIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
-import ShareModal from '../components/Modals/ShareModal.vue';
-import ShareIcon from '../components/icons/ShareIcon.vue';
-import TextInput from '../components/inputs/TextInput.vue';
-import MailIcon from '../components/icons/MailIcon.vue';
 
 import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -27,20 +23,8 @@ const $router = useRouter();
 const show = ref<boolean>(false);
 const shareModal = ref<boolean>(false);
 const deleteTarget = ref<number>(0);
-const targetNotebookId = ref<number>(0);
 let notebooks: array<object> = ref([{}]);
 
-// Form State
-const form = reactive({
-	email: '',
-});
-
-// Rules for vuelidate validation
-const rules = computed(() => {
-	return {
-		email: { required, email },
-	}
-});
 
 //Create Notebook and route to the notebook page
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
@@ -86,29 +70,6 @@ const deleteModalCtrl = (id: number): void => {
 getNotebooks();
 notebooks.value = notebookStore.getNotebooks;
 
-const toggleModal = (notebook_id: number): void => {
-	targetNotebookId.value = notebook_id;
-	shareModal.value = !shareModal.value;
-};
-
-const v$ = useVuelidate(rules, form);
-const shareNotebook = async (confirmed: boolean): void => {
-	if (confirmed) {
-		shareModal.value = !confirmed;
-		const result = await v$.value.$validate();
-		if (!result) return
-
-		try {
-			const response = await postApi('/notebooks/share', { notebook_id: targetNotebookId.value, shared_with_email: form.email });
-		} catch (error) {
-			console.error(error);
-		}
-	} else {
-		// TODO: close modal
-		shareModal.value = confirmed;
-	}
-};
-
 </script>
 <template>
 	<section class="flex flex-col h-screen">
@@ -132,7 +93,6 @@ const shareNotebook = async (confirmed: boolean): void => {
 					<span class="text-white font-antonio text-md text-center flex-grow">{{ notebook.title }}</span>
 					<div class="flex flex-row justify-between cursor-pointer hover:bg-gray-600 hover:text-white">
 						<CloseIcon @click="deleteModalCtrl(notebook.id)" />
-						<ShareIcon @click="toggleModal(notebook.id)" />
 						<router-link :to="{ name: 'notebooks', params: { notebook_id: notebook.id } }">
 							<EditIcon />
 						</router-link>
@@ -140,15 +100,6 @@ const shareNotebook = async (confirmed: boolean): void => {
 				</StepCard>
 			</div>
 		</main>
-		<ShareModal :show="shareModal" @confirmed="shareNotebook">
-			<p class="text-xl font-antonio text-center">
-				Enter The Email Address Of The User You Want To Share This Notebook With
-			</p>
-			<TextInput type="text" label="Email" placeholder="Email of recipient..." class="w-full" v-model="form.email"
-				:errors="v$.email?.$errors">
-				<MailIcon class="absolute top-1 right-1.5" />
-			</TextInput>
-		</ShareModal>
 		<DeleteModal @confirmed="deleteNotebook" :show="show">
 			Are you sure you want to delete this notebook?
 		</DeleteModal>
