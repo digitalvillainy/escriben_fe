@@ -30,7 +30,7 @@ const updateProfilePic = (event) => {
 			});
 		};
 		reader.onerror = (error) => {
-			console.error('Error convwerting image: ', error);
+			console.error('Error converting image: ', error);
 		};
 	}
 };

@@ -13,11 +13,8 @@ const authenticated = localStorage.getItem('token');
 const router = useRouter();
 
 const profilePic = (): string | null => {
-	if (userStore.getUser?.profile_pic.includes('data:image')) {
-		return userStore.getUser.profile_pic;
-	} else {
-		return null;
-	};
+	if (userStore.getUser?.profile_pic !== null) return null;
+	return userStore.getUser.profile_pic;
 };
 
 const logout = () => {

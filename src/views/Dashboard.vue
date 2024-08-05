@@ -6,6 +6,7 @@ import PlusIcon from '../components/icons/PlusIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import EditIcon from '../components/icons/EditIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
+import Layout from '../components/Layouts/Layout.vue';
 
 import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -72,9 +73,8 @@ notebooks.value = notebookStore.getNotebooks;
 
 </script>
 <template>
-	<section class="flex flex-col h-screen">
-		<NavBar />
-		<main class="flex flex-col place-items-center flex-grow">
+	<Layout :footer="false">
+		<template #content>
 			<h3 class="text-5xl text-center font-normal mt-36 mb-20 pb-2 font-antonio text-shadow-lg">Notebooks</h3>
 			<div class="w-full flex flex-row justify-start px-12">
 				<StepCard @click="createNotebook('New Notebook', userStore.getUser.id)" class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col 
@@ -99,9 +99,11 @@ notebooks.value = notebookStore.getNotebooks;
 					</div>
 				</StepCard>
 			</div>
-		</main>
-		<DeleteModal @confirmed="deleteNotebook" :show="show">
-			Are you sure you want to delete this notebook?
-		</DeleteModal>
-	</section>
+		</template>
+		<template #modal>
+			<DeleteModal @confirmed="deleteNotebook" :show="show">
+				Are you sure you want to delete this notebook?
+			</DeleteModal>
+		</template>
+	</Layout>
 </template>

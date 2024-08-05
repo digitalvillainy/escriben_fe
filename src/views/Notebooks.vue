@@ -4,11 +4,12 @@ import MarkdownEditor from '../components/MarkdownEditor/MarkdownEditor.vue';
 import CloseChevronIcon from '../components/icons/CloseChevronIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
+import Layout from '../components/Layouts/Layout.vue';
 
 import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
 import { useNotesStore } from '../stores/notes';
-import {useUserStore} from '../stores/user';
+import { useUserStore } from '../stores/user';
 import { ref, onBeforeMount, onMounted, computed, provide } from 'vue';
 
 const { notebook_id } = useRoute().params;
@@ -109,16 +110,10 @@ onMounted((): void => {
 	currentNotebook.value = notebookStore.getNotebooks.find((notebook) => notebook.id == notebook_id);
 });
 
-/*
-* TODO: Add The Following
-* Add simpified layout component
-* Responsive design update
-*/
 </script>
 <template>
-	<section class="flex flex-col h-screen">
-		<NavBar />
-		<main class="flex flex-col place-items-center flex-grow">
+	<Layout :footer="false">
+		<template v-slot:content>
 			<h3 class="text-3xl text-center font-normal mt-16 mb-12 pb-2 font-antonio text-shadow-lg cursor-pointer">
 				<input type="text" v-model="currentNotebook.title" @input="updateNotebooks(currentNotebook)"
 					class="bg-transparent" />/
@@ -161,9 +156,9 @@ onMounted((): void => {
 				</aside>
 				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
 			</section>
-		</main>
-		<DeleteModal @confirmed="deleteNote" :show="show">
-			Are you sure you want to delete this note?
-		</DeleteModal>
-	</section>
+		</template>
+		<template v-slot:modal>
+			<DeleteModal v-if="show" @delete="deleteNote" @close="show = !show" />
+		</template>
+	</Layout>
 </template>
