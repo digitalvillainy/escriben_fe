@@ -54,7 +54,7 @@ import Footer from '../components/Footer.vue';
 					<div class="text-3xl">Create Your Content</div>
 				<Step2Icon class="justify-self-center" />
 				<p class="text-lg font-roboto">
-					Start creating your content with our in browser editor.
+					Write, and edit your notes using markdown
 				</p>	
 			</StepCard>
 			<StepCard class="h-96 w-80">

@@ -22,8 +22,6 @@ const updatePreview = (): void => {
 	html.value = marked(markdown.value);
 };
 
-//TODO: continue working on save button
-// Save notes progress to DB & local storage
 const saveNotesProgress = (): void => {
 	emit('update:modelValue', markdown.value);
 	updatePreview();
