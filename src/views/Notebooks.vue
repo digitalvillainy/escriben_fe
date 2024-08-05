@@ -111,8 +111,6 @@ onMounted((): void => {
 
 /*
 * TODO: Add The Following
-* Add Sharing Feature
-* - Hide the Editor for readonly mode
 * Add simpified layout component
 * Responsive design update
 */

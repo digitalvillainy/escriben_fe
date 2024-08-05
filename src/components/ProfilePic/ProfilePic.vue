@@ -51,7 +51,7 @@ onMounted(() => {
 </script>
 <template>
 	<div class="flex flex-col space-y-8">
-		<svg v-if="base64Image === null" viewBox="0 0 226 221" fill="none" xmlns="http://www.w3.org/2000/svg"
+		<svg v-if="base64Image !== 'null'" viewBox="0 0 226 221" fill="none" xmlns="http://www.w3.org/2000/svg"
 			@click="() => uploadPic.click()" class="cursor-pointer size-56">
 			<ellipse cx="113" cy="110.5" rx="113" ry="110.5" fill="#D9D9D9" />
 			<g clip-path="url(#clip0_66_400)">
@@ -67,7 +67,7 @@ onMounted(() => {
 			</defs>
 		</svg>
 
-		<img v-if="base64Image !== null" :src="base64Image" class="size-56 rounded-full object-cover" />
+		<img v-if="base64Image === 'null'" :src="base64Image" class="size-56 rounded-full object-cover" />
 		<input type="file" class="hidden" ref="uploadPic" accept="image/*" @change="updateProfilePic" />
 	</div>
 </template>
