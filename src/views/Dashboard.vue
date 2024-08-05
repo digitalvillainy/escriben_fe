@@ -8,12 +8,16 @@ import EditIcon from '../components/icons/EditIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
 import ShareModal from '../components/Modals/ShareModal.vue';
 import ShareIcon from '../components/icons/ShareIcon.vue';
+import TextInput from '../components/inputs/TextInput.vue';
+import MailIcon from '../components/icons/MailIcon.vue';
 
 import { getApi, postApi } from '../axios.ts';
 import { useNotebooksStore } from '../stores/notebooks';
 import { useUserStore } from '../stores/user';
-import { ref } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
 
 
 //Initialize stores
@@ -25,6 +29,18 @@ const shareModal = ref<boolean>(false);
 const deleteTarget = ref<number>(0);
 const targetNotebookId = ref<number>(0);
 let notebooks: array<object> = ref([{}]);
+
+// Form State
+const form = reactive({
+	email: '',
+});
+
+// Rules for vuelidate validation
+const rules = computed(() => {
+	return {
+		email: { required, email },
+	}
+});
 
 //Create Notebook and route to the notebook page
 const createNotebook = async (title: string, user_id: number): Promise<void> => {
@@ -75,14 +91,15 @@ const toggleModal = (notebook_id: number): void => {
 	shareModal.value = !shareModal.value;
 };
 
-const shareNotebook = async (confirmed: boolean, email: string): void => {
+const v$ = useVuelidate(rules, form);
+const shareNotebook = async (confirmed: boolean): void => {
 	if (confirmed) {
 		shareModal.value = !confirmed;
 		const result = await v$.value.$validate();
 		if (!result) return
 
 		try {
-			const response = await postApi('/notebooks/share', { notebook_id: targetNotebookId.value, email });
+			const response = await postApi('/notebooks/share', { notebook_id: targetNotebookId.value, shared_with_email: form.email });
 		} catch (error) {
 			console.error(error);
 		}
@@ -123,7 +140,15 @@ const shareNotebook = async (confirmed: boolean, email: string): void => {
 				</StepCard>
 			</div>
 		</main>
-		<ShareModal :show="shareModal" @confirmed="shareNotebook"/>
+		<ShareModal :show="shareModal" @confirmed="shareNotebook">
+			<p class="text-xl font-antonio text-center">
+				Enter The Email Address Of The User You Want To Share This Notebook With
+			</p>
+			<TextInput type="text" label="Email" placeholder="Email of recipient..." class="w-full" v-model="form.email"
+				:errors="v$.email?.$errors">
+				<MailIcon class="absolute top-1 right-1.5" />
+			</TextInput>
+		</ShareModal>
 		<DeleteModal @confirmed="deleteNotebook" :show="show">
 			Are you sure you want to delete this notebook?
 		</DeleteModal>

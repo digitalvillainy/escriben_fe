@@ -1,10 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-let show = ref<boolean>(false);
-
-
-</script>
 <template>
 	<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" @click="$emit('shared', true)"
 		class="size-8 fill-cyan-400 hover:fill-white cursor-pointer">
