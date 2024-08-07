@@ -58,10 +58,10 @@ import Footer from '../components/Footer.vue';
 				</p>	
 			</StepCard>
 			<StepCard class="h-96 w-80">
-				<div class="text-3xl">Share Your Notes</div>
+				<div class="text-3xl">Organize Your Notes</div>
 				<Step3Icon class="mx-auto" />
 				<p class="text-lg font-roboto">
-					Collaborate with other users by sharing your notes.
+					Notes are organized by notebook
 				</p>	
 			</StepCard>
 		</div>
