@@ -75,11 +75,10 @@ const submitForm = async () => {
 <template>
 	<Layout>
 		<template #content>
-			<form class="flex flex-col place-items-center flex-grow" @submit.prevent="submitForm">
+			<form class="flex flex-col place-items-center flex-grow w-11/12 mx-auto" @submit.prevent="submitForm">
 				<h3 class="text-5xl text-center font-normal mt-36 mb-20 pb-2 font-antonio text-shadow-lg">Register</h3>
-				<StepCard class="w-[49rem] h-[30rem] drop-shadow-2xl border-black border-2">
-					<h5 class="font-antonio text-3xl text-left">Register User</h5>
-					<div class="flex flex-row justify-between gap-x-2">
+				<StepCard class="flex flex-col w-full lg:w-[49rem] lg:h-[30rem] drop-shadow-2xl border-black border-2">
+					<div class="flex flex-col lg:flex-row justify-between gap-x-2">
 						<TextInput type="text" label="First Name" placeholder="First Name" class="w-full relative"
 							v-model="form.first_name" :errors="v$.first_name.$errors">
 							<UserIcon />
@@ -89,7 +88,7 @@ const submitForm = async () => {
 							<UserIcon />
 						</TextInput>
 					</div>
-					<div class="flex flex-row justify-between gap-x-2 !mt-1.5">
+					<div class="flex flex-col lg:flex-row justify-between gap-x-2 !mt-1.5">
 						<TextInput type="text" label="Email" placeholder="Email" class="w-full relative" v-model="form.email"
 							:errors="v$.email.$errors">
 							<MailIcon class="absolute top-1 right-1.5" />
@@ -99,7 +98,7 @@ const submitForm = async () => {
 							<UserIcon />
 						</TextInput>
 					</div>
-					<div class="flex flex-row justify-between gap-x-2 !mt-1.5">
+					<div class="flex flex-col lg:flex-row justify-between gap-x-2 !mt-1.5">
 						<TextInput type="password" label="Password" placeholder="Password" class="w-full relative"
 							v-model="form.password" :errors="v$.password.$errors">
 							<LockIcon class="absolute top-1 right-1.5" />
@@ -112,13 +111,13 @@ const submitForm = async () => {
 					<div class="flex flew-row justify-center !mt-0" v-if="failedLogin">
 						<p class="text-red-800 text-shadow">{{ errorMessage }}</p>
 					</div>
-					<div class="flex flex-row justify-between space-x-3">
-						<div class="flex flex-row justify-between w-5/12">
+					<div class="flex flex-col lg:flex-row lg:justify-between">
+						<div class="flex flex-col lg:flex-row lg:justify-between lg:w-5/12 w-full">
 							<RouterLink to="/forgot-password" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
 							<RouterLink to="/login" class="text-shadow hover:text-cyan-400">Already Have An Account?</RouterLink>
 						</div>
 						<button type="submit"
-							class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">REGISTER</button>
+							class="w-full mt-6 lg:mt-0 lg:w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">REGISTER</button>
 					</div>
 				</StepCard>
 			</form>
