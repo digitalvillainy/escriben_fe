@@ -65,9 +65,8 @@ const submitForm = async () => {
 <template>
 	<Layout>
 		<template #content>
-			<form class="flex flex-col place-items-center flex-grow" @submit.prevent="submitForm">
-				<h3 class="text-5xl text-center font-normal mt-36 mb-20 pb-2 font-antonio text-shadow-lg">Login</h3>
-				<StepCard class="w-[49rem] h-[25rem] drop-shadow-2xl border-black border-2 flex flex-col">
+			<form class="flex flex-col place-items-center flex-grow w-full" @submit.prevent="submitForm">
+				<StepCard class="w-11/12 mx-auto lg:w-[49rem] lg:h-[25rem] drop-shadow-2xl border-black border-2 flex flex-col mt-36">
 					<h5 class="font-antonio text-3xl text-left">Login User</h5>
 					<div class="flex flex-col flex-grow">
 						<TextInput type="text" label="Email" placeholder="Email" class="w-full relative" v-model="form.email"
@@ -82,13 +81,13 @@ const submitForm = async () => {
 					<div class="flex flew-row justify-center !mt-0" v-if="failedLogin">
 						<p class="text-red-800 text-shadow">Invalid Credentials</p>
 					</div>
-					<div class="flex flex-row justify-between space-x-3">
-						<div class="flex flex-row justify-between w-5/12">
+					<div class="flex flex-col lg:flex-row lg:justify-between">
+						<div class="flex flex-col lg:flex-row lg:justify-between lg:w-5/12 w-full">
 							<RouterLink to="/forgot-password" class="text-shadow hover:text-cyan-400">Forgot Credentials?</RouterLink>
 							<RouterLink to="/register" class="text-shadow hover:text-cyan-400">Not Registered?</RouterLink>
 						</div>
 						<button type="submit"
-							class="w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">LOGIN</button>
+							class="w-full mt-6 lg:mt-0 lg:w-5/12 p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500">LOGIN</button>
 					</div>
 				</StepCard>
 			</form>
