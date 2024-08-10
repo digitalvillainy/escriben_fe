@@ -8,8 +8,8 @@
 </script>
 
 <template>
-	<footer class="flex flex-row justify-between px-5 mt-20">
-		<div class="flex flex-row justify-between w-28 place-self-end pb-3">
+	<footer class="flex flex-col place-content-center lg:flex-row lg:justify-between px-5 mt-20">
+		<div class="flex flex-row justify-between lg:w-28 lg:place-self-end pb-3">
 			<RouterLink to="/instagram" target="_blank" class="text-shadow">
 				<InstagramIcon />
 			</RouterLink>
@@ -17,10 +17,10 @@
 				<ThreadsIcon />
 			</RouterLink>
 		</div>
-		<div class="w-full flex flex-row justify-center place-self-end">
+		<div class="w-full hidden lg:flex flex-row justify-center place-self-end">
 			<FooterTriangleIcon />
 		</div>
-		<p class="place-self-end w-72 text-right font-antonio pb-3">Made By 
+		<p class="text-center lg:place-self-end w-72 lg:text-right font-antonio pb-3">Made By 
 			<RouterLink to="/port" target="_blank" class="text-shadow hover:text-cyan-400">
 				Roberto Rivera 
 			</RouterLink>
