@@ -26,7 +26,7 @@ const hideMenu = (): void => {
 
 watch(() => props.hide, (newValue) => {
 	hiddenToggle.value = newValue
-})
+});
 
 </script>
 <template>

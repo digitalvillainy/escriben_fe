@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import EditBar from '../EditBar/EditBar.vue';
-import { ref, watch, defineEmits, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { marked } from 'marked';
 
 const props = defineProps({

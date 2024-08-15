@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmits, ref } from 'vue';
+import { ref } from 'vue';
 import PreviewIcon from '../icons/PreviewIcon.vue';
 import InfoIcon from '../icons/InfoIcon.vue';
 import SaveIcon from '../icons/SaveIcon.vue';
