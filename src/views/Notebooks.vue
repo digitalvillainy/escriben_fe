@@ -124,10 +124,10 @@ onMounted((): void => {
 			<h5 class="text-2xl text-center font-antonio text-shadow-lg my-8">
 				Written By: {{ userStore.getFullName }}
 			</h5>
-			<section class="flex flex-col lg:flex-row w-full px-4">
+			<section class="flex flex-col lg:flex-row w-full lg:w-10/12 xl:w-11/12 px-4">
 				<Sidebar :currentNotebook="currentNotebook" :currentNotes="currentNotes" :selectedNote="selectedNote"
 					@changeSelected="changeSelectedNote" @deleteCtrl="deleteModalCtrl" @add="addNote" :hide="hiddenToggle" />
-				<MarkdownEditor class="w-full lg:w-11/12" :notes="selectedNote" @update:modelValue="updateNotes" @close="hideMenu" />
+				<MarkdownEditor class="w-full" :notes="selectedNote" @update:modelValue="updateNotes" @close="hideMenu" />
 			</section>
 		</template>
 		<template v-slot:modal>

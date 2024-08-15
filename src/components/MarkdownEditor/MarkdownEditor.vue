@@ -47,11 +47,11 @@ watch(markdown, saveNotesProgress);
 <template>
 	<section class="flex flex-col h-screen">
 		<EditBar class="w-auto" @togglePreview="hidePreview = !hidePreview" @close="$emit('close')" />
-		<div class="flex flex-row">
+		<div class="flex flex-col lg:flex-row relative">
 			<textarea v-model="markdown" @input="saveNotesProgress" :class="[{ 'editor-full': hidePreview }, 'editor']"
 				class="bg-zinc-600 p-6"></textarea>
 			<div v-html="html" v-if="!hidePreview"
-				class="preview bg-zinc-400 p-6 prose text-white break-words overflow-x-hidden"></div>
+				class="absolute top-0 lg:right-0 preview-sm lg:preview bg-zinc-400 p-6 prose text-white break-words overflow-x-hidden"></div>
 		</div>
 	</section>
 </template>
@@ -71,6 +71,12 @@ watch(markdown, saveNotesProgress);
 .preview {
 	min-width: 50% !important;
 	max-width: 50% !important;
+	min-height: 100vh !important;
+}
+
+.preview-sm {
+	min-width: 100% !important;
+	max-width: 100% !important;
 	min-height: 100vh !important;
 }
 </style>

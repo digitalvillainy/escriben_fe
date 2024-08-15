@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const props = defineProps(['previewMode']);
+const { previewMode } = defineProps(['previewMode']);
 </script>
 <template>
 	<svg width="576" height="512" viewBox="0 0 576 512" class="w-8 h-8 cursor-pointer"
-		:class="props.previewMode ? 'fill-cyan-400 hover:fill-white' : 'fill-white hover:fill-cyan-400'"
+		:class="previewMode ? 'fill-cyan-400 hover:fill-white' : 'fill-white hover:fill-cyan-400'"
 		xmlns="http://www.w3.org/2000/svg">
 		<g clip-path="url(#clip0_2296_4)">
 			<path

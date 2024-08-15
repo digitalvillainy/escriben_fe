@@ -30,8 +30,8 @@ watch(() => props.hide, (newValue) => {
 
 </script>
 <template>
-	<aside class="flex flex-row lg:flex-col h-full w-full lg:w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
-		<ul class="flex flex-col list-disc font-antonio text-base absolute top-24 left-0 bg-black/80 backdrop-blur-sm w-full px-4 py-3 lg:bg-transparent">
+	<aside class="flex flex-row lg:flex-col h-full w-full lg:w-2/12 lg:p-4 place-content-between relative z-30" v-show="!hiddenToggle">
+		<ul class="flex flex-col list-disc font-antonio text-base absolute top-16 left-0 bg-black/80 backdrop-blur-sm w-full px-4 pt-9 pb-3 lg:bg-transparent">
 			<li class="ml-3">
 				{{ currentNotebook.title }}
 			</li>
