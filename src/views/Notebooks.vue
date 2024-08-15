@@ -5,6 +5,7 @@ import CloseChevronIcon from '../components/icons/CloseChevronIcon.vue';
 import CloseIcon from '../components/icons/CloseIcon.vue';
 import DeleteModal from '../components/Modals/DeleteModal.vue';
 import Layout from '../components/Layouts/Layout.vue';
+import Sidebar from '../components/Sidebar/Sidebar.vue';
 
 import { useRouter, useRoute } from 'vue-router';
 import { useNotebooksStore } from '../stores/notebooks';
@@ -124,41 +125,15 @@ onMounted((): void => {
 				Written By: {{ userStore.getFullName }}
 			</h5>
 			<section class="flex flex-row w-full px-4">
-				<aside class="flex flex-col h-full w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
-					<ul class="flex flex-col list-disc font-antonio text-base">
-						<li>
-							{{ currentNotebook.title }}
-						</li>
-						<li class="ml-2 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes"
-							:key="index">
-							<button
-								:class="[{ 'text-cyan-400': note.title === selectedNote.title }, 'm-1 text-shadow hover:text-cyan-400 overflow-x-hidden']"
-								@click="changeSelectedNote(note)">
-								{{ note.title }}
-							</button>
-							<CloseIcon class="w-3 h-3 cursor-pointer" @click="deleteModalCtrl(note)" />
-						</li>
-						<li>
-							<button class="m-1 text-shadow hover:text-cyan-400" @click="addNote">
-								Add Note
-							</button>
-						</li>
-					</ul>
-
-					<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
-						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer" @click="hideMenu" />
-					</div>
-				</aside>
-				<aside class="flex flex-col h-full w-fit p-4 place-content-end relative" v-else>
-					<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
-						<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu" />
-					</div>
-				</aside>
+				<Sidebar :currentNotebook="currentNotebook" :currentNotes="currentNotes" :selectedNote="selectedNote"
+					@changeSelected="changeSelectedNote" @deleteCtrl="deleteModalCtrl" @add="addNote" />
 				<MarkdownEditor class="w-11/12" @update:modelValue="updateNotes" :notes="selectedNote" />
 			</section>
 		</template>
 		<template v-slot:modal>
-			<DeleteModal v-if="show" @delete="deleteNote" @close="show = !show" />
+			<DeleteModal :show="show" @confirmed="deleteNote" @close="show = !show">
+				Are you sure you want to delete this note?
+			</DeleteModal>
 		</template>
 	</Layout>
 </template>

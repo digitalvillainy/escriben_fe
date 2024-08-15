@@ -14,10 +14,13 @@ const togglePreview = (): void => {
 
 </script>
 <template>
-	<!-- TODO: Have a saved indicator -->
 	<div class="flex flex-row w-auto bg-neutral-900 p-4 justify-end space-x-4 place-items-center">
-		<SaveIcon />
-		<InfoIcon />
-		<PreviewIcon @click="togglePreview" :previewMode="preview"/>
+
+		<div class="flex flex-row space-x-4 place-items-center">
+			<SaveIcon />
+			<InfoIcon />
+			<PreviewIcon @click="togglePreview" :previewMode="preview" />
+		</div>
+
 	</div>
 </template>
