@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import Vue from "vue";
 import Register from "../views/Register.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
@@ -12,34 +13,50 @@ const routes = [
 	{
 		path: "/",
 		name: "home",
-		component: Home
+		component: Home,
+		meta: {
+			title: 'Escriben | A Markdown Note Taking Web Application'
+		}
 	},
 	{
 		path: "/register",
 		name: "register",
-		component: Register
+		component: Register,
+		meta: {
+			title: 'Register | Escriben | A Markdown Note Taking Web Application'
+		}
 	},
 	{
 		path: "/login",
 		name: "login",
-		component: Login
+		component: Login,
+		meta: {
+			title: 'Login | Escriben | A Markdown Note Taking Web Application'
+		}
 	},
 	{
 		path: "/forgot-password",
 		name: "forgot-password",
-		component: Forgot
+		component: Forgot,
+		meta: {
+			title: 'Forgot Password | Escriben | A Markdown Note Taking Web Application'
+		}
 	},
 	{
 		path: "/reset-password?:token&:email",
 		name: "reset-password",
-		component: ResetPwd
+		component: ResetPwd,
+		meta: {
+			title: 'Reset Password | Escriben | A Markdown Note Taking Web Application'
+		}
 	},
 	{
 		path: "/dashboard",
 		name: "dashboard",
 		component: Dashboard,
 		meta: {
-			requiresAuth: true
+			requiresAuth: true,
+			title: 'Dashboard | Escriben | A Markdown Note Taking Web Application'
 		}
 	},
 	{
@@ -47,7 +64,8 @@ const routes = [
 		name: "profile",
 		component: Profile,
 		meta: {
-			requiresAuth: true
+			requiresAuth: true,
+			title: 'Profile | Escriben | A Markdown Note Taking Web Application'
 		}
 	},
 	{
@@ -55,13 +73,9 @@ const routes = [
 		name: "notebooks",
 		component: Notebooks,
 		meta: {
-			requiresAuth: true
+			requiresAuth: true,
+			title: 'Notebooks | Escriben | A Markdown Note Taking Web Application'
 		}
-	},
-	{
-		path: '/:pathMatch(.*)*',
-		name: 'NotFound',
-		component: () => import('../views/NotFound.vue')
 	},
 	{
 		path: "/port",
@@ -83,7 +97,7 @@ const routes = [
 			location.href = 'https://www.threads.net/@xerafenix?xmt=AQGzDZ1U138aT8iCQUGgKSTueEldyfHN98hibwqq1Oeylm0'
 		},
 		component: { template: '<div>Going to https://www.threads.net/@xerafenix?xmt=AQGzDZ1U138aT8iCQUGgKSTueEldyfHN98hibwqq1Oeylm0' }
-	}
+	},
 ];
 
 const router = createRouter({
@@ -91,14 +105,14 @@ const router = createRouter({
 	routes
 });
 
-// TODO: Make it so when loggedin you always go to Dashboard when attempting to login/register/home
 // Check if user is authenticated
 router.beforeEach((to, from, next) => {
 	const isAuthenticated = !!localStorage.getItem('token');
+	document.title = to.meta.title || 'Escriben | A Markdown Note Taking Web Application';
 	if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-		next({ name: 'login' })
+		next({ name: 'login' });
 	} else {
-		next()
+		next();
 	}
 });
 export default router;
