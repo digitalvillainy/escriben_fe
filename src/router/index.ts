@@ -59,6 +59,11 @@ const routes = [
 		}
 	},
 	{
+		path: '/:pathMatch(.*)*',
+		name: 'NotFound',
+		component: () => import('../views/NotFound.vue')
+	},
+	{
 		path: "/port",
 		beforeEnter: () => {
 			location.href = 'https://robertorivera.dev'
