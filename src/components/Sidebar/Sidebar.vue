@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import CloseChevronIcon from '../icons/CloseChevronIcon.vue';
 import CloseIcon from '../icons/CloseIcon.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
+	hide: {
+		type: Boolean,
+	},
 	selectedNote: {
 		type: Object,
 	},
@@ -21,11 +24,15 @@ const hideMenu = (): void => {
 	hiddenToggle.value = !hiddenToggle.value;
 };
 
+watch(() => props.hide, (newValue) => {
+	hiddenToggle.value = newValue
+})
+
 </script>
 <template>
-	<aside class="flex flex-col h-full w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
-		<ul class="flex flex-col list-disc font-antonio text-base">
-			<li>
+	<aside class="flex flex-row lg:flex-col h-full w-full lg:w-1/12 p-4 place-content-between relative" v-if="!hiddenToggle">
+		<ul class="flex flex-col list-disc font-antonio text-base absolute top-24 left-0 bg-black/80 backdrop-blur-sm w-full px-4 py-3 lg:bg-transparent">
+			<li class="ml-3">
 				{{ currentNotebook.title }}
 			</li>
 			<li class="ml-2 flex flex-row justify-between place-items-center" v-for="( note, index ) in currentNotes"
@@ -35,22 +42,13 @@ const hideMenu = (): void => {
 					@click="$emit('changeSelected', note)">
 					{{ note.title }}
 				</button>
-				<CloseIcon class="w-3 h-3 cursor-pointer" @click="$emit('deleteCtrl', note)" />
+				<CloseIcon class="w-5 h-5 cursor-pointer" @click="$emit('deleteCtrl', note)" />
 			</li>
-			<li>
+			<li class="ml-3">
 				<button class="m-1 text-shadow hover:text-cyan-400" @click="$emit('add')">
 					Add Note
 				</button>
 			</li>
 		</ul>
-
-		<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
-			<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer" @click="hideMenu" />
-		</div>
-	</aside>
-	<aside class="flex flex-col h-full w-fit p-4 place-content-end relative" v-else>
-		<div class="flex flex-row w-full justify-end sticky bottom-8 right-4 z-20">
-			<CloseChevronIcon class="w-10 h-10 mt-12 cursor-pointer rotate-180" @click="hideMenu" />
-		</div>
 	</aside>
 </template>
