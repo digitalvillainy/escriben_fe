@@ -24,14 +24,7 @@ let currentNotebook = ref<Note>({
     updated_at: "",
 });
 let currentNotes = ref<Array<object>>([]);
-let selectedNote = ref<Note>({
-    id: 0,
-    title: "",
-    content: "",
-    notebook_id: 0,
-    created_at: "",
-    updated_at: "",
-});
+let selectedNote = ref<object>({});
 let hiddenToggle = ref<boolean>(false);
 let deleteTarget = ref<Note>({
     id: 0,
