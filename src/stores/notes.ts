@@ -6,7 +6,7 @@ export interface Note {
   id: number;
   title: string;
   content: string;
-  notebook_id: number;
+  notebook_id: number | string;
   created_at: string;
   updated_at: string;
 }
@@ -32,17 +32,21 @@ export const useNotesStore = defineStore("notes", {
     getNotes: (state): Note[] => {
       return state.notes;
     },
-    getNotesByNotebookId: (state) => (notebook_id: number) => {
-      return state.notes.filter((note) => note.notebook_id === notebook_id);
+    getNotesByNotebookId: (state) => (notebook_id: number | string) => {
+      const target: number =
+        typeof notebook_id === "string" ? parseInt(notebook_id) : notebook_id;
+      return state.notes.filter((note) => note.notebook_id === target);
     },
     getNoteById: (state) => (id: number) => {
       return state.notes.find((note) => note.id === id);
     },
   },
   actions: {
-    async getNotesByNotebook(notebook_id: number): Promise<Note[]> {
+    async getNotesByNotebook(notebook_id: number | string): Promise<Note[]> {
+      const target: number =
+        typeof notebook_id === "string" ? parseInt(notebook_id) : notebook_id;
       try {
-        const response = await getApi(`/notes?notebook_id=${notebook_id}`);
+        const response = await getApi(`/notes?notebook_id=${target}`);
         localStorage.setItem("notes", JSON.stringify(response));
         this.notes = response;
         return response;

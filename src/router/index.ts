@@ -5,7 +5,7 @@ import LoginPage from "../views/LoginPage.vue";
 import Forgot from "../views/Forgot.vue";
 import Dashboard from "../views/Dashboard.vue";
 import ResetPwd from "../views/ResetPwd.vue";
-import Notebooks from "../views/Notebooks.vue";
+import NotebooksPage from "../views/NotebooksPage.vue";
 import ProfilePage from "../views/ProfilePage.vue";
 
 const routes = [
@@ -72,7 +72,7 @@ const routes = [
   {
     path: "/notebooks?notebook_id=:notebook_id",
     name: "notebooks",
-    component: Notebooks,
+    component: NotebooksPage,
     meta: {
       requiresAuth: true,
       title: "Notebooks | Escriben | A Markdown Note Taking Web Application",

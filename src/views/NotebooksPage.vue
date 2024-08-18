@@ -15,9 +15,23 @@ const notebookStore = useNotebooksStore();
 const notesStore = useNotesStore();
 const userStore = useUserStore();
 
-let currentNotebook = ref<object>({});
+let currentNotebook = ref<Note>({
+    id: 0,
+    title: "",
+    content: "",
+    notebook_id: 0,
+    created_at: "",
+    updated_at: "",
+});
 let currentNotes = ref<Array<object>>([]);
-let selectedNote = ref<object>({});
+let selectedNote = ref<Note>({
+    id: 0,
+    title: "",
+    content: "",
+    notebook_id: 0,
+    created_at: "",
+    updated_at: "",
+});
 let hiddenToggle = ref<boolean>(false);
 let deleteTarget = ref<Note>({
     id: 0,
@@ -40,7 +54,7 @@ const hideMenu = (): void => {
     hiddenToggle.value = !hiddenToggle.value;
 };
 
-const deleteModalCtrl = (note: object): void => {
+const deleteModalCtrl = (note: Note): void => {
     deleteTarget.value = note;
     show.value = !show.value;
 };
@@ -62,7 +76,7 @@ const deleteNote = async (): Promise<void> => {
     selectedNote.value = currentNotes.value[0];
 };
 
-const updateNotes = (notes: string): void => {
+const updateNotes = (notes: Note): void => {
     savedNotes.value = false;
     if (notes.content === "") {
         notes.content = "# Add your content here...";
