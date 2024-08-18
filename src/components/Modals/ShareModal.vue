@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import TextInput from '../inputs/TextInput.vue';
-import MailIcon from '../icons/MailIcon.vue';
 
-const props = defineProps({ show: Boolean });
+defineProps({ show: Boolean });
 const confirm = ref<boolean>(false);
 const emit = defineEmits(['confirmed']);
 const dialog = ref<HTMLElement | null>(null);
-
-// Open and close dialog and emit event and confirmed value
-const openDialog = (): void => {
-	emit('confirmed', confirm.value, email.value);
-};
 
 const closeDialog = (mode: boolean): void => {
 	confirm.value = mode;

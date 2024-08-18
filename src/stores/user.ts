@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia';
-import { getApi, postApi } from '../axios.ts';
+import { defineStore } from "pinia";
+import { getApi, postApi } from "../axios.ts";
 
-type User = {
+export type UserType = {
   id: number;
-  token: string;
+  token?: string;
   username: string;
   first_name: string;
   last_name: string;
@@ -14,17 +14,17 @@ type User = {
 };
 
 //TODO: Make it so when getting user information if undefined then getUser() from api
-export const useUserStore = defineStore('user', {
-  state: (): User => {
-    const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+export const useUserStore = defineStore("user", {
+  state: (): UserType => {
+    const user: UserType = JSON.parse(localStorage.getItem("user") || "{}");
     return {
-      token: localStorage.getItem('token') || '',
+      token: localStorage.getItem("token") || "",
       id: user.id || 0,
-      username: user.username || '',
-      first_name: user.first_name || '',
-      last_name: user.last_name || '',
-      email: user.email || '',
-      profile_pic: user.profile_pic || '',
+      username: user.username || "",
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      email: user.email || "",
+      profile_pic: user.profile_pic || "",
     };
   },
   getters: {
@@ -37,16 +37,16 @@ export const useUserStore = defineStore('user', {
     getId(): number | string {
       return this.id;
     },
-    getUser(): object {
+    getUser(): UserType {
       return {
         id: this.id,
         username: this.username,
         first_name: this.first_name,
         last_name: this.last_name,
         email: this.email,
-        profile_pic: this.profile_pic
+        profile_pic: this.profile_pic,
       };
-    }
+    },
   },
   actions: {
     async getuser(): Promise<void> {
@@ -59,7 +59,7 @@ export const useUserStore = defineStore('user', {
     },
     async uploadProfilePic(data: object): Promise<void> {
       try {
-        const response = await postApi('/upload-profile-pic', data);
+        const response = await postApi("/upload-profile-pic", data);
         if (response) {
           this.setUser(response);
         }
@@ -67,9 +67,9 @@ export const useUserStore = defineStore('user', {
         console.error(error);
       }
     },
-    async updateUser(data: User): Promise<void> {
+    async updateUser(data: UserType): Promise<void> {
       try {
-        const response = await postApi('/users', data);
+        const response = await postApi("/users", data);
         if (response) {
           this.setUser(response);
         }
@@ -77,7 +77,7 @@ export const useUserStore = defineStore('user', {
         console.error(error);
       }
     },
-    setUser(user: User): void {
+    setUser(user: UserType): void {
       // Save User in state
       this.id = user.id;
       this.username = user.username;
@@ -87,19 +87,19 @@ export const useUserStore = defineStore('user', {
       this.profile_pic = user.profile_pic;
 
       // Save User in localStorage
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
     },
     login(token: string): void {
       // Save token in state
       this.token = token;
       // Save token in localStorage
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
     },
     logout(): void {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('notebooks');
-      this.token = '';
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("notebooks");
+      this.token = "";
     },
   },
 });

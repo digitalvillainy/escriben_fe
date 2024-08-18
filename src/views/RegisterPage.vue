@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router';
-import NavBar from '../components/NavBar.vue';
-import Footer from '../components/Footer.vue';
 import StepCard from '../components/cards/StepCard.vue';
 import TextInput from '../components/inputs/TextInput.vue';
 import UserIcon from '../components/icons/UserIcon.vue';
@@ -75,7 +73,7 @@ const submitForm = async () => {
 <template>
 	<Layout>
 		<template #content>
-			<form class="flex flex-col place-items-center flex-grow w-11/12 mx-auto" @submit.prevent="submitForm">
+			<form class="flex flex-col justify-center place-items-center flex-grow w-11/12 mx-auto" @submit.prevent="submitForm">
 				<StepCard class="flex flex-col w-full lg:w-[49rem] lg:h-[30rem] drop-shadow-2xl border-black border-2">
 					<h5 class="font-antonio text-3xl text-left">Login User</h5>
 					<div class="flex flex-col lg:flex-row justify-between gap-x-2">
