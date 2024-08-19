@@ -3,12 +3,12 @@ import { defineStore } from "pinia";
 import { getApi, postApi, patchApi, deleteApi } from "../axios";
 
 export interface Note {
-  id: number;
+  id?: number;
   title: string;
   content: string;
   notebook_id: number | string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 const Notes: Note[] = JSON.parse(localStorage.getItem("notes") || "[{}]");
@@ -58,7 +58,7 @@ export const useNotesStore = defineStore("notes", {
     async createNote(
       title: string,
       content: string,
-      notebook_id: string | string[],
+      notebook_id: number | string,
     ): Promise<void> {
       try {
         const response = await postApi("/notes", {

@@ -23,8 +23,15 @@ let currentNotebook = ref<Note>({
     created_at: "",
     updated_at: "",
 });
-let currentNotes = ref<Array<object>>([]);
-let selectedNote = ref<object>({});
+let currentNotes = ref<Array<Note>>([]);
+let selectedNote = ref<Note>({
+    id: 0,
+    title: "",
+    content: "",
+    notebook_id: 0,
+    created_at: "",
+    updated_at: "",
+});
 let hiddenToggle = ref<boolean>(false);
 let deleteTarget = ref<Note>({
     id: 0,
@@ -36,10 +43,11 @@ let deleteTarget = ref<Note>({
 });
 let savedNotes = ref<boolean>(false);
 let show = ref<boolean>(false);
-let timeout: typeof setTimeout;
+let timeout: number;
+const notes_id = Array.isArray(notebook_id) ? notebook_id[0] : notebook_id;
 
 provide("savedNotes", savedNotes);
-const changeSelectedNote = (note: object): void => {
+const changeSelectedNote = (note: Note): void => {
     selectedNote.value = note;
 };
 
@@ -56,16 +64,18 @@ const addNote = (): void => {
     const newNote = {
         title: "New Note",
         content: "# Add your content here...",
-        notebook_id: notebook_id,
+        notebook_id: notes_id,
     };
 
     notesStore.createNote(newNote.title, newNote.content, newNote.notebook_id);
 };
 
 const deleteNote = async (): Promise<void> => {
-    await notesStore.deleteNoteById(deleteTarget.value.id);
     show.value = !show.value;
-    currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
+    if (deleteTarget.value.id !== undefined) {
+        await notesStore.deleteNoteById(deleteTarget.value.id);
+    }
+    currentNotes.value = await notesStore.getNotesByNotebook(notes_id);
     selectedNote.value = currentNotes.value[0];
 };
 
@@ -79,8 +89,9 @@ const updateNotes = (notes: Note): void => {
         notes.title = "New Note";
     }
 
-    selectedNote.value.content = notes;
+    selectedNote.value.content = notes.content;
     clearTimeout(timeout);
+    console.log("test", selectedNote);
     timeout = setTimeout(() => {
         notesStore
             .updateNoteById(
@@ -92,7 +103,7 @@ const updateNotes = (notes: Note): void => {
     }, 1000);
 };
 
-const updateNotebooks = (notebook): void => {
+const updateNotebooks = (notebook: Note): void => {
     currentNotebook.value.title = notebook.title;
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -100,22 +111,18 @@ const updateNotebooks = (notebook): void => {
     }, 1000);
 };
 
-const updateNotebook = (notebook): void => {
-    notebookStore.updateNotebookById(
-        notebook.id,
-        notebook.title,
-        notebook.color,
-        notebook.icon,
-    );
-};
-
 onBeforeMount(async (): Promise<void> => {
-    currentNotes.value = await notesStore.getNotesByNotebook(notebook_id);
-    const defaultNote = {
+    const notes_id = Array.isArray(notebook_id) ? notebook_id[0] : notebook_id;
+    currentNotes.value = await notesStore.getNotesByNotebook(notes_id);
+    const defaultNote: Note = {
+        id: 0,
         title: "New Note",
         content: "# Add your content here...",
-        notebook_id: notebook_id,
+        notebook_id: notes_id,
+        created_at: "",
+        updated_at: "",
     };
+
     selectedNote.value =
         currentNotes.value.length > 0 ? currentNotes.value[0] : defaultNote;
 
