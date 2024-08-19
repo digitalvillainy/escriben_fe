@@ -5,7 +5,7 @@ import Layout from "../components/Layouts/Layout.vue";
 import Sidebar from "../components/Sidebar/Sidebar.vue";
 
 import { useRoute } from "vue-router";
-import { useNotebooksStore } from "../stores/notebooks";
+import { useNotebooksStore, Notebook } from "../stores/notebooks";
 import { useNotesStore, Note } from "../stores/notes";
 import { useUserStore } from "../stores/user";
 import { ref, onBeforeMount, onMounted, provide } from "vue";
@@ -15,15 +15,15 @@ const notebookStore = useNotebooksStore();
 const notesStore = useNotesStore();
 const userStore = useUserStore();
 
-let currentNotebook = ref<Note>({
+let currentNotes = ref<Array<Note>>([]);
+let hiddenToggle = ref<boolean>(false);
+let currentNotebook = ref<Notebook>({
     id: 0,
+    user_id: 0,
     title: "",
-    content: "",
-    notebook_id: 0,
     created_at: "",
     updated_at: "",
 });
-let currentNotes = ref<Array<Note>>([]);
 let selectedNote = ref<Note>({
     id: 0,
     title: "",
@@ -32,7 +32,6 @@ let selectedNote = ref<Note>({
     created_at: "",
     updated_at: "",
 });
-let hiddenToggle = ref<boolean>(false);
 let deleteTarget = ref<Note>({
     id: 0,
     title: "",
@@ -91,7 +90,7 @@ const updateNotes = (notes: Note): void => {
 
     selectedNote.value.content = notes.content;
     clearTimeout(timeout);
-    console.log("test", selectedNote);
+
     timeout = setTimeout(() => {
         notesStore
             .updateNoteById(
@@ -103,7 +102,7 @@ const updateNotes = (notes: Note): void => {
     }, 1000);
 };
 
-const updateNotebooks = (notebook: Note): void => {
+const updateNotebooks = (notebook: Notebook): void => {
     currentNotebook.value.title = notebook.title;
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -137,9 +136,9 @@ onBeforeMount(async (): Promise<void> => {
 });
 
 onMounted((): void => {
-    currentNotebook.value = notebookStore.getNotebooks.find(
-        (notebook) => notebook.id == notebook_id,
-    );
+    currentNotebook.value = notebookStore.getNotebooks.filter(
+        (notebook) => notebook.id === parseInt(notes_id),
+    )[0];
 });
 </script>
 <template>
@@ -153,11 +152,11 @@ onMounted((): void => {
                     v-model="currentNotebook.title"
                     @input="updateNotebooks(currentNotebook)"
                     class="bg-transparent"
-                />/
+                />
                 <input
                     type="text"
                     v-model="selectedNote.title"
-                    @input="updateNotes(selectedNote.content)"
+                    @input="updateNotes(selectedNote)"
                     class="bg-transparent"
                 />
             </h3>

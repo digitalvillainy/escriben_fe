@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { getApi, postApi, patchApi, deleteApi } from "../axios";
 
 export interface Note {
-  id?: number;
+  id: number;
   title: string;
   content: string;
   notebook_id: number | string;
