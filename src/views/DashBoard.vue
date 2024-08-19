@@ -6,7 +6,7 @@ import EditIcon from "../components/icons/EditIcon.vue";
 import DeleteModal from "../components/Modals/DeleteModal.vue";
 import Layout from "../components/Layouts/Layout.vue";
 
-import { useNotebooksStore } from "../stores/notebooks";
+import { useNotebooksStore, Notebook } from "../stores/notebooks";
 import { useUserStore } from "../stores/user";
 import { ref } from "vue";
 import { RouterLink, useRouter } from "vue-router";
@@ -17,7 +17,15 @@ const userStore = useUserStore();
 const $router = useRouter();
 const show = ref<boolean>(false);
 const deleteTarget = ref<number>(0);
-let notebooks: Array<object> = ref([{}]);
+let notebooks = ref<Notebook[]>([
+    {
+        id: 0,
+        user_id: 0,
+        title: "",
+        created_at: "",
+        updated_at: "",
+    },
+]);
 
 //Create Notebook and route to the notebook page
 const createNotebook = async (
@@ -46,7 +54,7 @@ const getNotebooks = async (): Promise<void> => {
 };
 
 //Delete Notebook
-const deleteNotebook = async (mode): Promise<void> => {
+const deleteNotebook = async (mode: boolean): Promise<void> => {
     if (mode) {
         try {
             await notebookStore.deleteNotebook(deleteTarget.value);
