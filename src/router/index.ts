@@ -2,8 +2,8 @@ import { createWebHistory, createRouter } from "vue-router";
 import RegisterPage from "../views/RegisterPage.vue";
 import Home from "../views/Home.vue";
 import LoginPage from "../views/LoginPage.vue";
-import Forgot from "../views/Forgot.vue";
-import Dashboard from "../views/Dashboard.vue";
+import ForgotPage from "../views/ForgotPage.vue";
+import DashBoard from "../views/DashBoard.vue";
 import ResetPwd from "../views/ResetPwd.vue";
 import NotebooksPage from "../views/NotebooksPage.vue";
 import ProfilePage from "../views/ProfilePage.vue";
@@ -36,7 +36,7 @@ const routes = [
   {
     path: "/forgot-password",
     name: "forgot-password",
-    component: Forgot,
+    component: ForgotPage,
     meta: {
       title:
         "Forgot Password | Escriben | A Markdown Note Taking Web Application",
@@ -54,7 +54,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "dashboard",
-    component: Dashboard,
+    component: DashBoard,
     meta: {
       requiresAuth: true,
       title: "Dashboard | Escriben | A Markdown Note Taking Web Application",

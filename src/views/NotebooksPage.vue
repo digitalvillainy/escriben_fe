@@ -2,7 +2,7 @@
 import MarkdownEditor from "../components/MarkdownEditor/MarkdownEditor.vue";
 import DeleteModal from "../components/Modals/DeleteModal.vue";
 import Layout from "../components/Layouts/Layout.vue";
-import Sidebar from "../components/Sidebar/Sidebar.vue";
+import SideBar from "../components/Sidebar/SideBar.vue";
 
 import { useRoute } from "vue-router";
 import { useNotebooksStore, Notebook } from "../stores/notebooks";
@@ -166,7 +166,7 @@ onMounted((): void => {
             <section
                 class="flex flex-col lg:flex-row w-full lg:w-10/12 xl:w-11/12 px-4"
             >
-                <Sidebar
+                <SideBar
                     :currentNotebook="currentNotebook"
                     :currentNotes="currentNotes"
                     :selectedNote="selectedNote"
