@@ -17,7 +17,12 @@ defineProps<{
                 :id="label"
                 :placeholder="placeholder"
                 :value="modelValue"
-                @input="$emit('update:modelValue', modelValue)"
+                @input="
+                    $emit(
+                        'update:modelValue',
+                        ($event.target as HTMLInputElement).value,
+                    )
+                "
                 class="w-full p-2 placeholder:text-custom-coal/75 text-custom-coal rounded-lg bg-zinc-300 shadow-[inset_1px_4px_8px_0_rgba(47,46,65,0.6)]"
             />
             <slot class="absolute top-0 right-0" />
