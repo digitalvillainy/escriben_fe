@@ -35,7 +35,6 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, form);
 
-// TODO: Add error handling from server
 const submitForm = async () => {
     const result = await v$.value.$validate();
     if (!result) return;

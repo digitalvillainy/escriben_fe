@@ -95,7 +95,9 @@ const submitForm = async () => {
                 <StepCard
                     class="flex flex-col w-full lg:w-[49rem] lg:h-[30rem] drop-shadow-2xl border-black border-2"
                 >
-                    <h5 class="font-antonio text-3xl text-left">Login User</h5>
+                    <h5 class="font-antonio text-3xl text-left">
+                        Register User
+                    </h5>
                     <div
                         class="flex flex-col lg:flex-row justify-between gap-x-2"
                     >
