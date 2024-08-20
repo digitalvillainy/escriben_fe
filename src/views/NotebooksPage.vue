@@ -153,6 +153,7 @@ onMounted((): void => {
                     @input="updateNotebooks(currentNotebook)"
                     class="bg-transparent"
                 />
+                /
                 <input
                     type="text"
                     v-model="selectedNote.title"

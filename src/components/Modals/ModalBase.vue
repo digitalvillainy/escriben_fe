@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CloseIcon from "../icons/CloseIcon.vue";
 
-const props = defineProps({
+defineProps({
     show: Boolean,
 });
 
@@ -14,16 +14,16 @@ const openDialog = (): void => {
 </script>
 <template>
     <div
-        v-if="props.show"
-        class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800"
+        v-if="show"
+        class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-40 text-slate-800"
     >
         <div
-            class="bg-zinc-300 rounded-xl space-y-8 w-8/12 h-[36rem] place-self-center absolute z-30 text-slate-800 overflow-y-auto"
+            class="bg-zinc-300 rounded-xl space-y-8 w-11/12 lg:w-8/12 h-[36rem] place-self-center absolute z-30 text-slate-800 overflow-y-auto"
         >
             <div
                 class="flex flex-row justify-between w-full bg-zinc-900 px-8 py-4 text-white sticky top-0 z-30"
             >
-                <span class="text-3xl font-antonio">
+                <span class="text-xl lg:text-3xl font-antonio">
                     <slot name="title"></slot>
                 </span>
                 <CloseIcon

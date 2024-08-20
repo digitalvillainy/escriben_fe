@@ -124,7 +124,7 @@ notebooks.value = notebookStore.getNotebooks;
                         <router-link
                             :to="{
                                 name: 'notebooks',
-                                params: { notebook_id: notebook.id },
+                                params: { notebook_id: notebook?.id },
                             }"
                         >
                             <EditIcon />

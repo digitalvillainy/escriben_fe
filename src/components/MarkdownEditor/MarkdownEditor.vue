@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import EditBar from "../EditBar/EditBar.vue";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { marked } from "marked";
 
 const props = defineProps({
@@ -13,7 +13,7 @@ const props = defineProps({
 // Initialize refs
 const markdown = ref<string>(props.notes.content || "# Markdown Editor");
 const html = ref<string>("");
-const hidePreview = ref<boolean>(false);
+const hidePreview = ref<boolean>(true);
 const emit = defineEmits(["update:modelValue", "close"]);
 
 // Update preview with new markdown
@@ -25,12 +25,6 @@ const saveNotesProgress = (): void => {
     emit("update:modelValue", markdown.value);
     updatePreview();
 };
-
-onMounted(() => {
-    //Hide preview on mobile
-    const width = window.innerWidth;
-    hidePreview.value = width < 1024;
-});
 
 // Watch for changes in props.notes and update internal state
 watch(
