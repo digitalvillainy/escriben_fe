@@ -8,7 +8,7 @@ defineProps<{
     modelValue: string;
     errors: ErrorObject[];
 }>();
-</script
+</script>
 <template>
     <div class="flex flex-col h-16">
         <label class="relative" :for="label">
