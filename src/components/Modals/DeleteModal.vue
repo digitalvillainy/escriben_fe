@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const props = defineProps({
+defineProps({
     show: Boolean,
 });
 
@@ -16,12 +16,12 @@ const closeDialog = (mode: boolean): void => {
 </script>
 <template>
     <div
-        v-if="props.show"
+        v-if="show"
         ref="dialog"
         class="w-full h-full bg-black/30 backdrop-blur-sm flex flex-col justify-center m-0 fixed inset-0 z-20 text-slate-800"
     >
         <div
-            class="bg-zinc-300 rounded-xl p-4 space-y-24 w-3/12 place-self-center absolute z-30"
+            class="bg-zinc-300 rounded-xl p-4 space-y-24 w-11/12 lg:w-3/12 place-self-center absolute z-30"
         >
             <p class="text-3xl font-antonio text-center">
                 <slot></slot>
