@@ -107,7 +107,6 @@ const submitForm = async () => {
                                 v-model="form.last_name"
                                 :errors="v$.last_name.$errors"
                             >
-                                > >
                                 <UserIcon />
                             </TextInput>
                         </div>
@@ -126,19 +125,9 @@ const submitForm = async () => {
                             </TextInput>
                             <TextInput
                                 type="text"
-                                label="Email"
-                                placeholder="Email"
-                                class="w-full relative"
-                                v-model="form.email"
-                                :errors="v$.email.$errors"
-                            >
-                                <UserIcon class="absolute top-1 right-1.5" />
-                            </TextInput>
-                            <TextInput
-                                class="w-full p-2 text-2xl shadow-2xl rounded-lg bg-custom-cyan hover:bg-cyan-500"
-                                type="text"
                                 label="Username"
                                 placeholder="Username"
+                                class="w-full relative"
                                 v-model="form.username"
                                 :errors="v$.username.$errors"
                             >
