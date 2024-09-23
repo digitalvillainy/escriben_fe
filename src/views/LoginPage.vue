@@ -49,7 +49,7 @@ const submitForm = async () => {
         if (response.token) {
             localStorage.setItem("token", response.token);
             userStore.setUser(response.user);
-            router.push({ name: "dashboard" });
+            await router.push({name: "dashboard"});
         }
     } catch (error) {
         v$.value.$touch();

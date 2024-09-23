@@ -8,9 +8,9 @@ import { useRoute } from "vue-router";
 import { useNotebooksStore, Notebook } from "../stores/notebooks";
 import { useNotesStore, Note } from "../stores/notes";
 import { useUserStore } from "../stores/user";
-import { ref, onBeforeMount, onMounted, provide } from "vue";
+import { ref, onBeforeMount, provide } from "vue";
 
-const { notebook_id } = useRoute().params;
+const notebook_id = useRoute().params.notebook_id ? useRoute().params.notebook_id : {};
 const notebookStore = useNotebooksStore();
 const notesStore = useNotesStore();
 const userStore = useUserStore();
@@ -127,19 +127,17 @@ onBeforeMount(async (): Promise<void> => {
 
     // Create a default note if there are no notes
     if (currentNotes.value.length == 0) {
-        notesStore.createNote(
+        await notesStore.createNote(
             defaultNote.title,
             defaultNote.content,
             defaultNote.notebook_id,
         );
     }
-});
-
-onMounted((): void => {
     currentNotebook.value = notebookStore.getNotebooks.filter(
         (notebook) => notebook.id === parseInt(notes_id),
     )[0];
 });
+
 </script>
 <template>
     <Layout :footer="false">
