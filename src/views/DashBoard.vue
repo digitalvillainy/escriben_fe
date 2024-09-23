@@ -35,9 +35,9 @@ const createNotebook = async (
     try {
         const response = await notebookStore.createNotebook(title, user_id);
         if (!response) return;
-        $router.push({
-            name: "notebooks",
-            params: { notebook_id: response.id },
+        await $router.push({
+          name: "notebooks",
+          params: {notebook_id: response.id},
         });
     } catch (error) {
         console.error(error);
@@ -124,7 +124,7 @@ notebooks.value = notebookStore.getNotebooks;
                         <router-link
                             :to="{
                                 name: 'notebooks',
-                                params: { notebook_id: notebook?.id },
+                                params: { notebook_id: notebook.id ?  notebook.id : 0 },
                             }"
                         >
                             <EditIcon />
