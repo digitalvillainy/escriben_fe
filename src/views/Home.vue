@@ -11,7 +11,7 @@ import Footer from '../components/Footer.vue';
 <template>
 	<section class="flex flex-col font-antonio bg-home-hero-pattern bg-cover bg-no-repeat bg-center h-[524px] relative">
 		<div class="text-right z-20">
-			<RouterLink to="/register" class="m-2 text-md lg:text-2xl font-antonio text-shadow hover:text-cyan-400">
+			<RouterLink to="/login" class="m-2 text-md lg:text-2xl font-antonio text-shadow hover:text-cyan-400">
 				Register/Login</RouterLink>
 		</div>
 		<div class="flex flex-row justify-center text-center z-20 h-full">
