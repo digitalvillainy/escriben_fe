@@ -30,6 +30,7 @@ const saveNotesProgress = (): void => {
 watch(
     () => props.notes.content,
     (newContent) => {
+      console.log(newContent);
         markdown.value = newContent || "";
         updatePreview();
     },

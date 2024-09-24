@@ -76,6 +76,7 @@ export const useNotesStore = defineStore("notes", {
       title: string,
       content: string,
     ): Promise<void> {
+      content = content !== undefined ? content : '# Add Content Here';
       try {
         const response = await patchApi(`/notes`, { id, title, content });
         this.updateNote(response);

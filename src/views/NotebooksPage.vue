@@ -80,13 +80,13 @@ const deleteNote = async (): Promise<void> => {
 
 const updateNotes = (notes: Note): void => {
     savedNotes.value = false;
-    if (notes.content === "") {
-        notes.content = "# Add your content here...";
-    }
-
-    if (notes.title === "") {
-        notes.title = "New Note";
-    }
+    // if (notes.content === "") {
+    //     notes.content = "# Add your content here...";
+    // }
+    //
+    // if (notes.title === "") {
+    //     notes.title = "New Note";
+    // }
 
     selectedNote.value.content = notes.content;
     clearTimeout(timeout);
