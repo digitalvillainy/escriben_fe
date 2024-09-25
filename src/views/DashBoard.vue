@@ -114,7 +114,7 @@ onBeforeMount(() => {
             v-else
             v-for="(notebook, index) in notebooks"
             v-bind:key="index"
-            class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-doshed border-4 flex flex-col hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400"
+            class="w-44 h-64 drop-shadow-2xl border-custom-cyan border-dashed border-4 flex flex-col hover:bg-gray-600 hover:text-white m-4 hover:border-cyan-400"
         >
                     <span
                         class="text-white font-antonio text-md text-center flex-grow"
