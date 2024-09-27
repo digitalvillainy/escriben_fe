@@ -26,10 +26,10 @@ type FormType = {
 
 const form = reactive({
     id: userStore.getUser.id,
-    first_name: "",
-    last_name: "",
-    email: "",
-    username: "",
+    first_name: userStore.getUser.first_name,
+    last_name: userStore.getUser.last_name,
+    email: userStore.getUser.email,
+    username: userStore.getUser.username,
 }) as FormType;
 
 // Rules for vuelidate validation
