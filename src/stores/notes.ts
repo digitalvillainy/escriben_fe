@@ -77,7 +77,6 @@ export const useNotesStore = defineStore("notes", {
       content: string,
     ): Promise<void> {
       try {
-        console.table("id", id, "title", title, "content", content);
         const response = await patchApi(`/notes`, { id, title, content });
         this.updateNote(response);
       } catch (error) {
